@@ -1,15 +1,18 @@
 <template>
-  <hello-world />
+    <HighLightsList/>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
-
-  export default {
-    name: 'Home',
+import HighLightsList from '@/components/HighlightsList.vue'
+export default {
+    name: "Home",
 
     components: {
-      HelloWorld,
-    },
-  }
+        HighLightsList
+    }
+}
 </script>
+
+<style>
+
+</style>

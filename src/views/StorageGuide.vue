@@ -1,18 +1,13 @@
 <template>
-<div>
-    <h2>Storage Guide</h2>
-    <div data-app>
-        <SGuide />
-    </div>
-</div>
+    <h1> this is the storage guide page under tips </h1>
 </template>
 
 <script>
-import SGuide from "@/components/SGuide.vue"
 export default {
-    name : "StorageGuide",
-    components: {
-        SGuide
-    },
+    name : "StorageGuide"
 }
 </script>
+
+<style>
+
+</style>
