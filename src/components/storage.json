@@ -1,0 +1,12 @@
+{
+    "users": [
+        { "name": "Fresh whole apples", "location": "Fridge", "time1": "5-7 days on the counter", "time2": "4-6 weeks in the fridge" },
+        { "name": "Ripe bananas", "location": "Fridge", "time1": "2-3 days on the counter", "time2": "1 week in the fridge" },
+        { "name": "Raw beef", "location": "Freezer", "time1": "3 days in the fridge", "time2": "4-12 months in the freezer" },
+        { "name": "UHT milk", "location": "Fridge", "time1": "6-9 months on the counter unopened", "time2": "7-10 days in the fridge after opening" },
+        { "name": "Fresh spinach", "location": "Fridge", "time1": "5-7 days in the fridge" },
+        { "name": "Cereal", "location": "Cabinet", "time1": "4-6 months on the counter in an airtight container" },
+        { "name": "Frozen fish fillet", "location": "Freezer", "time1": "3-8 months in the freezer" }
+
+    ]
+}

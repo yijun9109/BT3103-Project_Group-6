@@ -12,9 +12,10 @@
     "firebase": "^9.1.3",
     "firebaseui": "^0.600.0",
     "ics": "^2.31.0",
-    "vue": "^2.6.11",
+    "vue": "^2.6.14",
     "vue-router": "^3.5.2",
-    "vuetify": "^2.4.0"
+    "vuejs-smart-table": "^0.0.8",
+    "vuetify": "^2.5.10"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
