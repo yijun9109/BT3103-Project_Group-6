@@ -1,4 +1,5 @@
 <template>
+<div>
     <div>
         <h2 class = "header"> EXPIRING SOON</h2>
     <div>
@@ -72,6 +73,7 @@
         <button type='button' v-on:click='calendar()'>Cal Filter</button>
     </div>
     </div>
+</div>
 </template>
 
 <script>
