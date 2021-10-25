@@ -1,4 +1,5 @@
 <template>
+<div>
     <h2 class = "header"> EXPIRING SOON</h2>
     <div>
         <table id = "table" style="text-align: center">
@@ -12,13 +13,13 @@
                     <div>
                         <button id="dropdown" v-on:click="filterUpdate()"> Storage Location: {{selected}} </button>
                         <div class="dropdown-content" v-if="dropdown">
-                            <input type="radio" v-model="selected" name="Store" id="non" value="None">
+                            <input type="checkbox" v-model="selected" class="Store" id="non" value="None">
                             <label for="none">None</label>
-                            <input type="radio" v-model="selected" name="Store" id="fridge" value="Fridge" >
+                            <input type="checkbox" v-model="selected" class="Store" id="fridge" value="Fridge" >
                             <label for="fridge">Fridge</label>
-                            <input type="radio" v-model="selected" name="Store" id="freezer" value="Freezer">
+                            <input type="checkbox" v-model="selected" class="Store" id="freezer" value="Freezer">
                             <label for="freezer"> Freezer </label>
-                            <input type="radio" v-model="selected" name="Store" id="cabinet" value="Cabinet">
+                            <input type="checkbox" v-model="selected" class="Store" id="cabinet" value="Cabinet">
                             <label for="cabinet">Cabinet</label>
                         </div>
                     </div>
@@ -30,26 +31,7 @@
         </table>
     </div>
     
-    <button class='linktocalendar' type = 'button' onclick='document.getElementById("calendar").style.display = "block"'> Export Calendar </button> 
-
-    <div id='calendar' class = 'modal'>
-        <div class = 'content'>
-            <header id = 'modal-header'>
-                <slot name="header">
-                    Choose your calendar!
-                </slot>
-                <button class = 'close' onclick="document.getElementById('calendar').style.display = 'none'">X</button>
-            </header>
-            <div id="modal-body">
-                <input type="radio" name = 'selection' id = 'apple'>
-                <label for="apple"> Apple </label>
-                <input type="radio" name = 'selection' id = 'outlook'>
-                <label for="outlook">Outlook</label>
-                <input type="radio" name = 'selection' id="google">
-                <label for="google">Google</label>
-            </div>
-        </div>
-    </div>
+    <button class='linktocalendar' type = 'button'> Export Calendar </button>
 
     <div id="delete" class="modal">
         <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span>
@@ -70,6 +52,7 @@
         <button type='button' v-on:click="run()">  Click to filter </button>
         <button type='button' v-on:click='calendar()'>Cal Filter</button>
     </div>
+</div>
 </template>
 
 <script>
@@ -166,6 +149,7 @@ export default {
         async run() { 
             this.clearEntry()
             var foodList;
+            console.log(document.querySelector('.Store:checked'))
             if (this.selected == "None") {
                 foodList = await getDocs(collection(db, "Food"))
             } else {
@@ -213,11 +197,14 @@ export default {
                 deleteBut.className = 'deletebwt'
                 deleteBut.id = String(data.items)
                 deleteBut.innerHTML = 'delete'
-                deleteBut.onclick = async function() { 
+                deleteBut.onclick = () => { 
                     document.getElementById('delete').style.display = 'block'
-                    document.getElementById('confirm').onclick = function() {
+                    document.getElementById('confirm').onclick = () => {
                         this.deleteItem(data.item)
                         console.log("deleted")
+                        document.getElementById('delete').style.display = 'none'
+                    }
+                    document.getElementById('cancel').onclick = () => { 
                         document.getElementById('delete').style.display = 'none'
                     }
 
@@ -227,8 +214,8 @@ export default {
                 cell7.appendChild(deleteBut)
                 index += 1
 
-                async function editItem(item) {
-                    this.$emit('edit', item)
+                async function editItem() {
+                    this.$router.push('Edit')
                 }
             })
         },
@@ -239,7 +226,8 @@ export default {
             let tb = document.getElementById("table")
             while (tb.rows.length > 1) {
                 tb.deleteRow(1)
-             }
+            }
+            this.run()
          },
     },
 
