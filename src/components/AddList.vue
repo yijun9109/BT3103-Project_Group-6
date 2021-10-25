@@ -27,11 +27,21 @@
 import firebaseApp from '../firebase.js'
 import { getFirestore } from 'firebase/firestore'
 import { collection, query, doc, setDoc, where, getDocs }  from 'firebase/firestore'
+//import { getAuth} from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
+    data() {
+        return {
+            fbuser: ""
+        }
+    },
+
     methods: {
-        async saveData() {
+        async saveData() { 
+            //const auth = getAuth();
+            //this.fbuser = auth.currentUser.email;
+
             var item = document.getElementById('item1').value
             var quantity = parseInt(document.getElementById('quantity1').value)
             var expiry = document.getElementById('expiry1').value.toLowerCase()

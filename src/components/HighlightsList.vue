@@ -10,17 +10,16 @@
                     <button id='quantityorder' v-on:click='quantityOrder()'> V </button>
                 </th>
                 <th>
+                    Storage Location
+                     <button id="dropdown" v-on:click='dropDown()'> V </button>
                     <div>
-                        <button id="dropdown" v-on:click="filterUpdate()"> Storage Location: {{selected}} </button>
-                        <div class="dropdown-content" v-if="dropdown">
-                            <input type="checkbox" v-model="selected" class="Store" id="non" value="None">
-                            <label for="none">None</label>
-                            <input type="checkbox" v-model="selected" class="Store" id="fridge" value="Fridge" >
-                            <label for="fridge">Fridge</label>
-                            <input type="checkbox" v-model="selected" class="Store" id="freezer" value="Freezer">
-                            <label for="freezer"> Freezer </label>
-                            <input type="checkbox" v-model="selected" class="Store" id="cabinet" value="Cabinet">
+                        <div id="dropmenu">
+                            <input type="checkbox" id="cabinet" class="select" value="Cabinet"> 
                             <label for="cabinet">Cabinet</label>
+                            <input type="checkbox" id="freezer" class="select" value="Freezer">
+                            <label for="freezer">Freezer</label>
+                            <input type="checkbox" id="fridge" class="select" value="Fridge">
+                            <label for="fridge">Fridge</label>
                         </div>
                     </div>
                 </th>
@@ -59,6 +58,7 @@
 import firebaseApp from "../firebase.js"
 import { getFirestore } from "firebase/firestore"
 import { collection, getDocs, doc, deleteDoc, query, where} from "firebase/firestore"
+//import { getAuth } from 'firebase/auth'
 import * as ics from 'ics'
 
 const db = getFirestore(firebaseApp);
@@ -66,20 +66,16 @@ const db = getFirestore(firebaseApp);
 export default {
     data(){
         return{
-            dropdown: false,
-            selected: "None",
+            selected: [],
             orderByDict: {},
             orderByItems: false,
             orderByQuantity: 0, 
             orderByStorage: false,
-            orderByExpiry: 0
+            orderByExpiry: 0,
+            fbuser: ""
         }
     },
-    methods: { 
-        filterUpdate(){
-            this.dropdown = !this.dropdown
-        },
-
+    methods: {
         quantityOrder() {
             this.orderByQuantity += 1;
             if (this.orderByQuantity % 3 == 1) {
@@ -109,6 +105,10 @@ export default {
             while (table.rows.length > 1) {
                 table.deleteRow(1)
             }
+        },
+
+        dropDown() {
+            document.getElementById('dropmenu').classList.toggle('show');
         },
 
         calendar() {
@@ -148,12 +148,27 @@ export default {
 
         async run() { 
             this.clearEntry()
+            
+            //const auth = getAuth();
+            //this.fbuser = auth.currentUser.email;
+
             var foodList;
-            console.log(document.querySelector('.Store:checked'))
-            if (this.selected == "None") {
+            let s = document.getElementsByClassName('select')
+            this.selected = [];
+            for (let i = 0; i < s.length; i++) {
+                if (s[i].checked) {
+                    this.selected.push(s[i].value);
+                }
+            }
+
+            if (this.selected.length == 0) {
+                this.selected = ['None']
+            }
+
+            if (this.selected.includes("None")){
                 foodList = await getDocs(collection(db, "Food"))
             } else {
-                const q = query(collection(db, "Food"), where("storage", "==", this.selected))
+                const q = query(collection(db, "Food"), where("storage", "in", this.selected))
                 foodList = await getDocs(q)
             }
 
