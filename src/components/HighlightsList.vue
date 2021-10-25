@@ -204,8 +204,8 @@ export default {
                 editBut.className = 'editbwt'
                 editBut.id = String(data.items)
                 editBut.innerHTML = 'Edit'
-                editBut.onclick = function() { 
-                    editItem(data.items)
+                editBut.onclick = () => { 
+                    this.editItem()
                 }
 
                 var deleteBut = document.createElement('button')
@@ -228,11 +228,11 @@ export default {
                 cell6.appendChild(editBut)
                 cell7.appendChild(deleteBut)
                 index += 1
-
-                async function editItem() {
-                    this.$router.push('Edit')
-                }
             })
+        },
+
+        editItem() {
+            this.$router.push({name: 'EditList'})
         },
 
         async deleteItem(item) {
