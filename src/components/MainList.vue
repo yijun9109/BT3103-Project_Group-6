@@ -65,7 +65,9 @@ import * as ics from 'ics'
 
 const db = getFirestore(firebaseApp);
 
-export default {
+export default { 
+    name: 'MainList',
+    
     data(){
         return{
             selected: [],
