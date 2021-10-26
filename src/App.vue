@@ -1,23 +1,35 @@
 <template>
-<div>
-<div>
-  <div id="app">
-    <router-link to= "/Home">Home</router-link>
-    <router-link to="/editlist">Edit List</router-link>
+  <div>
+    <NavBar />
+    <router-view />
+    <!-- <div id="nav"> -->
+
+    <!-- <router-link to= "/Home">Home</router-link>
     <router-link to= "/Tips">Tips</router-link>
     <router-link to= "/ShoppingList">Shopping List</router-link>
-    <router-link to= "/LogIn"> Log in</router-link>
-    <router-link to='/list'>List</router-link>
+    <router-link to= "/LogIn"> Log in</router-link> -->
+
+    <!-- <div id="logo">
+        <a href="/App">
+            <div id="logo-img" alt="Logo image"></div>
+        </a>
+    </div> -->
+
+    <!-- need to add a button for login and also display the user name when logged in under "nav" -->
+
+    <!-- </div> -->
+    <!-- <router-view /> -->
   </div>
-</div>
-<router-view/>
-</div>
 </template>
 
 <script>
+import NavBar from "@/components/NavBar.vue";
 export default {
-  name: 'App'
-}
+  name: "App",
+  components: {
+    NavBar,
+  },
+};
 </script>
 
 <style>
@@ -40,7 +52,7 @@ export default {
   width: 100%;
 } */
 #logo-img {
-  background: url('/src/assets/icon.png') no-repeat;
+  background: url("/src/assets/icon.png") no-repeat;
   position: absolute;
   top: 0px;
   left: 0px;
