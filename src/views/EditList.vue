@@ -10,7 +10,7 @@
 import AddList from '@/components/AddList.vue'
 import HighlightsList from '@/components/HighlightsList.vue'
 export default {
-    Name: "Edit",
+    Name: "EditList",
 
     components: {
         AddList,
