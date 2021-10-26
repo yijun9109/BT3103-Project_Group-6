@@ -5,16 +5,11 @@
       <router-link to="/Home"> Home </router-link>
       <router-link to="/Tips"> Tips </router-link>
       <router-link to="/ShoppingList"> ShoppingList </router-link>
-      <router-link to="/LogIn"> Log In </router-link>
+      <router-link to="/LogOut" v-if="this.loggedIn"> Log Out </router-link> 
+      <router-link to="/LogIn" v-else > Log In </router-link>
       <!-- <LogInComponent /> -->
     </div>
-    <div id = "nav" v-if = "user">
-          <router-link to="/Home"> Home </router-link> 
-          <router-link to="/Tips"> Tips </router-link> 
-          <router-link to="/ShoppingList"> ShoppingList </router-link> 
-          <router-link to="/LogOut"> Log Out </router-link> 
-          <!-- <LogOut /> -->
-      </div>
+    
   </div>
 </template>
 
@@ -25,14 +20,10 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 export default {
   name: "NavBar",
 
-  components: {
-    // LogOut,
-    // LogInComponent,
-  },
-
   data() {
     return {
       user: false,
+      loggedIn: false,
     };
   },
 
