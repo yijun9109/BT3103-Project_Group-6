@@ -1,4 +1,5 @@
 <template>
+<div>
     <h2 class = "header"> EXPIRING SOON</h2>
     <div>
         <table id = "table" style="text-align: center">
@@ -9,17 +10,16 @@
                     <button id='quantityorder' v-on:click='quantityOrder()'> V </button>
                 </th>
                 <th>
+                    Storage Location
+                     <button id="dropdown" v-on:click='dropDown()'> V </button>
                     <div>
-                        <button id="dropdown" v-on:click="filterUpdate()"> Storage Location: {{selected}} </button>
-                        <div class="dropdown-content" v-if="dropdown">
-                            <input type="radio" v-model="selected" name="Store" id="non" value="None">
-                            <label for="none">None</label>
-                            <input type="radio" v-model="selected" name="Store" id="fridge" value="Fridge" >
-                            <label for="fridge">Fridge</label>
-                            <input type="radio" v-model="selected" name="Store" id="freezer" value="Freezer">
-                            <label for="freezer"> Freezer </label>
-                            <input type="radio" v-model="selected" name="Store" id="cabinet" value="Cabinet">
+                        <div id="dropmenu">
+                            <input type="checkbox" id="cabinet" class="select" value="Cabinet"> 
                             <label for="cabinet">Cabinet</label>
+                            <input type="checkbox" id="freezer" class="select" value="Freezer">
+                            <label for="freezer">Freezer</label>
+                            <input type="checkbox" id="fridge" class="select" value="Fridge">
+                            <label for="fridge">Fridge</label>
                         </div>
                     </div>
                 </th>
@@ -30,26 +30,7 @@
         </table>
     </div>
     
-    <button class='linktocalendar' type = 'button' onclick='document.getElementById("calendar").style.display = "block"'> Export Calendar </button> 
-
-    <div id='calendar' class = 'modal'>
-        <div class = 'content'>
-            <header id = 'modal-header'>
-                <slot name="header">
-                    Choose your calendar!
-                </slot>
-                <button class = 'close' onclick="document.getElementById('calendar').style.display = 'none'">X</button>
-            </header>
-            <div id="modal-body">
-                <input type="radio" name = 'selection' id = 'apple'>
-                <label for="apple"> Apple </label>
-                <input type="radio" name = 'selection' id = 'outlook'>
-                <label for="outlook">Outlook</label>
-                <input type="radio" name = 'selection' id="google">
-                <label for="google">Google</label>
-            </div>
-        </div>
-    </div>
+    <button class='linktocalendar' type = 'button'> Export Calendar </button>
 
     <div id="delete" class="modal">
         <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span>
@@ -70,12 +51,14 @@
         <button type='button' v-on:click="run()">  Click to filter </button>
         <button type='button' v-on:click='calendar()'>Cal Filter</button>
     </div>
+</div>
 </template>
 
 <script>
 import firebaseApp from "../firebase.js"
 import { getFirestore } from "firebase/firestore"
 import { collection, getDocs, doc, deleteDoc, query, where} from "firebase/firestore"
+//import { getAuth } from 'firebase/auth'
 import * as ics from 'ics'
 
 const db = getFirestore(firebaseApp);
@@ -83,20 +66,16 @@ const db = getFirestore(firebaseApp);
 export default {
     data(){
         return{
-            dropdown: false,
-            selected: "None",
+            selected: [],
             orderByDict: {},
             orderByItems: false,
             orderByQuantity: 0, 
             orderByStorage: false,
-            orderByExpiry: 0
+            orderByExpiry: 0,
+            fbuser: ""
         }
     },
-    methods: { 
-        filterUpdate(){
-            this.dropdown = !this.dropdown
-        },
-
+    methods: {
         quantityOrder() {
             this.orderByQuantity += 1;
             if (this.orderByQuantity % 3 == 1) {
@@ -126,6 +105,10 @@ export default {
             while (table.rows.length > 1) {
                 table.deleteRow(1)
             }
+        },
+
+        dropDown() {
+            document.getElementById('dropmenu').classList.toggle('show');
         },
 
         calendar() {
@@ -165,11 +148,27 @@ export default {
 
         async run() { 
             this.clearEntry()
+            
+            //const auth = getAuth();
+            //this.fbuser = auth.currentUser.email;
+
             var foodList;
-            if (this.selected == "None") {
+            let s = document.getElementsByClassName('select')
+            this.selected = [];
+            for (let i = 0; i < s.length; i++) {
+                if (s[i].checked) {
+                    this.selected.push(s[i].value);
+                }
+            }
+
+            if (this.selected.length == 0) {
+                this.selected = ['None']
+            }
+
+            if (this.selected.includes("None")){
                 foodList = await getDocs(collection(db, "Food"))
             } else {
-                const q = query(collection(db, "Food"), where("storage", "==", this.selected))
+                const q = query(collection(db, "Food"), where("storage", "in", this.selected))
                 foodList = await getDocs(q)
             }
 
@@ -205,19 +204,22 @@ export default {
                 editBut.className = 'editbwt'
                 editBut.id = String(data.items)
                 editBut.innerHTML = 'Edit'
-                editBut.onclick = function() { 
-                    editItem(data.items)
+                editBut.onclick = () => { 
+                    this.editItem()
                 }
 
                 var deleteBut = document.createElement('button')
                 deleteBut.className = 'deletebwt'
                 deleteBut.id = String(data.items)
                 deleteBut.innerHTML = 'delete'
-                deleteBut.onclick = async function() { 
+                deleteBut.onclick = () => { 
                     document.getElementById('delete').style.display = 'block'
-                    document.getElementById('confirm').onclick = function() {
+                    document.getElementById('confirm').onclick = () => {
                         this.deleteItem(data.item)
                         console.log("deleted")
+                        document.getElementById('delete').style.display = 'none'
+                    }
+                    document.getElementById('cancel').onclick = () => { 
                         document.getElementById('delete').style.display = 'none'
                     }
 
@@ -226,11 +228,11 @@ export default {
                 cell6.appendChild(editBut)
                 cell7.appendChild(deleteBut)
                 index += 1
-
-                async function editItem(item) {
-                    this.$emit('edit', item)
-                }
             })
+        },
+
+        editItem() {
+            this.$router.push({name: 'EditList'})
         },
 
         async deleteItem(item) {
@@ -239,7 +241,8 @@ export default {
             let tb = document.getElementById("table")
             while (tb.rows.length > 1) {
                 tb.deleteRow(1)
-             }
+            }
+            this.run()
          },
     },
 
