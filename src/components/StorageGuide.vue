@@ -16,6 +16,8 @@
         ></v-text-field>
       </template>
     </v-data-table>
+    <br>
+    <a href="https://www.sfa.gov.sg/images/default-source/section-content/food/foodstoragechart1.gif" target="_blank" onclick="window.open('https://www.sfa.gov.sg/images/default-source/section-content/food/foodstoragechart1.gif', 'popup', 'height=500, width=500'); return false;">Click to view food storage chart</a>
   </div>
 </template>
 
