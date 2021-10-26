@@ -1,5 +1,6 @@
 <template>
 <div>
+    <button id="Back" @click ="goToTips()"> Back </button>
     <h2>Recipes</h2>
     <br>
     <div data-app>
@@ -15,5 +16,10 @@ export default {
     components: {
         Recipe
     },
+    methods: {
+        goToTips() {
+            this.$router.push({name:'Tips'})
+        }
+    }
 }
 </script>
