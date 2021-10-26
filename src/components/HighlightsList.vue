@@ -4,8 +4,10 @@
     <div>
         <table id = "table" style="text-align: center">
             <tr>
-                <th> Index </th>
-                <th>Items</th>
+                <th >Index</th>
+                <th>Items
+                    <button id='itemorder' v-on:click='itemOrder()'>V</button>
+                </th>
                 <th>Quantity
                     <button id='quantityorder' v-on:click='quantityOrder()'> V </button>
                 </th>
@@ -13,18 +15,19 @@
                     Storage Location
                      <button id="dropdown" v-on:click='dropDown()'> V </button>
                     <div>
-                        <div id="dropmenu">
+                        <div id="dropmenu" v-if="dropdown">
                             <input type="checkbox" id="cabinet" class="select" value="Cabinet"> 
                             <label for="cabinet">Cabinet</label>
                             <input type="checkbox" id="freezer" class="select" value="Freezer">
                             <label for="freezer">Freezer</label>
                             <input type="checkbox" id="fridge" class="select" value="Fridge">
                             <label for="fridge">Fridge</label>
+                            <button type='button' v-on:click="run()">  Click to filter </button>
                         </div>
                     </div>
                 </th>
                 <th>Expiry Date
-                    <button id='expiryorder' v-on:click='expiryOrder()'> I </button>
+                    <button id='expiryorder' v-on:click='expiryOrder()'> V </button>
                 </th>
             </tr>
         </table>
@@ -48,7 +51,6 @@
     </div>
 
     <div>
-        <button type='button' v-on:click="run()">  Click to filter </button>
         <button type='button' v-on:click='calendar()'>Cal Filter</button>
     </div>
 </div>
@@ -67,23 +69,36 @@ export default {
     data(){
         return{
             selected: [],
-            orderByDict: {},
-            orderByItems: false,
+            dropdown: false,
+            orderByList: [],
+            orderByItems: 0,
             orderByQuantity: 0, 
-            orderByStorage: false,
             orderByExpiry: 0,
             fbuser: ""
         }
     },
-    methods: {
+    methods: { 
+        itemOrder() {
+            this.orderByItems += 1;
+            if (this.orderByItems % 3 == 1) {
+                this.orderByList = [1, 'asc']
+            } else if (this.orderByItems % 3 == 2) {
+                this.orderByList = [1, 'desc']
+            } else {
+                this.orderByList = [];
+                this.orderByItems = 0;
+            }
+            this.run()
+        },
         quantityOrder() {
             this.orderByQuantity += 1;
             if (this.orderByQuantity % 3 == 1) {
-                this.orderByDict['quantity'] = 'asc'
+                this.orderByList = [2, 'asc']
             } else if (this.orderByQuantity % 3 == 2) {
-                this.orderByDict['quantity'] = 'desc'
+                this.orderByList = [2, 'desc']
             } else {
-                delete this.orderByDict.quantity;
+                this.orderByList = [];
+                this.orderByQuantity = 0;
             }
             this.run()
         },
@@ -91,11 +106,12 @@ export default {
         expiryOrder() {
             this.orderByExpiry += 1;
             if (this.orderByExpiry % 3 == 1) {
-                this.orderByDict['expiry'] = 'asc'
+                this.orderByList = [4, 'asc']
             } else if (this.orderByExpiry % 3 == 2) {
-                this.orderByDict['expiry'] = 'desc'
+                this.orderByList = [4, 'desc']
             } else {
-                delete this.orderByDict.expiry;
+                this.orderByList = []
+                this.orderByExpiry = 0;
             }
             this.run()
         },
@@ -108,7 +124,7 @@ export default {
         },
 
         dropDown() {
-            document.getElementById('dropmenu').classList.toggle('show');
+            this.dropdown = !this.dropdown;
         },
 
         calendar() {
@@ -168,17 +184,10 @@ export default {
             if (this.selected.includes("None")){
                 foodList = await getDocs(collection(db, "Food"))
             } else {
-                const q = query(collection(db, "Food"), where("storage", "in", this.selected))
-                foodList = await getDocs(q)
+                const q1 = query(collection(db, "Food"), where("storage", "in", this.selected))
+                foodList = await getDocs(q1)
             }
 
-            //let dictSize = Object.keys(this.orderByDict).length
-            //if (dictSize > 0) { 
-            //    const q = query(collection(db, "Food"), orderBy("expiry"))   
-            //    foodList = await getDocs(q)
-            //} else {
-            //    foodList = await getDocs(collection(db, "Food"))
-            //}
             let index = 1
 
             foodList.forEach((docs) => {
@@ -196,7 +205,7 @@ export default {
 
                 cell1.innerHTML = index;
                 cell2.innerHTML = data.item;
-                cell3.innerHTML = data.quantity;
+                cell3.innerHTML = parseInt(data.quantity);
                 cell4.innerHTML = data.storage;
                 cell5.innerHTML = data.expiry;
 
@@ -229,6 +238,11 @@ export default {
                 cell7.appendChild(deleteBut)
                 index += 1
             })
+
+            if (this.orderByList.length != 0) {
+                this.sortTable(this.orderByList[0], this.orderByList[1])
+            }
+
         },
 
         editItem() {
@@ -244,6 +258,49 @@ export default {
             }
             this.run()
          },
+
+         sortTable(index, direction) {
+             var table = document.getElementById('table');
+             var sw = true;
+             while (sw) {
+                sw = false;
+                if (index == 4 || index == 1) {
+                    for (let i = 1; i < (table.rows.length - 1); i++) {
+                        let x = table.rows[i].getElementsByTagName('TD')[index]
+                        let y = table.rows[i + 1].getElementsByTagName('TD')[index]
+                        if (direction == 'asc') {
+                            if (x.innerHTML > y.innerHTML) {
+                                table.rows[i].parentNode.insertBefore(table.rows[i + 1], table.rows[i])
+                                sw = true;
+                            }
+                        } else {
+                            if (x.innerHTML < y.innerHTML) {
+                                table.rows[i].parentNode.insertBefore(table.rows[i + 1], table.rows[i])
+                                sw = true;
+                            }
+                        }
+                    }
+                } else {
+                    for (let i = 1; i < (table.rows.length - 1); i++) {
+                        let x = table.rows[i].getElementsByTagName('TD')[index]
+                        let y = table.rows[i + 1].getElementsByTagName('TD')[index]
+                        let xinner = parseInt(x.innerHTML)
+                        let yinner = parseInt(y.innerHTML)
+                        if (direction == 'asc') {
+                            if (parseInt(xinner) > parseInt(yinner)) {
+                                table.rows[i].parentNode.insertBefore(table.rows[i + 1], table.rows[i])
+                                sw = true;
+                            }
+                        } else {
+                            if (parseInt(xinner) < parseInt(yinner)) {
+                                table.rows[i].parentNode.insertBefore(table.rows[i + 1], table.rows[i])
+                                sw = true;
+                            }
+                        }
+                    }
+                }
+             }
+         }
     },
 
     mounted() { 
