@@ -2,7 +2,7 @@
 import Landing from '@/views/Landing.vue'
 import Home from '@/views/Home.vue'
 import List from '@/views/List.vue'
-import Edit from '@/views/Edit.vue'
+import EditList from '@/views/EditList.vue'
 //Account matters
 import LogIn from '@/views/LogIn.vue'
 import LogOut from '@/views/LogOut.vue'
@@ -38,7 +38,7 @@ export default new Router ({
     {
         path: '/editlist',
         name: 'EditList',
-        component: Edit
+        component: EditList
     },
     {
         path: '/Login',

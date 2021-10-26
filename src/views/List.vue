@@ -1,18 +1,18 @@
 <template>
   <div>
   <h1> This is the list page</h1>
-  <HighlightsList/>
+  <MainList/>
   </div>
 </template>
 
 <script>
-import HighlightsList from '@/components/HighlightsList.vue'
+import MainList from '@/components/MainList.vue'
 
 export default {
     Name: "List",
 
     components: {
-        HighlightsList
+        MainList
     }
 }
 </script>
