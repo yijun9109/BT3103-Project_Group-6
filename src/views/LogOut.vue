@@ -1,23 +1,27 @@
 <template>
-<div>
-    <h1> Thank you for using MyFridge </h1>
-    <h2> Click on the Log Out Button to proceed</h2>
-    <div id = "logout">
+  <div>
+    <div id="container">
+      <h1>Thank you for using MyFridge</h1>
+      <h2>Click on the Log Out Button to proceed</h2>
+      <div id="logout">
         <LogOutComponent />
+      </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
-import LogOutComponent from "@/components/LogOut.vue"
+import LogOutComponent from "@/components/LogOut.vue";
 export default {
-    name : "LogOut",
-    components: {
-        LogOutComponent
-    }
-}
+  name: "LogOut",
+  components: {
+    LogOutComponent,
+  },
+};
 </script>
 
 <style>
-
+#container {
+  
+}
 </style>
