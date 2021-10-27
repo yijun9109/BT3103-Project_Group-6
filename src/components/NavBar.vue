@@ -2,11 +2,12 @@
   <div id="container">
     <!-- <div id = "logged" v-if = "user"> -->
     <div id="nav">
-      <router-link to="/Home"> Home </router-link>
-      <router-link to="/Tips"> Tips </router-link>
-      <router-link to="/ShoppingList"> ShoppingList </router-link>
-      <router-link to="/LogOut" v-if="this.loggedIn"> Log Out </router-link> 
-      <router-link to="/LogIn" v-else > Log In </router-link>
+      <router-link to="/Home" v-if="this.loggedIn"> Home </router-link>
+      <router-link to="/Tips" v-if="this.loggedIn"> Tips </router-link>
+      <router-link to="/ShoppingList" v-if="this.loggedIn"> ShoppingList </router-link>
+      <router-link to="/LogOut" v-if="this.loggedIn"> Log Out </router-link>
+      <router-link to="/LogIn" v-else > Log In / Register </router-link>
+       
       <!-- <LogInComponent /> -->
     </div>
     
@@ -32,6 +33,7 @@ export default {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.user = user;
+        this.loggedIn = user;
       }
     });
   },
@@ -44,12 +46,10 @@ export default {
   text-align: end;
   background-color: rgb(247, 183, 65);
 }
-
 #nav a {
   font-weight: bold;
   color: white;
 }
-
 #nav a.router-link-exact-active {
   color: rgb(119, 192, 221);
 }
