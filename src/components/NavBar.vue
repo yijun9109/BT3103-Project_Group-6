@@ -1,17 +1,14 @@
 <template>
   <div id="container">
-      <a href="/" class="brand">myfridge</a>
-    <!-- <div id = "logged" v-if = "user"> -->
     <div id="nav">
-      <router-link to="/Home" v-if="this.loggedIn"> Home </router-link>
-      <router-link to="/Tips" v-if="this.loggedIn"> Tips </router-link>
-      <router-link to="/ShoppingList" v-if="this.loggedIn"> Shopping List </router-link>
-      <router-link to="/LogOut" v-if="this.loggedIn"> Log Out </router-link>
-      <router-link to="/LogIn" v-else > Log In </router-link>
+        <a href="/" class="brand">myfridge</a>
+        <router-link to="/Home" v-if="this.loggedIn"> Home </router-link>
+        <router-link to="/Tips" v-if="this.loggedIn"> Tips </router-link>
+        <router-link to="/ShoppingList" v-if="this.loggedIn"> Shopping List </router-link>
+        <router-link to="/LogOut" v-if="this.loggedIn"> Log Out </router-link>
+        <router-link to="/LogIn" v-else > Log In </router-link>
        
-      <!-- <LogInComponent /> -->
     </div>
-    
   </div>
 
 </template>
@@ -52,14 +49,6 @@ export default {
   margin: 0px;
 }
 
-#container a {
-    font-weight: bold;
-  /* color: #2c3e50; */
-  color: #FFA235;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
 #nav {
   padding-top: 30px;
   padding-bottom:30px;
@@ -67,7 +56,7 @@ export default {
   text-align: right;
   /* background: rgb(241, 220, 150); */
   background: white;
-  margin-top: -10px;
+  margin-top: 0px;
   margin-left: -10px;
   width: 100%;
   position: relative;

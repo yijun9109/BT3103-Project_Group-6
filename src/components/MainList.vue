@@ -1,6 +1,5 @@
 <template>
-<div>
-    <h2 class = "header"> EXPIRING SOON</h2>
+<div class>
     <div>
         <table id = "table" style="text-align: center">
             <tr>
@@ -39,7 +38,7 @@
         <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span>
         <form class="modal-content">
             <div class='content' id='deleteContent'>
-                <h1> Delete Item? </h1>
+                <h1> Delete Item </h1>
                 <p> Do you want to delete this item? </p>
 
                 <div class='confirmation'>
@@ -312,7 +311,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 #calendar {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -334,8 +333,35 @@ export default {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: #474e5d;
+  background-color: white;
+  /* background-color: #474e5d; */
   padding-top: 50px;
+}
+
+.modal button {
+    margin:20px;
+}
+
+.confirmation button {
+    color: white;
+    height: 30px;
+    width: 100px;
+    border-radius: 30px;
+    border: 0px;
+    font-weight: bold;
+    background-color: #90B3F5;
+}
+
+#confirm:hover {
+    background-color: #5a7dbd;
+}
+
+#cancel {
+    background-color: #B5D5E3;
+}
+
+#cancel:hover {
+    background-color: #6a8e9e;
 }
 
 </style>

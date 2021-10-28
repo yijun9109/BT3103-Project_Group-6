@@ -1,7 +1,8 @@
 <template>
   <div class="bg">
     <div class="box">
-      <a href="/Home">keep track of your food items</a>
+      <a href="/Home#/Home" v-if="this.LoggedIn">keep track of your food items</a>
+      <a href="/Home#/LogIn" v-else>keep track of your food items</a>
     </div>
 
     <div class="row">
@@ -50,9 +51,9 @@ export default {
 }
 
 .box {
-  height: 80px;
+  height: 100px;
   width: 80%;
-  padding: 10px;
+  padding: 15px;
   background-color: #ffffff;
   box-shadow: 5px 8px 5px;
   margin-left: 7%;

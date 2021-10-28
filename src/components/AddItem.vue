@@ -47,10 +47,10 @@
                 <button id ="savebutton" type="button" v-on:click="savetofs()">Save</button>
             </span>
 
-            <span class="cancel">
+            <!-- <span class="cancel">
                 <button id="cancelbutton" type="button" @click="childParent()">Cancel</button>
-                <!-- the emit doesnt work child (add item comp) to parent (home view) -->
-            </span>
+                <!- the emit doesnt work child (add item comp) to parent (home view)  click away to trigger cancel-->
+            <!-- </span> -->
 
         </div>
         <br>
@@ -177,7 +177,8 @@ select:hover {
 }
 
 button {
-    background-color: #90B3F5;
+    /* background-color: #90B3F5; */
+    background-image: linear-gradient(to left, #db9387, #fbd09e);
     color: white;
     height: 30px;
     width: 100px;

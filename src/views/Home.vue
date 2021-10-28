@@ -1,8 +1,4 @@
 <template>
-  <!--Note to Chen wei: hi sorry my npm not working so i cant load how it looks 
-    like ps can just insert your gotolistview() where u see it !!!! for now ill just add in 
-    what i did up so far tho i cant see anyt on my end (cannot compile) mb can have a separate view for expiringlist -->
-
   <!-- <div> 
        <button id="List" @click ="goToListView()"> List View </button>
    </div>  -->
@@ -11,39 +7,26 @@
   <!-- best at 1580x812 -->
   <div class="bg">
     <div class="board">
-      <h2>xx ITEMS EXPIRING SOON</h2>
-      <!-- <img src = "../assets/warning.png"> not working -->
-
-      <div class="btn listview">
-        <a href="/List#/List">LIST VIEW</a>
-        <!-- CHANGE THIS TO CORRECT LINK -->
-      </div>
-
-      <div class="tile first">
-        <p>Apple</p>
-      </div>
-      <div class="tile second">
-        <p>Raw Beef</p>
-      </div>
-      <div class="tile third">
-        <p>Milk</p>
-      </div>
-      <div class="tile fourth">
-        <p>More..</p>
-      </div>
+        <h2> EXPIRING SOON</h2>
+        <div class="btn listview">
+            <a href="/List#/List">LIST VIEW</a> <!-- CHANGE THIS TO CORRECT LINK -->
+        </div>
+        <!-- <MainList/> -->
+        <div class ="table">
+            <ExpMini/>
+        </div>
     </div>
 
     <section class="drawers">
       <div class="btn">
-        <a href="/Home">ALL ITEMS</a>
+        <a href="/List#/List">ALL ITEMS</a>
         <!-- CHANGE THIS TO CORRECT LINK -->
       </div>
 
       <button class="button" @click="showModal = true">ADD ITEM</button>
       <!-- how to get component to show up in centre -->
       <transition name="fade" appear>
-        <div
-          class="modal-overlay"
+        <div class="modal-overlay"
           v-if="showModal"
           @click="showModal = false"
         ></div>
@@ -63,11 +46,15 @@
 
 <script>
 import AddItem from "../components/AddItem.vue";
+// import MainList from "../components/MainList.vue"
+import ExpMini from "@/components/ExpMini.vue"
 
 export default {
   name: "Home",
   components: {
-    AddItem,
+    AddItem, 
+    ExpMini,
+    // MainList
   },
   data() {
     return {
@@ -210,7 +197,7 @@ export default {
 
 .listview {
   float: right;
-  margin-top: -60px;
+  margin-top: -40px;
   margin-right: 40px;
 }
 
@@ -222,7 +209,7 @@ export default {
 }
 
 h2 {
-  color: #c41d1d;
+  /* color: #c41d1d; */
   padding-top: 25px;
   padding-left: 30px;
   font-size: 30px;
@@ -262,24 +249,24 @@ h2 {
 /* HOVER DIM */
 .tile:after {
   /*add button for edit and delete */
-  content: "Expiring on 15/10/21 \a Storage Location: Fridge";
+  /* content: "Expiring on 15/10/21 \a Storage Location: Fridge";
   white-space: pre;
   color: #fff;
   position: absolute;
   width: 100%;
   height: 100%; /* why does it not take the whole width of tile but almost the whole screen */
-  top: 0;
+  /* top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.6);
   opacity: 0;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
   height: 250px;
-  width: 250px;
+  width: 250px; */ 
 }
 
 .tile:hover:after {
-  opacity: 1;
+  /* opacity: 1; */
 }
 
 .container {
@@ -289,5 +276,9 @@ h2 {
   align-items: center;
   text-align: center;
   min-height: 100vh;
+}
+
+.table {
+    padding-left: 30px;
 }
 </style>

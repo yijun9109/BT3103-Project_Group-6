@@ -2,7 +2,7 @@
   <div id="bg">
     <div id="container">
       <div id="heading">
-        <h1>MyFridge Logo</h1>
+        <h1>myfridge</h1>
         <br><br>
         <h3>Log in or register with the following options</h3>
       </div>
