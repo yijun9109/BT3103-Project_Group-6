@@ -15,7 +15,7 @@
       <!-- <img src = "../assets/warning.png"> not working -->
 
       <div class="btn listview">
-        <a href="/ExpiringList">LIST VIEW</a>
+        <a href="/List#/List">LIST VIEW</a>
         <!-- CHANGE THIS TO CORRECT LINK -->
       </div>
 
