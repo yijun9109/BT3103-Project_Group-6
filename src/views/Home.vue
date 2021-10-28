@@ -9,7 +9,8 @@
     <div class="board">
         <h2> EXPIRING SOON</h2>
         <div class="btn listview">
-            <a href="/List#/List">LIST VIEW</a> <!-- CHANGE THIS TO CORRECT LINK -->
+            <a href="/List#/List">LIST VIEW</a> <!--CHANGE THIS TO CORRECT LINK -->
+            <a href="/List">LIST VIEW</a>
         </div>
         <!-- <MainList/> -->
         <div class ="table">

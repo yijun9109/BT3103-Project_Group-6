@@ -6,8 +6,8 @@ import EditList from '@/views/EditList.vue'
 //Account matters
 import LogIn from '@/views/LogIn.vue'
 import LogOut from '@/views/LogOut.vue'
-import Registration from '@/views/Registration.vue'
-import ForgetPassword from '@/views/ForgetPassword.vue'
+// import Registration from '@/views/Registration.vue'
+// import ForgetPassword from '@/views/ForgetPassword.vue'
 // Tips Page
 import Tips from '@/views/Tips.vue'
 import StorageGuide from '@/views/StorageGuide.vue'
@@ -31,12 +31,12 @@ export default new Router ({
         component: Home 
     },
     {
-        path:'/list',
+        path:'/List',
         name: 'List',
         component: List
     },
     {
-        path: '/editlist',
+        path: '/EditList',
         name: 'EditList',
         component: EditList
     },
@@ -50,16 +50,16 @@ export default new Router ({
         name: 'LogOut',
         component: LogOut 
     },
-    {
-        path: '/Registration',
-        name: 'Registration',
-        component: Registration 
-    },
-    {
-        path: '/ForgetPassword',
-        name: 'ForgetPassword',
-        component: ForgetPassword 
-    },
+    // {
+    //     path: '/Registration',
+    //     name: 'Registration',
+    //     component: Registration 
+    // },
+    // {
+    //     path: '/ForgetPassword',
+    //     name: 'ForgetPassword',
+    //     component: ForgetPassword 
+    // },
     {
         path: '/Tips',
         name: 'Tips',

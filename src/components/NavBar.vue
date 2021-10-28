@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <div id="nav">
+    <!-- <div id="nav">
         <a href="/" class="brand">myfridge</a>
         <router-link to="/Home" v-if="this.loggedIn"> Home </router-link>
         <router-link to="/Tips" v-if="this.loggedIn"> Tips </router-link>
@@ -8,6 +8,17 @@
         <router-link to="/LogOut" v-if="this.loggedIn"> Log Out </router-link>
         <router-link to="/LogIn" v-else > Log In </router-link>
        
+    </div> -->
+    <div id = "nav" v-if="this.loggedIn">
+      <a href="/" class="brand">myfridge</a>
+      <router-link to="/Home" > Home </router-link>
+      <router-link to="/Tips" > Tips </router-link>
+      <router-link to="/ShoppingList"> Shopping List </router-link>
+      <router-link to="/LogOut"> Log Out </router-link>
+    </div>
+    <div id = "nav" v-else>
+      <a href="/" class="brand">myfridge</a>
+      <router-link to="/LogIn"> Log In </router-link>
     </div>
   </div>
 
