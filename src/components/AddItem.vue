@@ -34,10 +34,12 @@
                 <option value="Fridge">Fridge</option>
                 <option value="Freezer">Freezer</option>
                 <option value="Cabinet">Cabinet</option>
-            </select> <br><br>
+            </select> 
 
+            <!-- 
+            <br><br>
             <label for="img">Select image: </label>
-            <input type="file" id="img" name="img" accept="image/*">
+            <input type="file" id="img" name="img" accept="image/*"> -->
             <br><br>
 
         </div>
