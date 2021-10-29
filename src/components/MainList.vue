@@ -50,7 +50,7 @@
     </div>
 
     <div>
-        <button type='button' v-on:click='calendar()'>Cal Filter</button>
+        <button type='button' v-on:click='calendar()'>Calendar</button>
     </div>
 </div>
 </template>
@@ -59,7 +59,7 @@
 import firebaseApp from "../firebase.js"
 import { getFirestore } from "firebase/firestore"
 import { collection, getDocs, doc, deleteDoc, query, where} from "firebase/firestore"
-//import { getAuth } from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 import * as ics from 'ics'
 
 const db = getFirestore(firebaseApp);
@@ -166,8 +166,8 @@ export default {
         async run() { 
             this.clearEntry()
             
-            //const auth = getAuth();
-            //this.fbuser = auth.currentUser.email;
+            const auth = getAuth();
+            this.fbuser = auth.currentUser.email;
 
             var foodList;
             let s = document.getElementsByClassName('select')
@@ -183,9 +183,9 @@ export default {
             }
 
             if (this.selected.includes("None")){
-                foodList = await getDocs(collection(db, "Food"))
+                foodList = await getDocs(collection(db, String(this.user)))
             } else {
-                const q1 = query(collection(db, "Food"), where("storage", "in", this.selected))
+                const q1 = query(collection(db, String(this.user)), where("storage", "in", this.selected))
                 foodList = await getDocs(q1)
             }
 
@@ -252,7 +252,7 @@ export default {
 
         async deleteItem(item) {
             var i = item 
-            await deleteDoc(doc(db, "Food", i))
+            await deleteDoc(doc(db, String(this.user), i))
             let tb = document.getElementById("table")
             while (tb.rows.length > 1) {
                 tb.deleteRow(1)
