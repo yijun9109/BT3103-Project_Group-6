@@ -9,7 +9,6 @@
       <v-toolbar
         flat
       >
-        <v-toolbar-title>Shopping List</v-toolbar-title>
         <v-divider
           class="mx-4"
           inset
@@ -28,7 +27,7 @@
               v-bind="attrs"
               v-on="on"
             >
-              New Item
+              Add Item
             </v-btn>
           </template>
           <v-card>
@@ -48,7 +47,8 @@
                       v-model="editedItem.name"
                       label="ITEM NAME"
                       id="name"
-                    ></v-text-field>
+                    >
+                    </v-text-field>
                   </v-col>
                   <v-col
                     cols="12"
@@ -135,6 +135,10 @@
 </template>
 
 <script>
+import {  deleteDoc, getDocs, collection, setDoc, doc, getFirestore } from 'firebase/firestore'
+import firebaseApp from '../firebase'
+
+const db = getFirestore(firebaseApp)
   export default {
     data: () => ({
       dialog: false,
@@ -176,8 +180,17 @@
         val || this.closeDelete()
       },
     },
-    created () {
-      this.initialize()
+    async created () {
+      var a = await getDocs(collection(db, "Shopping List"))
+      console.log(a)
+      a.forEach((docs) => {
+        let data = docs.data()
+        this.items.push({
+            name: data.name,
+            quant: data.cquant,
+            current: data.iquant,
+          })
+      })
     },
     methods: {
       initialize () {
@@ -199,15 +212,18 @@
           }
         ]
       },
-      editItem (item) {
+      async editItem (item) {
         this.editedIndex = this.items.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
-      deleteItem (item) {
+      async deleteItem (item) {
         this.editedIndex = this.items.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
+
+        var i = item
+        await deleteDoc(doc(db, "Shopping List", i.name));
       },
       deleteItemConfirm () {
         this.items.splice(this.editedIndex, 1)
@@ -227,14 +243,32 @@
           this.editedIndex = -1
         })
       },
-      save () {
+      async save () {
         if (this.editedIndex > -1) {
+          
           Object.assign(this.items[this.editedIndex], this.editedItem)
-        } else {
+          } else {
           this.items.push(this.editedItem)
+
+          var name = document.getElementById("name").value
+          var iquant = document.getElementById("IQuant").value
+          var cquant = document.getElementById("CQuant").value
+          const docRef = await setDoc(doc(db, "Shopping List", name), {
+          name: name, iquant: iquant, cquant: cquant
+          })
+
+          const SList = collection(db, "Shopping List");
+          const que = await getDocs(SList)
+          
+          que.forEach((docs) => {
+                let data = docs.data()
+                name += data.name;
+          })
+          console.log(docRef)
+          this.$emit("added")
         }
         this.close()
       },
-    },
+    }
   }
 </script>
