@@ -67,7 +67,7 @@ const db = getFirestore(firebaseApp);
 
 export default { 
     name: 'MainList',
-    
+
     data(){
         return{
             selected: [],
