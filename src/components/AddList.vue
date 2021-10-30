@@ -27,7 +27,7 @@
 import firebaseApp from '../firebase.js'
 import { getFirestore } from 'firebase/firestore'
 import { collection, query, doc, setDoc, where, getDocs }  from 'firebase/firestore'
-//import { getAuth} from "firebase/auth";
+import { getAuth} from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -39,15 +39,15 @@ export default {
 
     methods: {
         async saveData() { 
-            //const auth = getAuth();
-            //this.fbuser = auth.currentUser.email;
+            const auth = getAuth();
+            this.fbuser = auth.currentUser.email;
 
             var item = document.getElementById('item1').value
             var quantity = parseInt(document.getElementById('quantity1').value)
             var expiry = document.getElementById('expiry1').value.toLowerCase()
             var storage = document.getElementById('storage1').value
 
-            const food = collection(db, "Food");
+            const food = collection(db, String(this.user));
             const q = query(food, where('item', '==', item), where('expiry', '==', expiry), where('storage', '==', storage))
             const que = await getDocs(q)
 
@@ -58,7 +58,7 @@ export default {
 
 
             try {
-                const docRef = await setDoc(doc(db, "Food", item), {
+                const docRef = await setDoc(doc(db, String(this.user), item), {
                     item: item, quantity: quantity, expiry: expiry, storage: storage
                 })
                 document.getElementById('input').reset();

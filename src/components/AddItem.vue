@@ -182,9 +182,9 @@ button {
     /* background-color: #90B3F5; */
     background-image: linear-gradient(to left, #db9387, #fbd09e);
     color: white;
-    height: 30px;
-    width: 100px;
-    border-radius: 30px;
+    height: 15px;
+    width: 50px;
+    border-radius: 15px;
     border: 0px;
     font-weight: bold;
     text-transform: uppercase;

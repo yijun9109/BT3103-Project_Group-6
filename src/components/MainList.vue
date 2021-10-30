@@ -5,14 +5,14 @@
             <tr>
                 <th >Index</th>
                 <th>Items
-                    <button id='itemorder' v-on:click='itemOrder()'>V</button>
+                    <button class='sorting' id='itemorder' v-on:click='itemOrder()'></button>
                 </th>
                 <th>Quantity
                     <button id='quantityorder' v-on:click='quantityOrder()'> V </button>
                 </th>
                 <th>
                     Storage Location
-                     <button id="dropdown" v-on:click='dropDown()'> V </button>
+                     <button class='sorting' id="dropdown" v-on:click='dropDown()'> V </button>
                     <div>
                         <div id="dropmenu" v-if="dropdown">
                             <input type="checkbox" id="cabinet" class="select" value="Cabinet"> 
@@ -26,13 +26,11 @@
                     </div>
                 </th>
                 <th>Expiry Date
-                    <button id='expiryorder' v-on:click='expiryOrder()'> V </button>
+                    <button class='sorting' id='expiryorder' v-on:click='expiryOrder()'> V </button>
                 </th>
             </tr>
         </table>
     </div>
-    
-    <button class='linktocalendar' type = 'button'> Export Calendar </button>
 
     <div id="delete" class="modal">
         <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span>
@@ -50,7 +48,8 @@
     </div>
 
     <div>
-        <button type='button' v-on:click='calendar()'>Cal Filter</button>
+        <button type='button' v-on:click='addItem()'> Add Item </button>
+        <button type='button' v-on:click ='dlcalendar()'> Download Calendar </button>
     </div>
 </div>
 </template>
@@ -59,14 +58,15 @@
 import firebaseApp from "../firebase.js"
 import { getFirestore } from "firebase/firestore"
 import { collection, getDocs, doc, deleteDoc, query, where} from "firebase/firestore"
-//import { getAuth } from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 import * as ics from 'ics'
+import { saveAs } from 'file-saver'
 
 const db = getFirestore(firebaseApp);
 
 export default { 
     name: 'MainList',
-    
+
     data(){
         return{
             selected: [],
@@ -75,7 +75,9 @@ export default {
             orderByItems: 0,
             orderByQuantity: 0, 
             orderByExpiry: 0,
-            fbuser: ""
+            fbuser: "",
+            url: '#',
+            filename: ''
         }
     },
     methods: { 
@@ -153,21 +155,33 @@ export default {
                 calarr = []
             }
             console.log(calEntry)
-            ics.createEvents(calEntry, (error, value) => {
+            var val = ics.createEvents(calEntry, (error, value) => {
                 if (error) { 
                     console.log(error)
                 }
-
-                console.log(value)
+                return value;
             });
+
+            return val  
                    
+        },
+
+        dlcalendar() {
+            const icsFile = this.calendar()
+            var file = new File([icsFile], 'calendar.ics', {type: 'text/calendar; charset=utf-8'})
+            console.log(icsFile)
+            saveAs(file)
+        },
+
+        addItem() {
+            this.$router.push({name: 'EditList'})
         },
 
         async run() { 
             this.clearEntry()
             
-            //const auth = getAuth();
-            //this.fbuser = auth.currentUser.email;
+            const auth = getAuth();
+            this.fbuser = auth.currentUser.email;
 
             var foodList;
             let s = document.getElementsByClassName('select')
@@ -183,9 +197,9 @@ export default {
             }
 
             if (this.selected.includes("None")){
-                foodList = await getDocs(collection(db, "Food"))
+                foodList = await getDocs(collection(db, String(this.user)))
             } else {
-                const q1 = query(collection(db, "Food"), where("storage", "in", this.selected))
+                const q1 = query(collection(db, String(this.user)), where("storage", "in", this.selected))
                 foodList = await getDocs(q1)
             }
 
@@ -252,7 +266,7 @@ export default {
 
         async deleteItem(item) {
             var i = item 
-            await deleteDoc(doc(db, "Food", i))
+            await deleteDoc(doc(db, String(this.user), i))
             let tb = document.getElementById("table")
             while (tb.rows.length > 1) {
                 tb.deleteRow(1)
@@ -312,18 +326,46 @@ export default {
 </script>
 
 <style scoped>
-#calendar {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-     top: 0;
-    width: 100%; /* Full width */
-     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-     background-color: #474e5d;
-     padding-top: 50px;
+#table {
+    /* Background */
+
+    position: absolute;
+    width: 1706px;
+    height: 586px;
+    left: 96px;
+    top: 221px;
+
+/* Rectangle 9 */
+
+    position: absolute;
+    width: 1706px;
+    height: 586px;
+    left: 96px;
+    top: 221px;
+
+    background: #FFFFFF;
+    border: 1px solid #A0AEC0;
+    box-sizing: border-box;
+    box-shadow: 0px 3.5px 5.5px rgba(0, 0, 0, 0.02);
+    border-radius: 15px;
 }
+
+button {
+    /* background-color: #90B3F5; */
+    background-image: linear-gradient(to left, #db9387, #fbd09e);
+    color: white;
+    height: 30px;
+    width: 100px;
+    border-radius: 30px;
+    border: 0px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+th {
+    border: 1px silver
+}
+
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
