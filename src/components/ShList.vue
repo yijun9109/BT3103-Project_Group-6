@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :headers="headers" :items="items" sort-by="quant" class="elevation-1">
+  <v-data-table :headers="headers" :items="items" sort-by="quant" class="elevation-1" id="table">
     <template v-slot:top>
       <v-toolbar flat>
         <v-divider class="mx-4" inset vertical></v-divider>
@@ -138,13 +138,14 @@
 </template>
 
 <script>
-import {  deleteDoc, getDocs, collection, setDoc, doc, getFirestore, updateDoc, } from 'firebase/firestore'
+import {  deleteDoc, getDocs, collection, setDoc, doc, getFirestore, updateDoc, getDoc } from 'firebase/firestore'
 import firebaseApp from '../firebase'
-
+import { getAuth} from "firebase/auth";
 
 const db = getFirestore(firebaseApp)
   export default {
     data: () => ({
+      fbuser: "",
       dialog: false,
       dialogEdit: false,
       dialogDelete: false,
@@ -237,6 +238,8 @@ const db = getFirestore(firebaseApp)
         })
       },
       async save () {
+        const auth = getAuth();
+        this.fbuser = auth.currentUser.email;
 
         if (this.editedIndex > -1) {
           
@@ -257,9 +260,23 @@ const db = getFirestore(firebaseApp)
           var name = document.getElementById("name").value
           var iquant = document.getElementById("IQuant").value
           var cquant = document.getElementById("CQuant").value
-          const docRef = await setDoc(doc(db, "Shopping List", name), {
-          name: name, iquant: iquant, cquant: cquant
-          })
+
+          const nRef = doc(db, "Food", name)
+          const next = await getDoc(nRef)
+
+          if (next.exists()) {
+            let data = next.data()
+            const docRef = await setDoc(doc(db, "Shopping List", name), {
+            name: name, iquant: iquant, cquant: data.quantity
+            })
+            console.log(docRef)
+            window.location.reload();
+          } else {
+            const docRef = await setDoc(doc(db, "Shopping List", name), {
+            name: name, iquant: iquant, cquant: cquant
+            })
+            console.log(docRef)
+          }  
           const SList = collection(db, "Shopping List");
           const que = await getDocs(SList)
           
@@ -269,7 +286,6 @@ const db = getFirestore(firebaseApp)
                 iquant += data.iquant;
                 cquant += data.cquant;
           })
-          console.log(docRef)
           this.$emit("added")
         }
         this.close()
@@ -278,3 +294,4 @@ const db = getFirestore(firebaseApp)
   }
 
 </script>
+
