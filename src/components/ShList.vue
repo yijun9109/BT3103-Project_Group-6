@@ -1,4 +1,5 @@
 <template>
+<div>
   <v-data-table :headers="headers" :items="items" sort-by="quant" class="elevation-1" id="table">
     <template v-slot:top>
       <v-toolbar flat>
@@ -10,6 +11,7 @@
               Add Item
             </v-btn>
           </template>
+
           <v-card>
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
@@ -34,6 +36,8 @@
                 </v-row>
               </v-container>
             </v-card-text>
+            
+            
 
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -54,12 +58,14 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-
+        <v-btn color="primary" dark class="mb-2" @click="deleteAll()">
+              Delete All
+        </v-btn>
 
         <v-dialog v-model="dialogEdit" max-width="500px">
           <v-card>
             <v-card-title>
-              <span class="text-h5">Edit Item</span>
+              <span class="text-h5">EDIT ITEM</span>
             </v-card-title>
 
             <v-card-text>
@@ -103,8 +109,8 @@
             <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="closeDelete">No, cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteItemConfirm">Yes, confirm</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -126,15 +132,8 @@
         mdi-delete
       </v-icon>
     </template>
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
   </v-data-table>
+</div>
 </template>
 
 <script>
@@ -175,7 +174,7 @@ const db = getFirestore(firebaseApp)
     }),
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit'
+        return this.editedIndex === -1 ? 'ADD ITEM' : 'Edit'
       },
     },
     watch: {
@@ -217,6 +216,15 @@ const db = getFirestore(firebaseApp)
 
         var i = item
         await deleteDoc(doc(db, "Shopping List", i.name));
+      },
+      async deleteAll () {
+        
+        const SList = collection(db, "Shopping List");
+        const que = await getDocs(SList)
+        que.forEach((docs) => {
+          deleteDoc(doc(db, "Shopping List", docs.id))
+        })
+        window.location.reload();
       },
       deleteItemConfirm () {
         this.items.splice(this.editedIndex, 1)
