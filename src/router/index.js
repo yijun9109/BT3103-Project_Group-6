@@ -2,6 +2,7 @@
 import Landing from '@/views/Landing.vue'
 import Home from '@/views/Home.vue'
 import List from '@/views/List.vue'
+import AddList from '@/views/AddList.vue'
 import EditList from '@/views/EditList.vue'
 //Account matters
 import LogIn from '@/views/LogIn.vue'
@@ -36,10 +37,16 @@ export default new Router ({
         component: List
     },
     {
-        path: '/EditList',
+        path:'/AddList',
+        name: 'AddList',
+        component: AddList
+    },
+    {
+        path: '/EditList/:item',
         name: 'EditList',
         component: EditList
     },
+
     {
         path: '/Login',
         name: 'LogIn',

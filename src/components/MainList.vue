@@ -1,6 +1,6 @@
 <template>
 <div class>
-    <div>
+    <div id='list'>
         <table id = "table" style="text-align: center">
             <tr>
                 <th >Index</th>
@@ -15,13 +15,12 @@
                      <button class='sorting' id="dropdown" v-on:click='dropDown()'> V </button>
                     <div>
                         <div id="dropmenu" v-if="dropdown">
-                            <input type="checkbox" id="cabinet" class="select" value="Cabinet"> 
+                            <input type="checkbox" id="cabinet" class="select" value="Cabinet" v-on:click='run()'> 
                             <label for="cabinet">Cabinet</label>
-                            <input type="checkbox" id="freezer" class="select" value="Freezer">
+                            <input type="checkbox" id="freezer" class="select" value="Freezer" v-on:click='run()'>
                             <label for="freezer">Freezer</label>
-                            <input type="checkbox" id="fridge" class="select" value="Fridge">
+                            <input type="checkbox" id="fridge" class="select" value="Fridge" v-on:click='run()'>
                             <label for="fridge">Fridge</label>
-                            <button type='button' v-on:click="run()">  Click to filter </button>
                         </div>
                     </div>
                 </th>
@@ -77,7 +76,8 @@ export default {
             orderByExpiry: 0,
             fbuser: "",
             url: '#',
-            filename: ''
+            filename: '',
+            item: ""
         }
     },
     methods: { 
@@ -166,15 +166,15 @@ export default {
                    
         },
 
+        addItem() { 
+            this.$router.push({name: 'AddList'})
+        },
+
         dlcalendar() {
             const icsFile = this.calendar()
             var file = new File([icsFile], 'calendar.ics', {type: 'text/calendar; charset=utf-8'})
             console.log(icsFile)
             saveAs(file)
-        },
-
-        addItem() {
-            this.$router.push({name: 'EditList'})
         },
 
         async run() { 
@@ -226,10 +226,10 @@ export default {
 
                 var editBut = document.createElement('button')
                 editBut.className = 'editbwt'
-                editBut.id = String(data.items)
+                editBut.id = String(data.item)
                 editBut.innerHTML = 'Edit'
                 editBut.onclick = () => { 
-                    this.editItem()
+                    this.editItem(editBut.id)
                 }
 
                 var deleteBut = document.createElement('button')
@@ -260,8 +260,8 @@ export default {
 
         },
 
-        editItem() {
-            this.$router.push({name: 'EditList'})
+        editItem(i) { 
+            this.$router.push({name: 'EditList', params: {item: i}})
         },
 
         async deleteItem(item) {
@@ -326,7 +326,7 @@ export default {
 </script>
 
 <style scoped>
-#table {
+#list {
     /* Background */
 
     position: absolute;
