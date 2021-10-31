@@ -1,6 +1,9 @@
 <template>
-    <form id = "input">
-        <h2 class = 'subheader'>Add Items</h2>
+    <div>
+        <div>
+            <button type = 'button' v-on:click='back()'>Back</button>
+        </div>
+        <form id = "input">
             <div class = 'inForm'>
                 <label for="item"> Item Name </label>
                 <input type="text" id = 'item1' required = "" placeholder="Please enter item name">
@@ -19,8 +22,10 @@
 
             <div class = 'save'>
                 <button class = 'savebutton' type = 'button' v-on:click ='saveData()'> Save </button>
+                <button type = 'button' id = 'cancelbutton' v-on:click='cancel()'> Cancel </button>
             </div>
-    </form>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -31,6 +36,8 @@ import { getAuth} from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
+    name: "AddItemList",
+
     data() {
         return {
             fbuser: ""
@@ -38,6 +45,13 @@ export default {
     },
 
     methods: {
+        back() {
+            this.$router.push({name: 'List'})
+        },
+        
+        cancel() {
+            this.$router.push({name: 'List'})
+        },
         async saveData() { 
             const auth = getAuth();
             this.fbuser = auth.currentUser.email;
@@ -59,11 +73,15 @@ export default {
 
             try {
                 const docRef = await setDoc(doc(db, String(this.user), item), {
-                    item: item, quantity: quantity, expiry: expiry, storage: storage
+                    item: item, 
+                    quantity: quantity, 
+                    expiry: expiry, 
+                    storage: storage
                 })
                 document.getElementById('input').reset();
                 console.log(docRef)
                 this.$emit("added")
+                alert(item + " has been added!")
             }
             catch (error) {
                 console.error("Error adding item: " + item)

@@ -1,19 +1,19 @@
 <template>
 <div>
-    <h1> This is where you edit/add to List. </h1>
+    <h1> Edit Items </h1>
     <MainList :key="refreshComp"/>
-    <AddList @added="change"/>
+    <EditItemList @added="change"/>
 </div>
 </template>
 
 <script>
-import AddList from '@/components/AddList.vue'
+import EditItemList from '@/components/EditItemList.vue'
 import MainList from '@/components/MainList.vue'
 export default {
     Name: "EditList",
 
     components: {
-        AddList,
+        EditItemList,
         MainList
     },
 
