@@ -9,15 +9,14 @@
     </v-data-table> -->
     <div>
 
-        
-        <table id = "table" class = "auto-index" :key="count">
+        <br>
+        <table id = "table">
             <tr>  
             <th>Index</th>       
             <th>Item</th>
             <th>Quantity</th>
             <th>Location</th>
             <th>Expiry Date</th>
-            <th>Actions</th>
             </tr>
         </table>
         <h2 id = "count"></h2> 
@@ -25,9 +24,11 @@
 </template>
 
 <script>
-import {  deleteDoc, getDocs, collection, doc, getFirestore } from 'firebase/firestore';
+import {  deleteDoc, doc, getFirestore, getDocs, collection, query, where} from 'firebase/firestore';
+// import { getDocs, collection, Timestamp, query, where } from 'firebase/firestore';
 import firebaseApp from '../firebase';
 import { getAuth } from  'firebase/auth';
+
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -38,15 +39,62 @@ export default {
         }
     },
     mounted() {
-        const auth = getAuth();
-        this.fbuser = auth.currentUser.email;
+        // const auth = getAuth();
+        // this.fbuser = auth.currentUser.email;
+        // this.display(this.fbuser);
         this.display();
     },
     methods: {
         async display() {
-            let z = await getDocs(collection(db, "Food"))
+
+            const auth = getAuth();
+            this.fbuser = auth.currentUser.email;
+
+        // async display(user) {
+            // let z = await getDocs(collection(db, "Food"))
+            // let z = await getDocs(collection(db, String(user)))
+            //  let data = await getDocs(collection(z, "Food"))
+
+            // let data = await db
+            //             .collection(String(user))
+            //             .doc('Food')
+            //             .get()
+
+            // let data = await getDocs(doc(db, String(user), "Food"))
+
+            // let data = await getDocs(collectionGroup(db,"Food").where("id", "==", String(user))) 
+            
+            // let data = await getDocs(collectionGroup(db,String(user))) 
+
+            // let data = await db.collection(String(user)).doc("Food")
+
+            // let ref = db.collection(String(this.fbuser)).doc("Food")
+            // let data = await ref.listCollections()
+
+            // const docRef = doc(db, String(this.fbuser), "Food");     
+            // const docSnap = await getDocs(docRef);
+
+            // let z = await getDocs(collection(db, String(this.fbuser)+"/Food"))
+
+            // const now = new Date();
+            // function in3days() {
+            //     const aft = now.setHours(72, 0, 0, 0) // +5 hours for Eastern Time
+            //     const timestamp = Timestamp.fromDate(aft)
+            //     return timestamp // ex. 1631246400
+            // }
+
+            var start = new Date();
+            start.setHours(0,0,0,0);
+
+            var end = new Date(start.getTime());
+            end.setHours(72,59,59,999);
+
+
+            const q = query(collection(db, "undefined"), where("expiry", "<=", end));
+            const z = await getDocs(q);
+            // const z = await getDocs(collection(db, "undefined"))
+
             let idx = 1
-            // maybe can count total num expiring items, last idx 
 
                 z.forEach((docs) => {
                     let yy = docs.data()
@@ -62,20 +110,12 @@ export default {
 
                     var cell1 = row.insertCell(0); var cell2 = row.insertCell(1);
                     var cell3 = row.insertCell(2); var cell4 = row.insertCell(3);
-                    var cell5 = row.insertCell(4); var cell6 = row.insertCell(5);
+                    var cell5 = row.insertCell(4); 
 
                     cell1.innerHTML = idx; cell2.innerHTML = name; 
                     cell3.innerHTML = quant; cell4.innerHTML = exp;
                     cell5.innerHTML = loc;
 
-                    var bu = document.createElement("button")
-                    bu.className = "bwt"
-                    bu.id = String(name)
-                    bu.innerHTML = "Delete"
-                    bu.onclick = function() {
-                        this.deleteItem(name)
-                    }
-                    cell6.appendChild(bu)
                     idx ++
                 })
 
@@ -86,7 +126,7 @@ export default {
         async deleteItem(name) {
             var x = name
             alert("You are deleting " + x + ". Confirm?")
-            await deleteDoc(doc(db, "Food", x))
+            await deleteDoc(doc(db, String(this.fbuser), x))
             console.log("Item successfully deleteed!", x);
             let tb = document.getElementById("table")
             while (tb.rows.length > 1) {

@@ -29,7 +29,7 @@
             <input type="date" id = "expdate" required=""> <br><br>
 
             <label for="loc">Storage Location: </label>
-            <select id="loc">
+            <select id="loc" required ="">
                 <option disabled value="">Choose a location</option>
                 <option value="Fridge">Fridge</option>
                 <option value="Freezer">Freezer</option>
@@ -64,29 +64,54 @@
 <script>
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc }  from 'firebase/firestore'
+import { getAuth } from "firebase/auth";
+
 const db = getFirestore(firebaseApp);
 
   export default {
     name: "AddItem",
     emits: ["offModal"],
+    data() {
+        return {
+            fbuser: ""
+        }
+    },
+    // mounted() {
+    //     const auth = getAuth();
+    //     onAuthStateChanged(auth, (user) => {
+    //         if (user) {
+    //             this.fbuser = user;
+    //         }
+    //     })
+    // },
     methods: {
         async savetofs() {
+            const auth = getAuth();
+            this.fbuser = auth.currentUser.email;
+
+            // onAuthStateChanged(auth, (user) => {
+            // if (user) { this.fbuser = user }
+            // });
+
             var a = document.getElementById("name").value
             var b = document.getElementById("quant").value
             var c = document.getElementById("expdate").value
             var d = document.getElementById("loc").value
-            var e = document.getElementById("img").value
-            alert("Saving item: " + b + "x " + a)
-            try {
-                const docRef = await setDoc(doc(db, "Portfolio", a), {
-                    Name: a, Quantity: b, Expiry: c, Location: d, Image: e
-                })
-                console.log(docRef)
-                document.getElementById('myform').reset(); 
-                this.$emit("added") 
-            } catch(error) {
-                console.error("Error adding document: ", error);
+
+            
+            if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
+                alert("Saving item: " + b + "x " + a)
+                try {
+                    const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
+                        Name: a, Quantity: b, Expiry: c, Location: d, 
+                    })
+                    console.log(docRef)
+                    document.getElementById('myform').reset(); 
+                    this.$emit("added") 
+                } catch(error) {
+                    console.error("Error adding document: ", error);
+            }
             }
         }, 
         goToSummary() {
@@ -99,12 +124,7 @@ const db = getFirestore(firebaseApp);
             // or tell parent in Home that showModal = false?? wld be better i think
         }
 
-    }
-    , data() {
-      return {
-      
-      }
-    }
+    },
   }
 </script>
 
@@ -156,7 +176,9 @@ form {
 }
 
 input {
-    height: 20px;
+    height: 25px;
+    border: 0.5px solid rgb(143, 143, 143);
+    border-radius: 5px;
 }
 
 input:hover {
@@ -166,6 +188,8 @@ input:hover {
 
 select {
     height: 25px;
+    border: 0.5px solid rgb(143, 143, 143);
+    border-radius: 5px;
 }
 
 select:hover {
@@ -179,11 +203,11 @@ select:hover {
 }
 
 button {
-    /* background-color: #90B3F5; */
-    background-image: linear-gradient(to left, #db9387, #fbd09e);
+    background-color: #5a7dbd;
+    /* background-image: linear-gradient(to left, #db9387, #fbd09e); */
     color: white;
-    height: 15px;
-    width: 50px;
+    height: 30px;
+    width: 80px;
     border-radius: 15px;
     border: 0px;
     font-weight: bold;
@@ -191,7 +215,7 @@ button {
 }
 
 #savebutton:hover {
-    background-color: #5a7dbd;
+    background-color: #db9387;
 }
 
 #cancelbutton {

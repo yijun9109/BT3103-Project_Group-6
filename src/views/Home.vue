@@ -8,10 +8,10 @@
   <div class="bg">
     <div class="board">
         <h2> EXPIRING SOON</h2>
+        <!--
         <div class="btn listview">
-            <a href="/List#/List">LIST VIEW</a> <!--CHANGE THIS TO CORRECT LINK -->
             <a href="/List">LIST VIEW</a>
-        </div>
+        </div> -->
         <!-- <MainList/> -->
         <div class ="table">
             <ExpMini/>
@@ -20,7 +20,7 @@
 
     <section class="drawers">
       <div class="btn">
-        <a href="/List#/List">ALL ITEMS</a>
+        <a href="/#/List">ALL ITEMS</a>
         <!-- CHANGE THIS TO CORRECT LINK -->
       </div>
 
