@@ -1,8 +1,13 @@
 <template>
-<div>
-    <h1>Shopping List</h1>
+<div id="test">
+    <div >
+        <br/><br/><br/>
+    </div>
     <div data-app>
-        <ShList />
+        <ShList :key="refreshComp"/>
+    </div>
+    <div >
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
 </template>
@@ -14,5 +19,22 @@ export default {
     components: {
         ShList
     },
+    data() {
+        return {
+            refreshComp: 0
+        }
+    },
+    methods: {
+        change() { 
+            this.refreshComp += 1
+        }
+    }
 }
 </script>
+
+<style scoped>
+#test {
+    background-color: antiquewhite;
+    height: 100%
+}
+</style>
