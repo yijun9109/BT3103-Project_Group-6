@@ -1,6 +1,8 @@
 <template>
 <div>
-  <v-data-table :headers="headers" :items="items" sort-by="quant" class="elevation-1" id="table">
+  <v-data-table v-model="selected" :headers="headers" :items="items" :single-select="singleSelect" item-key="name" 
+  sort-by="quant" show-select class="elevation-1" id="table">
+
     <template v-slot:top>
       <v-toolbar flat>
         <v-divider class="mx-4" inset vertical></v-divider>
@@ -118,6 +120,7 @@
       </v-toolbar>
     </template> 
     <template v-slot:item.actions="{ item }">
+
       <v-icon
         small
         class="mr-2"
@@ -144,6 +147,8 @@ import { getAuth} from "firebase/auth";
 const db = getFirestore(firebaseApp)
   export default {
     data: () => ({
+      singleSelect: false,
+      selected: [],
       fbuser: "",
       dialog: false,
       dialogEdit: false,
@@ -210,6 +215,9 @@ const db = getFirestore(firebaseApp)
         this.dialogEdit = true
       },
       async deleteItem (item) {
+        const auth = getAuth();
+        this.fbuser = auth.currentUser.email;
+
         this.editedIndex = this.items.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
@@ -218,7 +226,9 @@ const db = getFirestore(firebaseApp)
         await deleteDoc(doc(db, "Shopping List", i.name));
       },
       async deleteAll () {
-        
+        const auth = getAuth();
+        this.fbuser = auth.currentUser.email;
+
         const SList = collection(db, "Shopping List");
         const que = await getDocs(SList)
         que.forEach((docs) => {
@@ -248,6 +258,7 @@ const db = getFirestore(firebaseApp)
       async save () {
         const auth = getAuth();
         this.fbuser = auth.currentUser.email;
+        console.log(this.fbuser)
 
         if (this.editedIndex > -1) {
           
@@ -300,6 +311,5 @@ const db = getFirestore(firebaseApp)
       },
     }
   }
-
 </script>
 
