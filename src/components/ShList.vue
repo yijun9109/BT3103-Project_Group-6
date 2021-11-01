@@ -1,17 +1,18 @@
 <template>
 <div>
   <v-data-table v-model="selected" :headers="headers" :items="items" :single-select="singleSelect" item-key="name" 
-  sort-by="quant" show-select class="elevation-1" id="table">
-
+  sort-by="quant" show-select class="elevation-1" id="table" >
     <template v-slot:top>
       <v-toolbar flat>
+        <h2>SHOPPING LIST</h2>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              Add Item
+            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" id="addBtn">
+             + Add Item
             </v-btn>
+
           </template>
 
           <v-card>
@@ -60,10 +61,11 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-btn color="primary" dark class="mb-2" @click="deleteAll()">
+        <div id="deleteBtn">
+        <v-btn color="secondary"  @click="deleteAll()">
               Delete All
         </v-btn>
-
+        </div>
         <v-dialog v-model="dialogEdit" max-width="500px">
           <v-card>
             <v-card-title>
@@ -312,4 +314,38 @@ const db = getFirestore(firebaseApp)
     }
   }
 </script>
+<style scoped>
+#table {
+  margin-left: 65px;
+  margin-right: 65px;
+  border-radius: 10px;
+}
+.v-sheet.v-toolbar {
+    border-radius: 10px;
+}
+.theme--light.v-btn.v-btn--has-bg {
+    background-color: rgb(240, 123, 123);
+}
+.theme--dark.v-btn.v-btn--has-bg {
+    background-color: rgb(121, 186, 226);
+}
+#deleteBtn {
+  margin-left: 5px;
+  margin-right:15px;
+  margin-top: 20px;
+}
+#addBtn {
+  margin-top: 20px;
+}
+.v-btn{
+        border-radius:28px!important;
+}
+h2 {
+  font-size: 28px;
+  margin-top: 20px;
+}
+header {
+  margin-bottom: 25px;
+}
+</style>
 
