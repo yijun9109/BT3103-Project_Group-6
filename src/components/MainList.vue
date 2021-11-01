@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import firebaseApp from "../firebase.js"
+import firebaseApp from "@/firebase.js"
 import { getFirestore } from "firebase/firestore"
 import { collection, getDocs, doc, deleteDoc, query, where} from "firebase/firestore"
 import { getAuth } from 'firebase/auth'
@@ -180,9 +180,6 @@ export default {
         async run() { 
             this.clearEntry()
             
-            const auth = getAuth();
-            this.fbuser = auth.currentUser.email;
-
             var foodList;
             let s = document.getElementsByClassName('select')
             this.selected = [];
@@ -197,9 +194,9 @@ export default {
             }
 
             if (this.selected.includes("None")){
-                foodList = await getDocs(collection(db, String(this.user)))
+                foodList = await getDocs(collection(db, String(this.fbuser)))
             } else {
-                const q1 = query(collection(db, String(this.user)), where("storage", "in", this.selected))
+                const q1 = query(collection(db, String(this.fbuser)), where("storage", "in", this.selected))
                 foodList = await getDocs(q1)
             }
 
@@ -266,7 +263,7 @@ export default {
 
         async deleteItem(item) {
             var i = item 
-            await deleteDoc(doc(db, String(this.user), i))
+            await deleteDoc(doc(db, String(this.fbuser), i))
             let tb = document.getElementById("table")
             while (tb.rows.length > 1) {
                 tb.deleteRow(1)
@@ -319,6 +316,8 @@ export default {
     },
 
     mounted() { 
+        const auth = getAuth();
+        this.fbuser = auth.currentUser.email;
         this.run()
     }
 }
@@ -361,11 +360,6 @@ button {
     font-weight: bold;
     text-transform: uppercase;
 }
-
-th {
-    border: 1px silver
-}
-
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
