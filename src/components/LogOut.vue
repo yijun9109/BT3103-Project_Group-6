@@ -28,8 +28,13 @@ export default {
             const auth = getAuth();
             const user = auth.currentUser;
             signOut(auth, user)
-            this.$router.push({name:'Landing'})
+            //this.$router.push({name:'Landing'})
+            
+            //this.$router.go()
+           
+            this.$router.go('/')
         }
+        
     }
 }
 </script>
