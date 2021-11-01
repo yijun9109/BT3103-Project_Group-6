@@ -361,11 +361,6 @@ button {
     font-weight: bold;
     text-transform: uppercase;
 }
-
-th {
-    border: 1px silver
-}
-
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
