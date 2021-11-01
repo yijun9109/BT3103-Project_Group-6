@@ -13,6 +13,7 @@ import LogOut from '@/views/LogOut.vue'
 import Tips from '@/views/Tips.vue'
 import StorageGuide from '@/views/StorageGuide.vue'
 import Recipes from '@/views/Recipes.vue'
+import RecipeDemo from '@/views/RecipeDemo.vue'
 // Shopping List Page
 import ShoppingList from '@/views/ShoppingList.vue'
 import Router from 'vue-router'
@@ -81,6 +82,11 @@ export default new Router ({
         path: '/Recipes',
         name: 'Recipes',
         component: Recipes 
+    },
+    {
+        path: '/RecipeDemo',
+        name: 'RecipeDemo',
+        component: RecipeDemo
     },
     {
         path: '/ShoppingList',

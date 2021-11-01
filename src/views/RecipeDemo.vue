@@ -1,17 +1,18 @@
 <template>
-<div id="bg">
+<div id = "bg">
+    <br>
     <div data-app>
-        <Recipe/>
+        <RDemo/>
     </div>
 </div>
 </template>
 
 <script>
-import Recipe from "@/components/Recipes.vue"
+import RDemo from "@/components/RecipeDemo.vue"
 export default {
-    name : "Recipes",
+    name : "RecipeDemo",
     components: {
-        Recipe
+        RDemo
     }
 }
 </script>
