@@ -168,7 +168,7 @@ export default {
   padding: 20px;
   margin-left: -10px;
   margin-right: -40px;
-  overflow: hidden; /* prevents scrolling down the abyss of nothginness */
+  /* overflow: hidden; prevents scrolling down the abyss of nothginness */
 }
 
 .btn {
