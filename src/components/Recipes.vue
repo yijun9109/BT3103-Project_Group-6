@@ -1,12 +1,20 @@
 <template>
 <div>
+    <v-row 
+        :align="align"
+        no-gutters>
+    <v-col>
     <br>
     <h3> RECIPES </h3>
-    <br>
+    </v-col>
+    <v-col>
     <div id = "searchBar">
+        <br>
         <script type="application/javascript" defer src="https://cse.google.com/cse.js?cx=b8eb2ad231f32c9e5"></script>
         <div class="gcse-search"></div>
     </div>
+    </v-col>
+    </v-row>
     <v-row 
         :align="align"
         no-gutters>
@@ -92,8 +100,9 @@ export default {
   margin-right: 50px;
 }
 #searchBar{
-    margin-left: 35px;
     width: 50%;
+    float: right;
+    margin-right: 50px;
 }
 h3{
     text-align: left;
