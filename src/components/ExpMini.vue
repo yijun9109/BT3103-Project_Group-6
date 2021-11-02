@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {  deleteDoc, doc, getFirestore, getDocs, collection, query, orderBy,  } from 'firebase/firestore';
+import {  deleteDoc, doc, getFirestore, getDocs, collection,   } from 'firebase/firestore';
 // import { getDocs, collection, Timestamp, query, where } from 'firebase/firestore';
 import firebaseApp from '@/firebase.js';
 import { getAuth, onAuthStateChanged } from  'firebase/auth';
@@ -45,6 +45,8 @@ export default {
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
+            this.fbuser = auth.currentUser.email;
+            console.log(String(this.fbuser));
             this.display();
         } else {
             console.log("no user");
@@ -55,9 +57,9 @@ export default {
     methods: {
         async display() {
 
-            const auth = getAuth();
-            this.fbuser = auth.currentUser.email;
-            console.log(String(this.fbuser));
+            // const auth = getAuth();
+            // this.fbuser = auth.currentUser.email;
+            // console.log(String(this.fbuser));
 
         // async display(user) {
             // let z = await getDocs(collection(db, "Food"))
@@ -101,8 +103,8 @@ export default {
             var end = new Date(start.getTime());
             end.setHours(72,59,59,999);
 
-
-            const q = query(collection(db, "Food"), orderBy('expiry'));
+            // const q = query(collection(db, String(this.fbuser)+" Food"));
+            // const q = query(collection(db, "Food"), orderBy('expiry'));
             // query all the docs, but lim in table so that still can display
             // actual number of food expiring "4 Items" text
             // removed limit(lim) since im technically doing it within the table 
@@ -110,10 +112,15 @@ export default {
             // endBefore, endAt() 0 items
             // where query 0 items
 
-            const z = await getDocs(q);
+            // const z = await getDocs(q);
             // const z = await getDocs(collection(db, "Food"), where("expiry"), "<=", end)
 
+            const z = await getDocs(collection(db, String(this.fbuser)));
+
             z.forEach((docs) => {
+
+                console.log(docs)
+
                 let yy = docs.data()
                 // need to filter query : expiry date within 3 days
 
@@ -137,7 +144,8 @@ export default {
                 } 
                 idx ++ // to show number of items expiring if it goes beyond limit
 
-                console.log(typeof exp)
+                // console.log(typeof exp)
+                // console.log(name)
             })
 
             document.getElementById("count").innerHTML = (idx-1 + " ITEMS")
