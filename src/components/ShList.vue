@@ -62,7 +62,7 @@
           </v-card>
         </v-dialog>
         <div id="deleteBtn">
-        <v-btn color="secondary"  @click="deleteAll()">
+        <v-btn color="secondary"  @click="deleteA()" >
               Delete All
         </v-btn>
         </div>
@@ -144,7 +144,7 @@
 <script>
 import {  deleteDoc, getDocs, collection, setDoc, doc, getFirestore, updateDoc, getDoc } from 'firebase/firestore'
 import firebaseApp from '../firebase'
-import { getAuth} from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const db = getFirestore(firebaseApp)
   export default {
@@ -195,21 +195,31 @@ const db = getFirestore(firebaseApp)
         val || this.closeDelete()
       },
     },
-    async created () {
-      var a = await getDocs(collection(db, "Shopping List"))
-      console.log(a)
-      a.forEach((docs) => {
+    created () {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.initialize()
+      } else {
+        console.log("no user")
+      }
+      })
+    },
+    methods: {
+      async initialize () {
+        const auth = getAuth();
+        this.fbuser = auth.currentUser.email;
+        var a = await getDocs(collection(db, String(this.fbuser) + " Shopping"))
+        console.log(this.fbuser)
+        console.log(a)
+        a.forEach((docs) => {
         let data = docs.data()
         this.items.push({
             name: data.name,
             quant: data.iquant,
             current: data.cquant,
           })
-      })
-    },
-    methods: {
-      initialize () {
-        this.items = []
+        })
       },
       editItem (item) {
         this.editedIndex = this.items.indexOf(item)
@@ -225,16 +235,28 @@ const db = getFirestore(firebaseApp)
         this.dialogDelete = true
 
         var i = item
-        await deleteDoc(doc(db, "Shopping List", i.name));
+        await deleteDoc(doc(db, String(this.fbuser) + " Shopping", i.name));
       },
+      async deleteA () {
+        const auth = getAuth();
+        this.fbuser = auth.currentUser.email;
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            this.deleteAll()
+          } else {
+            console.log("no user")
+          }
+        })
+      }, 
       async deleteAll () {
         const auth = getAuth();
         this.fbuser = auth.currentUser.email;
-
-        const SList = collection(db, "Shopping List");
+  
+        const SList = collection(db, String(this.fbuser) + " Shopping");
         const que = await getDocs(SList)
+        console.log(que.size)
         que.forEach((docs) => {
-          deleteDoc(doc(db, "Shopping List", docs.id))
+          deleteDoc(doc(db, String(this.fbuser) + " Shopping", docs.id))
         })
         window.location.reload();
       },
@@ -260,16 +282,24 @@ const db = getFirestore(firebaseApp)
       async save () {
         const auth = getAuth();
         this.fbuser = auth.currentUser.email;
-        console.log(this.fbuser)
 
-        if (this.editedIndex > -1) {
+        const SList = collection(db, String(this.fbuser) + "Shopping");
+        const que = await getDocs(SList)
+        que.forEach((docs) => {
+              let data = docs.data()
+              name += data.name;
+              iquant += data.iquant;
+              cquant += data.cquant;
+        })
+
+       if (this.editedIndex > -1) {
           
           Object.assign(this.items[this.editedIndex], this.editedItem)
           var name1 = document.getElementById("name1").value
           var iquant1 = document.getElementById("IQuant1").value
           var cquant1 = document.getElementById("CQuant1").value
           var i = this.editedItem.name
-          const docRef = doc(db, "Shopping List", i);
+          const docRef = doc(db, String(this.fbuser) + " Shopping", i);
           if (i == name1) {
             await updateDoc(docRef, {
               iquant: iquant1,
@@ -278,35 +308,26 @@ const db = getFirestore(firebaseApp)
           }
           } else {
           this.items.push(this.editedItem)
+          console.log(this.items)
           var name = document.getElementById("name").value
           var iquant = document.getElementById("IQuant").value
           var cquant = document.getElementById("CQuant").value
-
-          const nRef = doc(db, "Food", name)
+          const nRef = doc(db, String(this.fbuser) + " Shopping", name)
           const next = await getDoc(nRef)
-
+      
           if (next.exists()) {
             let data = next.data()
-            const docRef = await setDoc(doc(db, "Shopping List", name), {
+            const docRef = await setDoc(doc(db, String(this.fbuser) + " Shopping", name), {
             name: name, iquant: iquant, cquant: data.quantity
             })
             console.log(docRef)
             window.location.reload();
           } else {
-            const docRef = await setDoc(doc(db, "Shopping List", name), {
+            const docRef = await setDoc(doc(db, String(this.fbuser) + " Shopping", name), {
             name: name, iquant: iquant, cquant: cquant
             })
             console.log(docRef)
           }  
-          const SList = collection(db, "Shopping List");
-          const que = await getDocs(SList)
-          
-          que.forEach((docs) => {
-                let data = docs.data()
-                name += data.name;
-                iquant += data.iquant;
-                cquant += data.cquant;
-          })
           this.$emit("added")
         }
         this.close()
@@ -348,4 +369,5 @@ header {
   margin-bottom: 25px;
 }
 </style>
+
 

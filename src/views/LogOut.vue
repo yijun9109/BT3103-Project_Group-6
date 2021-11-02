@@ -4,7 +4,7 @@
       <div id="heading">
         <h1>Thank you for using MyFridge</h1>
         <br><br>
-        <h3>Click on the Log Out Button to proceed</h3>
+        <!-- <h3>Click on the Log Out Button to proceed</h3> -->
       </div>
       <div id="logout">
         <LogOutComponent />

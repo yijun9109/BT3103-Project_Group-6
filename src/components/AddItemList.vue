@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import firebaseApp from '../firebase.js'
+import firebaseApp from '@/firebase.js'
 import { getFirestore } from 'firebase/firestore'
 import { collection, query, doc, setDoc, where, getDocs }  from 'firebase/firestore'
 import { getAuth} from "firebase/auth";
@@ -52,6 +52,7 @@ export default {
         cancel() {
             this.$router.push({name: 'List'})
         },
+
         async saveData() { 
             const auth = getAuth();
             this.fbuser = auth.currentUser.email;
@@ -61,7 +62,7 @@ export default {
             var expiry = document.getElementById('expiry1').value.toLowerCase()
             var storage = document.getElementById('storage1').value
 
-            const food = collection(db, String(this.user));
+            const food = collection(db, String(this.fbuser));
             const q = query(food, where('item', '==', item), where('expiry', '==', expiry), where('storage', '==', storage))
             const que = await getDocs(q)
 
@@ -72,7 +73,7 @@ export default {
 
 
             try {
-                const docRef = await setDoc(doc(db, String(this.user), item), {
+                const docRef = await setDoc(doc(db, String(this.fbuser), item), {
                     item: item, 
                     quantity: quantity, 
                     expiry: expiry, 
