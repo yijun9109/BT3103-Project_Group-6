@@ -7,14 +7,14 @@
 </template>
 
 <script>
-import EditItemList from '@/components/EditItemList.vue'
 import MainList from '@/components/MainList.vue'
+import EditItemList from '@/components/EditItemList.vue'
 export default {
     Name: "EditList",
 
     components: {
+        MainList,
         EditItemList,
-        MainList
     },
 
     data() {
