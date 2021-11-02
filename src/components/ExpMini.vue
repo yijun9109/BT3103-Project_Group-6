@@ -24,10 +24,10 @@
 </template>
 
 <script>
-import {  deleteDoc, doc, getFirestore, getDocs, collection, query, where} from 'firebase/firestore';
+import {  deleteDoc, doc, getFirestore, getDocs, collection, query, orderBy,  } from 'firebase/firestore';
 // import { getDocs, collection, Timestamp, query, where } from 'firebase/firestore';
-import firebaseApp from '../firebase';
-import { getAuth } from  'firebase/auth';
+import firebaseApp from '@/firebase.js';
+import { getAuth, onAuthStateChanged } from  'firebase/auth';
 
 const db = getFirestore(firebaseApp);
 
@@ -42,13 +42,22 @@ export default {
         // const auth = getAuth();
         // this.fbuser = auth.currentUser.email;
         // this.display(this.fbuser);
-        this.display();
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+            this.display();
+        } else {
+            console.log("no user");
+        }
+      });
+        // this.display();
     },
     methods: {
         async display() {
 
             const auth = getAuth();
             this.fbuser = auth.currentUser.email;
+            console.log(String(this.fbuser));
 
         // async display(user) {
             // let z = await getDocs(collection(db, "Food"))
@@ -83,6 +92,9 @@ export default {
             //     return timestamp // ex. 1631246400
             // }
 
+            let idx = 1
+            var lim = 8
+
             var start = new Date();
             start.setHours(0,0,0,0);
 
@@ -90,34 +102,43 @@ export default {
             end.setHours(72,59,59,999);
 
 
-            const q = query(collection(db, "undefined"), where("expiry", "<=", end));
+            const q = query(collection(db, "Food"), orderBy('expiry'));
+            // query all the docs, but lim in table so that still can display
+            // actual number of food expiring "4 Items" text
+            // removed limit(lim) since im technically doing it within the table 
+            // limit(3) works
+            // endBefore, endAt() 0 items
+            // where query 0 items
+
             const z = await getDocs(q);
-            // const z = await getDocs(collection(db, "undefined"))
+            // const z = await getDocs(collection(db, "Food"), where("expiry"), "<=", end)
 
-            let idx = 1
+            z.forEach((docs) => {
+                let yy = docs.data()
+                // need to filter query : expiry date within 3 days
 
-                z.forEach((docs) => {
-                    let yy = docs.data()
-                    // need to filter query : expiry date within 3 days
+                var table = document.getElementById("table")
+                // var row = table.insertRow(idx)
 
-                    var table = document.getElementById("table")
+                var name = (yy.item)
+                var quant = parseInt(yy.quantity)
+                var exp = (yy.expiry)
+                var loc = (yy.storage)
+
+                if (idx <= lim) { // only add and display when idx <= lim
                     var row = table.insertRow(idx)
-
-                    var name = (yy.item)
-                    var quant = parseInt(yy.quantity)
-                    var exp = (yy.expiry)
-                    var loc = (yy.storage)
-
                     var cell1 = row.insertCell(0); var cell2 = row.insertCell(1);
                     var cell3 = row.insertCell(2); var cell4 = row.insertCell(3);
                     var cell5 = row.insertCell(4); 
 
                     cell1.innerHTML = idx; cell2.innerHTML = name; 
-                    cell3.innerHTML = quant; cell4.innerHTML = exp;
+                    cell3.innerHTML = "x"+quant.toString(); cell4.innerHTML = exp;
                     cell5.innerHTML = loc;
+                } 
+                idx ++ // to show number of items expiring if it goes beyond limit
 
-                    idx ++
-                })
+                console.log(typeof exp)
+            })
 
             document.getElementById("count").innerHTML = (idx-1 + " ITEMS")
 
@@ -143,18 +164,21 @@ export default {
 table {
   border-collapse: collapse;
   width: 80%;
-  /* border: 2px solid #2c3e50; */
+  border: 2px solid #2c3e50; 
   /* text-align: center */
 }
 
 th,td {
-  /* border: 1px solid #2c3e50; */
-  /* text-align: center; */
-  /* padding: 8px; */
-  /* background-color: #2c3e50;  */
-  color: #2c3e50;
-  /* color: white; */
+  border: 1px solid #2c3e50; 
+  text-align: center; 
+  padding: 3px;
+  background-color: #2c3e50; 
+  /* color: #2c3e50; */
+  color: white; 
 }
+
+/* Q. how to adjust styles under insertrow */
+
 
 h2 {
     padding-top: 140px;

@@ -96,6 +96,7 @@ const db = getFirestore(firebaseApp);
 
             var a = document.getElementById("name").value
             var b = document.getElementById("quant").value
+            // var c = Date.parse(document.getElementById("expdate").value)
             var c = document.getElementById("expdate").value
             var d = document.getElementById("loc").value
 
@@ -103,7 +104,8 @@ const db = getFirestore(firebaseApp);
             if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
                 alert("Saving item: " + b + "x " + a)
                 try {
-                    const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
+                    const docRef = await setDoc(doc(db, String(this.fbuser) + " Food", a), {
+                    // const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
                         Name: a, Quantity: b, Expiry: c, Location: d, 
                     })
                     console.log(docRef)
