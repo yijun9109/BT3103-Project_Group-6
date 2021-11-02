@@ -1,7 +1,6 @@
 <template>
-<div>
-    <button id="Back" @click ="goToTips()"> Back </button>
-    <h2>Storage Guide</h2>
+<div id = "bg">
+    <br>
     <div data-app>
         <SGuide/>
     </div>
@@ -14,11 +13,14 @@ export default {
     name : "StorageGuide",
     components: {
         SGuide
-    },
-    methods: {
-        goToTips() {
-            this.$router.push({name:'Tips'})
-        }
     }
 }
 </script>
+
+<style scoped>
+#bg{
+    background-color: #FFF8EF;
+    width: 100%;
+    height: 100vh;
+}
+</style>

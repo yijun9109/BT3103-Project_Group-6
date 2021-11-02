@@ -10,9 +10,11 @@ import LogOut from "@/views/LogOut.vue";
 // import Registration from '@/views/Registration.vue'
 // import ForgetPassword from '@/views/ForgetPassword.vue'
 // Tips Page
-import Tips from "@/views/Tips.vue";
-import StorageGuide from "@/views/StorageGuide.vue";
-import Recipes from "@/views/Recipes.vue";
+import Tips from '@/views/Tips.vue'
+import StorageGuide from '@/views/StorageGuide.vue'
+import Recipes from '@/views/Recipes.vue'
+import RecipeDemo from '@/views/RecipeDemo.vue'
+
 // Shopping List Page
 import ShoppingList from "@/views/ShoppingList.vue";
 import Router from "vue-router";
@@ -86,9 +88,14 @@ export default new Router({
       component: Recipes,
     },
     {
-      path: "/ShoppingList",
-      name: "ShoppingList",
-      component: ShoppingList,
+        path: '/RecipeDemo',
+        name: 'RecipeDemo',
+        component: RecipeDemo
+    },
+    {
+        path: '/ShoppingList',
+        name: 'ShoppingList',
+        component: ShoppingList 
     },
 
     {

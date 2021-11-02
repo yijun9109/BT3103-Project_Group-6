@@ -1,23 +1,33 @@
 <template>
   <div>
-    <v-data-table
-      :headers="headers"
-      :items="food"
-      item-key="name"
-      class="elevation-1"
-      :search="search"
-      :custom-filter="filterOnlyCapsText"
-    >
-      <template v-slot:top>
-        <v-text-field
-          v-model="search"
-          label="Search (UPPER CASE ONLY)"
-          class="mx-4"
-        ></v-text-field>
-      </template>
-    </v-data-table>
-    <br>
-    <a href="https://www.sfa.gov.sg/images/default-source/section-content/food/foodstoragechart1.gif" target="_blank" onclick="window.open('https://www.sfa.gov.sg/images/default-source/section-content/food/foodstoragechart1.gif', 'popup', 'height=500, width=500'); return false;">Click to view food storage chart</a>
+    <v-card class="rounded-card">
+      <br>
+      <h3>STORAGE GUIDE</h3>
+      <v-data-table
+        :headers="headers"
+        :items="food"
+        item-key="name"
+        class="elevation-1"
+        :search="search"
+        :custom-filter="filterNonCapsText"
+        id = "table"
+      >
+        <template v-slot:top>
+          <v-text-field
+            v-model="search"
+            label="Search (lower case only)"
+            class="mx-4"
+          ></v-text-field>
+        </template>
+      </v-data-table>
+      </v-card>
+      <br>
+      <v-btn id="chart" onclick="window.open('https://www.sfa.gov.sg/images/default-source/section-content/food/foodstoragechart1.gif', 'popup', 'height=500, width=500'); return false;">View food storage chart</v-btn>
+      <v-btn id="back" @click ="goToTips()">
+        Back <v-icon>
+          mdi-arrow-right
+        </v-icon>
+      </v-btn>
   </div>
 </template>
 
@@ -76,12 +86,46 @@
       },
     },
     methods: {
-      filterOnlyCapsText (value, search) {
+      filterNonCapsText (value, search) {
         return value != null &&
           search != null &&
           typeof value === 'string' &&
-          value.toString().toLocaleUpperCase().indexOf(search) !== -1
+          value.toString().toLocaleLowerCase().indexOf(search) !== -1
+      },
+      goToTips() {
+            this.$router.push({name:'Tips'})
       },
     },
   }
 </script>
+
+<style scoped>
+#table{
+  margin-left: 65px;
+  margin-right: 65px;
+  border-radius: 10px;
+  color: #2D3748;
+}
+.rounded-card{
+    border-radius:20px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+#back{
+  background-color: #CBD5E0;
+  color: white;
+  float: right;
+  margin-right: 50px;
+}
+#chart{
+  background-color: #F5C790;
+  color: white;
+  float: left;
+  margin-left: 50px;
+}
+h3{
+  text-align: left;
+  margin-left: 30px;
+  color: #2D3748;
+}
+</style>

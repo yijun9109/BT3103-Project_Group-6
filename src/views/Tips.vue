@@ -1,19 +1,41 @@
 <template>
-<div>
-    <h2> Tips </h2>
+<div id="bg">
     <br>
+    <h3> TIPS </h3>
     <body>
     <div class="main">
-        <div class="first">
-            <router-link to="/StorageGuide"> Storage Guide </router-link>
-            <br><br>
-            Guide for storage recommendations of common food items
-        </div>
-        <div class="second">
-            <router-link to="/Recipes"> Recipes </router-link>
-            <br><br>
-            Discover recipes to better make use of leftover food items and the items you have
-        </div>
+        <v-row 
+            :align="align"
+            no-gutters>
+        <v-col>
+        <router-link to="/StorageGuide">
+            <v-card class="rounded-card" id="first">
+                <v-avatar
+                    size="90"
+                    id="bulb">
+                    <img src="https://cdn-icons.flaticon.com/png/512/2987/premium/2987996.png?token=exp=1635768194~hmac=dfcd9a07906a80213bb346799c6e3c60" alt="Bulb">
+                </v-avatar>
+                <h2>Storage guide</h2>
+                <br><br>
+                Guide for storage recommendations <br> of common food items
+            </v-card>
+        </router-link>
+        </v-col>
+        <v-col>
+        <router-link to="/Recipes">
+            <v-card class="rounded-card" id="second">
+                <v-avatar
+                    size="90"
+                    id="food">
+                    <img src="https://cdn-icons.flaticon.com/png/512/1065/premium/1065715.png?token=exp=1635771194~hmac=164e533aef649ba497faaa34439d1324">
+                </v-avatar>
+                <h2>Recipes</h2>
+                <br><br>
+                Discover recipes to better make use of <br> leftover food items and the items you have
+            </v-card>
+        </router-link>
+        </v-col>
+        </v-row>
     </div>
     </body>
 </div>
@@ -26,31 +48,39 @@ export default {
 </script>
 
 <style scoped>
-    h2{
+    h3{
         text-align: left;
+        margin-left: 50px;
     }
-    .first{
+    #first{
         text-align: center;
-        width: 48%;
+        background-color: #F0F7E6;
         height: 400px;
-        background-color: #d4fcd4;
-        float: left;
         color: slategray;
+        margin: 50px;
     }
-    .second{
+    #second{
         text-align: center;
-        width: 48%;
+        background-color: #EAEFFB;
         height: 400px;
-        background-color: paleturquoise;
-        float: right;
         color: slategray;
+        margin: 50px;
     }
-    .first:hover{
-        background-color: #b3fab3;
-        color: slategray;
+    #first:hover{
+        background-color: #eaf7d9;
     }
-    .second:hover{
-        background-color: rgb(153, 224, 218);
-        color: slategray;
+    #second:hover{
+        background-color: #e2e9fa;
+    }
+    #bg{
+        background-color: #FFF8EF;
+        width: 100%;
+        height: 100vh;
+    }
+    #bulb, #food{
+        margin: 50px;
+    }
+    h2{
+        color: #2D3748;
     }
 </style>
