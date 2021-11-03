@@ -25,6 +25,19 @@
                 <button type = 'button' id = 'cancelbutton' v-on:click='cancel()'> Cancel </button>
             </div>
         </form>
+        <div id="ok" class="modal">
+            <span onclick="document.getElementById('ok').style.display = none" class="close" title="Close Modal">&times;</span>
+                <form class="modal-content">
+                    <div class='content' id='deleteContent'>
+                    <p> You have the same item, stored with the same expiry date and location. <br><br>
+                        Please use the edit function if you want to store this item.</p>
+
+                    <div class='confirmation'>
+                        <button type='button' id='confirm'> Ok </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -66,14 +79,18 @@ export default {
             const q = query(food, where('item', '==', item), where('expiry', '==', expiry), where('storage', '==', storage))
             const que = await getDocs(q)
 
-            que.forEach((docs) => {
-                let data = docs.data()
-                quantity += data.quantity;
-            })
-
-
+            if (!que.empty) {
+                document.getElementById('ok').style.display = 'block'
+                document.getElementById('confirm').onclick = () => {
+                    console.log('ok')
+                    document.getElementById('ok').style.display = 'none'
+                    document.getElementById('input').reset();
+                }
+                return;
+            }
+            
             try {
-                const docRef = await setDoc(doc(db, String(this.fbuser), item), {
+                const docRef = await setDoc(doc(db, String(this.fbuser), item + ' ' + expiry + ' ' + storage), { //Support for storing multiple items with the same name.
                     item: item, 
                     quantity: quantity, 
                     expiry: expiry, 
@@ -95,5 +112,23 @@ export default {
 </script>
 
 <style>
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: white;
+  /* background-color: #474e5d; */
+  padding-top: 50px;
+}
+
+.modal button {
+    margin:20px;
+}
 
 </style>

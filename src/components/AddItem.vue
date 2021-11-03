@@ -106,7 +106,7 @@ const db = getFirestore(firebaseApp);
                 try {
                     const docRef = await setDoc(doc(db, String(this.fbuser) + " Food", a), {
                     // const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
-                        Name: a, Quantity: b, Expiry: c, Location: d, 
+                        item: a, quantity: b, expiry: c, storage: d, 
                     })
                     console.log(docRef)
                     document.getElementById('myform').reset(); 
