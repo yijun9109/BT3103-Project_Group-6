@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {  deleteDoc, doc, getFirestore, getDocs, collection,   } from 'firebase/firestore';
+import {  deleteDoc, doc, getFirestore, getDocs, collection,  where, orderBy } from 'firebase/firestore';
 // import { getDocs, collection, Timestamp, query, where } from 'firebase/firestore';
 import firebaseApp from '@/firebase.js';
 import { getAuth, onAuthStateChanged } from  'firebase/auth';
@@ -113,9 +113,7 @@ export default {
             // where query 0 items
 
             // const z = await getDocs(q);
-            // const z = await getDocs(collection(db, "Food"), where("expiry"), "<=", end)
-
-            const z = await getDocs(collection(db, String(this.fbuser)));
+             const z = await getDocs(collection(db, String(this.fbuser)), where("expiry", "<=", end), orderBy("expiry"))
 
             z.forEach((docs) => {
 

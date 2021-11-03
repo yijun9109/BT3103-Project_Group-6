@@ -56,8 +56,8 @@
 <script>
 import firebaseApp from "@/firebase.js"
 import { getFirestore } from "firebase/firestore"
-import { collection, getDocs, doc, deleteDoc, query, where} from "firebase/firestore"
-import { getAuth } from 'firebase/auth'
+import { collection, getDocs, doc, deleteDoc, query, where, orderBy} from "firebase/firestore"
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import * as ics from 'ics'
 import { saveAs } from 'file-saver'
 
@@ -145,6 +145,7 @@ export default {
                 })
                 moddate.push(0)
                 moddate.push(0)
+                console.log(moddate)
                 let name = "You have " + calarr[2] + " " + calarr[1] + " expiring today!"
                 let entry = {
                     title: name,
@@ -194,7 +195,7 @@ export default {
             }
 
             if (this.selected.includes("None")){
-                foodList = await getDocs(collection(db, String(this.fbuser)))
+                foodList = await getDocs(query(collection(db, String(this.fbuser)), orderBy('expiry')))
             } else {
                 const q1 = query(collection(db, String(this.fbuser)), where("storage", "in", this.selected))
                 foodList = await getDocs(q1)
@@ -316,9 +317,16 @@ export default {
     },
 
     mounted() { 
-        const auth = getAuth();
-        this.fbuser = auth.currentUser.email;
-        this.run()
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+            this.fbuser = auth.currentUser.email;
+            console.log(String(this.fbuser));
+            this.run();
+        } else {
+            console.log("no user");
+        }
+      });
     }
 }
 
@@ -326,13 +334,6 @@ export default {
 
 <style scoped>
 #list {
-    /* Background */
-
-    position: absolute;
-    width: 1706px;
-    height: 586px;
-    left: 96px;
-    top: 221px;
 
 /* Rectangle 9 */
 
