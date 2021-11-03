@@ -1,10 +1,12 @@
 <template>
   <div class="bg">
-    <h2 class = "header"> INVENTORY</h2>
-    <h2 class = "shadow"> INVENTORY</h2>
-    <div class = "container">
+    <!-- <h2 class = "header"> INVENTORY</h2>
+    <h2 class = "shadow"> INVENTORY</h2> -->
+
+    <MainList/>
+    <!-- <div class = "container">
         <MainList/>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -30,25 +32,25 @@ export default {
 
 <style scoped>
 .bg {
-    background-color: #fbd09e;
+    /* background-color: #fbd09e; */
+    background-color: #FFF8EF;
     height: 85vh;
     padding: 20px;
     margin-left: -10px;
     margin-right: -40px;
 }
 
-.container {
+/* .container {
     background-color: white;
     border-radius: 30px;
     margin: auto;
     width: 40%;
 
-}
+} */
 
-h2 {
+/* h2 {
     font-size: 40px;
 }
-
 .shadow {
     color: white;
     margin-top: -53px;
@@ -58,6 +60,6 @@ h2 {
 .header {
     color: #a77235;
 
-}
+} */
 
 </style>

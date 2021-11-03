@@ -1,6 +1,10 @@
 <template>
 <div class>
+
+    <a href="/#/Home" class="viewexp">VIEW EXPIRING ITEMS</a>
     <div id='list'>
+
+        <h1>All Items</h1>
         <table id = "table" style="text-align: center">
             <tr>
                 <th >Index</th>
@@ -47,7 +51,7 @@
     </div>
 
     <div>
-        <button type='button' v-on:click='addItem()'> Add Item </button>
+        <button type='button' class = 'add' v-on:click='addItem()'> Add Item </button>
         <button type='button' v-on:click ='dlcalendar()'> Download Calendar </button>
     </div>
 </div>
@@ -333,15 +337,35 @@ export default {
 </script>
 
 <style scoped>
+
+.viewexp {
+    text-decoration:none;
+    color: black;
+    font-size: 15px;
+    position: relative;
+    right: -720px;
+    font-weight: bold;
+}
+
+.viewexp:hover {
+    color: rgb(66, 66, 66);
+
+}
+
+h1 {
+    text-align: left;
+    margin-left: 50px;
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-size: 30px;
+}
+
 #list {
-
-/* Rectangle 9 */
-
     position: absolute;
     width: 1706px;
     height: 586px;
     left: 96px;
-    top: 221px;
+    top: 150px;
 
     background: #FFFFFF;
     border: 1px solid #A0AEC0;
@@ -350,9 +374,23 @@ export default {
     border-radius: 15px;
 }
 
+#list th {
+    color: #A0AEC0;
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
+#table {
+    width: 100%;
+}
+
+#itemorder, #quantityorder, #dropdown, #expiryorder {
+    width: 30px;
+}
+
 button {
-    /* background-color: #90B3F5; */
-    background-image: linear-gradient(to left, #db9387, #fbd09e);
+    background-color: #90B3F5;
+     /* background-image: linear-gradient(to left, #db9387, #fbd09e); */
     color: white;
     height: 30px;
     width: 100px;
@@ -361,6 +399,12 @@ button {
     font-weight: bold;
     text-transform: uppercase;
 }
+
+.add {
+    
+}
+
+
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
