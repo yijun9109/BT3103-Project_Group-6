@@ -14,6 +14,8 @@ import Tips from '@/views/Tips.vue'
 import StorageGuide from '@/views/StorageGuide.vue'
 import Recipes from '@/views/Recipes.vue'
 import RecipeDemo from '@/views/RecipeDemo.vue'
+import WesternRecipes from '@/views/WRecipes.vue'
+import ChineseRecipes from '@/views/CRecipes.vue'
 
 // Shopping List Page
 import ShoppingList from "@/views/ShoppingList.vue";
@@ -91,6 +93,16 @@ export default new Router({
         path: '/RecipeDemo',
         name: 'RecipeDemo',
         component: RecipeDemo
+    },
+    {
+      path: '/WRecipes',
+      name: 'WesternRecipes',
+      component: WesternRecipes
+    },
+    {
+      path: '/CRecipes',
+      name: 'ChineseRecipes',
+      component: ChineseRecipes
     },
     {
         path: '/ShoppingList',
