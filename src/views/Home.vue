@@ -1,18 +1,10 @@
 <template>
-  <!-- <div> 
-       <button id="List" @click ="goToListView()"> List View </button>
-   </div>  -->
 
-  <!-- might need to do sth about min-width and max-width for differing screensizes -->
-  <!-- best at 1580x812 -->
   <div class="bg">
+              
     <div class="board">
         <h2> EXPIRING SOON</h2>
-        <!--
-        <div class="btn listview">
-            <a href="/List">LIST VIEW</a>
-        </div> -->
-        <!-- <MainList/> -->
+
         <div class ="table">
             <ExpMini/>
         </div>
@@ -20,56 +12,155 @@
 
     <section class="drawers">
       <div class="btn">
-        <a href="/#/List">ALL ITEMS</a>
-        <!-- CHANGE THIS TO CORRECT LINK -->
+        <a href="/#/List">ALL ITEMS</a> <!-- CHANGE THIS TO CORRECT LINK -->
       </div>
 
-      <button class="button" @click="showModal = true">ADD ITEM</button>
-      <!-- how to get component to show up in centre -->
-      <transition name="fade" appear>
-        <div class="modal-overlay"
-          v-if="showModal"
-          @click="showModal = false"
-        ></div>
-      </transition>
+        <v-app>
+        <template>
+        <v-dialog v-model="dialog" max-width = "600px">
 
-      <transition name="slide" appear>
-        <div class="modal" v-if="showModal" @offModal="toggle()">
-          <!-- <h1>lorem ipsum</h1>
-                <p>lorem ipsum</p> -->
-          <AddItem />
-          <!-- <button class = "button" @click = "showModal=false">X</button> -->
-        </div>
-      </transition>
+            <template v-slot:activator="{ on }">
+            <v-btn  v-on="on" id="addbtn">Add Item</v-btn> 
+            </template>
+
+        <v-card>
+            <v-card-title>
+                <h2>Add a new item</h2>
+            </v-card-title>
+
+            <v-card-text>
+                <v-form class="px-3" ref="form">
+                    <v-text-field label="Name" v-model="name" ></v-text-field>
+                    <v-text-field label="Quantity" v-model="qty" :rules="qtyRules"></v-text-field>
+                    <v-select
+                        :items="locations"
+                        label="Storage Location" v-model="loc"
+                        ></v-select>
+                    <v-menu max-width="290" class="mx-100">
+                        <template v-slot:activator="{ on }">
+                            <v-text-field :value="due" v-on="on" label="Expiry Date"></v-text-field>
+                        </template>
+                        <v-date-picker v-model="due"></v-date-picker>
+                    </v-menu>
+
+                </v-form>
+            </v-card-text>
+
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="submit"
+                id="cfmbtn"
+              >
+                Save
+              </v-btn>
+
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="close"
+              >
+                Cancel
+              </v-btn>
+            </v-card-actions>
+        </v-card>
+
+        </v-dialog>
+    </template>
+    </v-app>
+
+    
     </section>
   </div>
 </template>
 
 <script>
-import AddItem from "../components/AddItem.vue";
+// import AddItem from "../components/AddItem.vue";
 // import MainList from "../components/MainList.vue"
 import ExpMini from "@/components/ExpMini.vue"
+import firebaseApp from '../firebase.js';
+import { getFirestore } from "firebase/firestore";
+import { doc, setDoc }  from 'firebase/firestore'
+import { getAuth } from "firebase/auth";
+// import Popup from "@/components/Popup.vue"
+
+const db = getFirestore(firebaseApp);
 
 export default {
   name: "Home",
   components: {
-    AddItem, 
+    // AddItem, 
+    // Popup,
     ExpMini,
     // MainList
   },
   data() {
     return {
-      showModal: false,
+    //   showModal: false,
+    //     showModal: true,
+        name: '',
+        qty: '',
+        due: null,
+        loc: '',
+        dialog: false,
+        fbuser: '',
+
+        locations: ['Fridge', 'Freezer', 'Cabinet'],
+        qtyRules: [
+            v => v.length > 0 || 'This field may not be empty',
+            v => Number.isInteger(Number(v)) || "The value must be an integer number"
+        ],
     };
   },
   methods: {
-    goToListView() {
-      this.$router.push({ name: "List" });
+    // goToListView() {
+    //   this.$router.push({ name: "List" });
+    // },
+    // toggle() {
+    //   this.showModal = false;
+    // },
+
+    async submit() {
+        if (this.$refs.form.validate())  {  // performs validation check
+            // console.log(this.name, this.qty); // replace with what u need to do
+            const auth = getAuth();
+            this.fbuser = auth.currentUser.email;
+
+            var a = this.name
+            var b = this.qty
+            var c = this.due
+            var d = this.loc
+
+            if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
+                alert("Saving item: " + b + "x " + a)
+                try {
+                    const docRef = await setDoc(doc(db, String(this.fbuser), a), {
+                    // const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
+                        item: a, quantity: b, expiry: c, storage: d, 
+                    })
+                    console.log(docRef)
+                    this.$emit("added") 
+                } catch(error) {
+                    console.error("Error adding document: ", error);
+                }
+            }
+            this.close()
+        }
+
     },
-    toggle() {
-      this.showModal = false;
-    },
-  },
+
+    close() {
+    this.dialog = false
+    }
+
+  },watch: {
+            dialog(val) {
+                val || this.close()
+            }
+        }
 };
 </script>
 
@@ -108,7 +199,20 @@ export default {
   box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
 }
 
-.modal-overlay {
+/* vuetify */ 
+.v-application {
+    background-color: transparent;
+}
+
+#addbtn {
+    width: 150px;
+    background-image: linear-gradient(to right, #db9387, #fbd09e);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* .modal-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -133,7 +237,7 @@ export default {
 
 .modal .button {
   width: 60px;
-}
+} */
 
 .fade-enter-active,
 .fade-leave-active {
@@ -168,7 +272,7 @@ export default {
   padding: 20px;
   margin-left: -10px;
   margin-right: -40px;
-  /* overflow: hidden; prevents scrolling down the abyss of nothginness */
+  overflow: hidden; /* prevents scrolling down the abyss of nothginness */
 }
 
 .btn {
@@ -280,6 +384,6 @@ h2 {
 }
 
 .table {
-    padding-left: 30px;
+    /* padding-left: 30px; */
 }
 </style>

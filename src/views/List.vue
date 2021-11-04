@@ -34,7 +34,7 @@ export default {
 .bg {
     /* background-color: #fbd09e; */
     background-color: #FFF8EF;
-    height: 85vh;
+    height: 100vh;
     padding: 20px;
     margin-left: -10px;
     margin-right: -40px;

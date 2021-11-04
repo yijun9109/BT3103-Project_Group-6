@@ -8,7 +8,7 @@
 
     </v-data-table> -->
     <div>
-
+        
         <br>
         <table id = "table">
             <tr>  
@@ -19,7 +19,9 @@
             <th>Expiry Date</th>
             </tr>
         </table>
+        
         <h2 id = "count"></h2> 
+        
     </div>
 </template>
 
@@ -169,9 +171,10 @@ export default {
 
 table {
   border-collapse: collapse;
-  width: 80%;
+  width: 95%;
   border: 2px solid #2c3e50; 
-  /* text-align: center */
+  margin: auto;
+  text-align: center
 }
 
 th,td {
@@ -187,8 +190,9 @@ th,td {
 
 
 h2 {
-    padding-top: 140px;
+    padding-top: 40px;
     padding-right: 25px;
+
     font-size: 60px;
     font-weight: 100;
     color: white;
