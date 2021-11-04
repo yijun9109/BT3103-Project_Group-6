@@ -232,7 +232,7 @@ export default {
                 editBut.id = String(data.item)
                 editBut.innerHTML = 'Edit'
                 editBut.onclick = () => { 
-                    this.editItem(editBut.id)
+                    this.editItem(editBut.id, data.expiry, data.storage)
                 }
 
                 var deleteBut = document.createElement('button')
@@ -263,8 +263,8 @@ export default {
 
         },
 
-        editItem(i) { 
-            this.$router.push({name: 'EditList', params: {item: i}})
+        editItem(i, e, s) { 
+            this.$router.push({name: 'EditList', params: {item: i, expiry: e, storage: s}})
         },
 
         async deleteItem(item, expiry, storage) {
