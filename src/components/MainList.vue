@@ -5,11 +5,12 @@
     <div id='list'>
 
         <h1>All Items</h1>
+        <hr>
         <table id = "table" style="text-align: center">
             <tr>
                 <th >Index</th>
                 <th>Items
-                    <button class='sorting' id='itemorder' v-on:click='itemOrder()'></button>
+                    <button class='sorting' id='itemorder' v-on:click='itemOrder()'> V </button>
                 </th>
                 <th>Quantity
                     <button id='quantityorder' v-on:click='quantityOrder()'> V </button>
@@ -50,10 +51,10 @@
         </form>
     </div>
 
-    <div>
-        <button type='button' class = 'add' v-on:click='addItem()'> Add Item </button>
+    <!-- <div> -->
+        <button type='button' class = 'add' v-on:click='addItem()'> + Add Item </button>
         <button type='button' v-on:click ='dlcalendar()'> Download Calendar </button>
-    </div>
+    <!-- </div> -->
 </div>
 </template>
 
@@ -343,7 +344,8 @@ export default {
     color: black;
     font-size: 15px;
     position: relative;
-    right: -720px;
+    right: -670px;
+    top: 10px;
     font-weight: bold;
 }
 
@@ -362,15 +364,16 @@ h1 {
 
 #list {
     position: absolute;
-    width: 1706px;
-    height: 586px;
+    width: 90%;
+    /* /* width: 1706px; */
+    height: 586px; 
     left: 96px;
     top: 150px;
 
     background: #FFFFFF;
     border: 1px solid #A0AEC0;
     box-sizing: border-box;
-    box-shadow: 0px 3.5px 5.5px rgba(0, 0, 0, 0.02);
+    box-shadow: 0px 3.5px 5.5px rgba(0, 0.5, 0.5, 0.2);
     border-radius: 15px;
 }
 
@@ -388,6 +391,14 @@ h1 {
     width: 30px;
 }
 
+hr {
+    position: relative;
+    top: 33px;
+    width: 98%;
+    margin-left: 1%;
+    opacity: 0.4;
+}
+
 button {
     background-color: #90B3F5;
      /* background-image: linear-gradient(to left, #db9387, #fbd09e); */
@@ -401,7 +412,12 @@ button {
 }
 
 .add {
-    
+    position: relative;
+    bottom: -660px;
+    right: -550px;
+    height: 40px;
+    width: 130px;
+    font-size: 15px;
 }
 
 
