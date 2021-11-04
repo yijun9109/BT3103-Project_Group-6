@@ -237,11 +237,11 @@ export default {
                 var deleteBut = document.createElement('button')
                 deleteBut.className = 'deletebwt'
                 deleteBut.id = String(data.items)
-                deleteBut.innerHTML = 'delete'
+                deleteBut.innerHTML = 'Delete'
                 deleteBut.onclick = () => { 
                     document.getElementById('delete').style.display = 'block'
                     document.getElementById('confirm').onclick = () => {
-                        this.deleteItem(data.item)
+                        this.deleteItem(data.item, data.expiry, data.storage)
                         console.log("deleted")
                         document.getElementById('delete').style.display = 'none'
                     }
@@ -266,9 +266,9 @@ export default {
             this.$router.push({name: 'EditList', params: {item: i}})
         },
 
-        async deleteItem(item) {
+        async deleteItem(item, expiry, storage) {
             var i = item 
-            await deleteDoc(doc(db, String(this.fbuser), i))
+            await deleteDoc(doc(db, String(this.fbuser), i + ' ' + expiry + ' ' + storage))
             let tb = document.getElementById("table")
             while (tb.rows.length > 1) {
                 tb.deleteRow(1)

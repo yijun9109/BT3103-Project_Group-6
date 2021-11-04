@@ -54,7 +54,7 @@ export default {
             var storage = document.getElementById('storage1').value
 
             try {
-                const docRef = await setDoc(doc(db, String(this.user), item), {
+                const docRef = await setDoc(doc(db, String(this.user), item + ' ' + expiry + ' ' + storage), {
                     item: item, 
                     quantity: quantity, 
                     expiry: expiry, 
