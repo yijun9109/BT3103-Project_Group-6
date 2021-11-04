@@ -56,9 +56,26 @@ export default {
       });
         // this.display();
     },
-    methods: {
-        async display() {
 
+    watch: {
+        refresh: function() {
+            this.display()
+        }
+    },
+
+    props: ['refresh'],
+
+    methods: {
+        clearEntry() {
+            // Clears the table for refresh to work.
+            var table = document.getElementById('table')
+            while (table.rows.length > 1) {
+                table.deleteRow(1)
+            }
+        },
+
+        async display() {
+            this.clearEntry()
             // const auth = getAuth();
             // this.fbuser = auth.currentUser.email;
             // console.log(String(this.fbuser));

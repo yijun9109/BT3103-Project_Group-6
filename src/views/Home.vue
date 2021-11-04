@@ -6,7 +6,7 @@
         <h2> EXPIRING SOON</h2>
 
         <div class ="table">
-            <ExpMini/>
+            <ExpMini :refresh="run"/>
         </div>
     </div>
 
@@ -107,6 +107,7 @@ export default {
         loc: '',
         dialog: false,
         fbuser: '',
+        run: 0,
 
         locations: ['Fridge', 'Freezer', 'Cabinet'],
         qtyRules: [
@@ -115,6 +116,7 @@ export default {
         ],
     };
   },
+
   methods: {
     // goToListView() {
     //   this.$router.push({ name: "List" });
@@ -137,7 +139,7 @@ export default {
             if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
                 alert("Saving item: " + b + "x " + a)
                 try {
-                    const docRef = await setDoc(doc(db, String(this.fbuser), a), {
+                    const docRef = await setDoc(doc(db, String(this.fbuser), a + ' ' + c + ' ' + d), {
                     // const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
                         item: a, quantity: b, expiry: c, storage: d, 
                     })
@@ -149,18 +151,19 @@ export default {
             }
             this.close()
         }
-
     },
 
     close() {
-    this.dialog = false
+      this.dialog = false
+      this.run += 1;
     }
 
-  },watch: {
-            dialog(val) {
-                val || this.close()
-            }
+  },
+  watch: {
+    dialog(val) {
+        val || this.close()
         }
+     }
 };
 </script>
 
