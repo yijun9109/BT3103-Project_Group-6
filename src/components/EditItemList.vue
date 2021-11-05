@@ -26,7 +26,7 @@
 <script>
 import firebaseApp from '@/firebase.js'
 import { getFirestore } from 'firebase/firestore'
-import { doc, setDoc, }  from 'firebase/firestore'
+import { doc, setDoc, deleteDoc}  from 'firebase/firestore'
 import { getAuth} from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
@@ -35,7 +35,9 @@ export default {
 
     data() {
         return {
-            item: ""
+            item: "",
+            expiry: "",
+            storage: ""
         }
     },
 
@@ -53,13 +55,18 @@ export default {
             var expiry = document.getElementById('expiry1').value.toLowerCase()
             var storage = document.getElementById('storage1').value
 
+            var oldI = this.item;
+            var oldE = this.expiry;
+            var oldS = this.storage;
+
             try {
-                const docRef = await setDoc(doc(db, String(this.user), item + ' ' + expiry + ' ' + storage), {
+                const docRef = await setDoc(doc(db, String(this.fbuser), item + ' ' + expiry + ' ' + storage), {
                     item: item, 
                     quantity: quantity, 
                     expiry: expiry, 
                     storage: storage
-                })
+                })  
+                await deleteDoc(doc(db, String(this.fbuser), oldI + ' ' + oldE + ' ' + oldS))
                 document.getElementById('input').reset();
                 console.log(item + ' is updated')
                 console.log(docRef)
@@ -75,6 +82,8 @@ export default {
 
     mounted() {
         this.item = this.$route.params.item
+        this.expiry = this.$route.params.expiry
+        this.storage = this.$route.params.storage
         document.getElementById('item1').value = this.item
         document.getElementById('item1').readOnly = true
     }

@@ -104,7 +104,7 @@ const db = getFirestore(firebaseApp);
             if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
                 alert("Saving item: " + b + "x " + a)
                 try {
-                    const docRef = await setDoc(doc(db, String(this.fbuser) + " Food", a + ' ' + c + ' ' + d), {
+                    const docRef = await setDoc(doc(db, String(this.fbuser), a + ' ' + c + ' ' + d), {
                     // const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
                         item: a, quantity: b, expiry: c, storage: d, 
                     })
