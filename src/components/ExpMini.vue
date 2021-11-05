@@ -19,7 +19,7 @@
             <th>Expiry Date</th>
             </tr>
         </table>
-        
+
         <h2 id = "count"></h2> 
         
     </div>
@@ -212,7 +212,7 @@ th,td {
 
 
 h2 {
-    padding-top: 40px;
+    padding-top: 20px;
     padding-right: 25px;
 
     font-size: 60px;

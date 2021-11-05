@@ -10,10 +10,10 @@ import LogOut from "@/views/LogOut.vue";
 // import Registration from '@/views/Registration.vue'
 // import ForgetPassword from '@/views/ForgetPassword.vue'
 // Tips Page
-import Tips from '@/views/Tips.vue'
-import StorageGuide from '@/views/StorageGuide.vue'
-import Recipes from '@/views/Recipes.vue'
-import RecipeDemo from '@/views/RecipeDemo.vue'
+import Tips from "@/views/Tips.vue";
+import StorageGuide from "@/views/StorageGuide.vue";
+import Recipes from "@/views/Recipes.vue";
+import RecipeDemo from "@/views/RecipeDemo.vue";
 
 // Shopping List Page
 import ShoppingList from "@/views/ShoppingList.vue";
@@ -22,9 +22,15 @@ import Vue from "vue";
 
 // temp
 import temp from "@/views/temp.vue";
+import edit2 from "@/views/EditList2.vue";
+
+// catch error
+import NotFound from "@/views/NotFound.vue";
 
 Vue.use(Router);
 export default new Router({
+  mode: "history",
+
   routes: [
     {
       path: "/",
@@ -62,16 +68,6 @@ export default new Router({
       name: "LogOut",
       component: LogOut,
     },
-    // {
-    //     path: '/Registration',
-    //     name: 'Registration',
-    //     component: Registration
-    // },
-    // {
-    //     path: '/ForgetPassword',
-    //     name: 'ForgetPassword',
-    //     component: ForgetPassword
-    // },
     {
       path: "/Tips",
       name: "Tips",
@@ -88,20 +84,38 @@ export default new Router({
       component: Recipes,
     },
     {
-        path: '/RecipeDemo',
-        name: 'RecipeDemo',
-        component: RecipeDemo
+      path: "/RecipeDemo",
+      name: "RecipeDemo",
+      component: RecipeDemo,
     },
     {
-        path: '/ShoppingList',
-        name: 'ShoppingList',
-        component: ShoppingList 
+      path: "/ShoppingList",
+      name: "ShoppingList",
+      component: ShoppingList,
     },
 
     {
       path: "/temp",
       name: "temp",
       component: temp,
+    },
+
+    {
+      path: "/edit2",
+      name: "edit2",
+      component: edit2,
+    },
+
+    {
+      path: "/edit2/:item",
+      name: "edit2",
+      component: edit2,
+    },
+
+    {
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: NotFound,
     },
   ],
 });

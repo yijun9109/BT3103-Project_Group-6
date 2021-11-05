@@ -1,8 +1,8 @@
 <template>
   <div class="bg">
     <div class="box">
-      <a href="/#/Home" v-if="this.loggedIn">keep track of your food items</a>
-      <a href="/#/LogIn" v-else>keep track of your food items</a>
+      <a href="/Home" v-if="this.loggedIn">keep track of your food items</a>
+      <a href="/LogIn" v-else>keep track of your food items</a>
     </div>
 
     <div class="row">
@@ -109,7 +109,7 @@ p {
 
 .tile {
   color: white;
-  height: 350px;
+  height: 300px;
   width: 20%;
   /* border: 1px solid black; */
   background-color: white;
