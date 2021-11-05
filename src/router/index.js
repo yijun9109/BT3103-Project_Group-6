@@ -16,7 +16,6 @@ import Recipes from '@/views/Recipes.vue'
 import RecipeDemo from '@/views/RecipeDemo.vue'
 import WesternRecipes from '@/views/WRecipes.vue'
 import ChineseRecipes from '@/views/CRecipes.vue'
-
 // Shopping List Page
 import ShoppingList from "@/views/ShoppingList.vue";
 import Router from "vue-router";
@@ -24,9 +23,15 @@ import Vue from "vue";
 
 // temp
 import temp from "@/views/temp.vue";
+import edit2 from "@/views/EditList2.vue";
+
+// catch error
+import NotFound from "@/views/NotFound.vue";
 
 Vue.use(Router);
 export default new Router({
+  mode: "history",
+
   routes: [
     {
       path: "/",
@@ -64,16 +69,6 @@ export default new Router({
       name: "LogOut",
       component: LogOut,
     },
-    // {
-    //     path: '/Registration',
-    //     name: 'Registration',
-    //     component: Registration
-    // },
-    // {
-    //     path: '/ForgetPassword',
-    //     name: 'ForgetPassword',
-    //     component: ForgetPassword
-    // },
     {
       path: "/Tips",
       name: "Tips",
@@ -90,9 +85,9 @@ export default new Router({
       component: Recipes,
     },
     {
-        path: '/RecipeDemo',
-        name: 'RecipeDemo',
-        component: RecipeDemo
+      path: "/RecipeDemo",
+      name: "RecipeDemo",
+      component: RecipeDemo,
     },
     {
       path: '/WRecipes',
@@ -114,6 +109,24 @@ export default new Router({
       path: "/temp",
       name: "temp",
       component: temp,
+    },
+
+    {
+      path: "/edit2",
+      name: "edit2",
+      component: edit2,
+    },
+
+    {
+      path: "/edit2/:item",
+      name: "edit2",
+      component: edit2,
+    },
+
+    {
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: NotFound,
     },
   ],
 });

@@ -33,6 +33,7 @@ export default {
             //this.$router.go()
            
             this.$router.go('/')
+            //this.$router.go('http://localhost:8080/')
         }
         
     }

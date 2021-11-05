@@ -8,7 +8,7 @@
 
     </v-data-table> -->
     <div>
-
+        
         <br>
         <table id = "table">
             <tr>  
@@ -19,12 +19,14 @@
             <th>Expiry Date</th>
             </tr>
         </table>
+
         <h2 id = "count"></h2> 
+        
     </div>
 </template>
 
 <script>
-import {  deleteDoc, doc, getFirestore, getDocs, collection,  where, orderBy } from 'firebase/firestore';
+import {  deleteDoc, doc, getFirestore, getDocs, collection,  orderBy, query, where } from 'firebase/firestore';
 // import { getDocs, collection, Timestamp, query, where } from 'firebase/firestore';
 import firebaseApp from '@/firebase.js';
 import { getAuth, onAuthStateChanged } from  'firebase/auth';
@@ -97,11 +99,14 @@ export default {
             let idx = 1
             var lim = 8
 
-            var start = new Date();
-            start.setHours(0,0,0,0);
+            var time = new Date(new Date().getTime() + 3*24*60*60*1000).toLocaleDateString();
+            var arrTime = time.split('/')
+            if (parseInt(arrTime[1]) < 10) {
+                arrTime[1] = '0' + arrTime[1]
+            }
+            var end = arrTime[2] + '-' + arrTime[0] + '-' + arrTime[1]
+            console.log(end)
 
-            var end = new Date(start.getTime());
-            end.setHours(72,59,59,999);
 
             // const q = query(collection(db, String(this.fbuser)+" Food"));
             // const q = query(collection(db, "Food"), orderBy('expiry'));
@@ -113,7 +118,7 @@ export default {
             // where query 0 items
 
             // const z = await getDocs(q);
-             const z = await getDocs(collection(db, String(this.fbuser)), where("expiry", "<=", end), orderBy("expiry"))
+            const z = await getDocs(query(collection(db, String(this.fbuser)), orderBy("expiry"), where('expiry', '<=', end)))
 
             z.forEach((docs) => {
 
@@ -139,7 +144,9 @@ export default {
                     cell1.innerHTML = idx; cell2.innerHTML = name; 
                     cell3.innerHTML = "x"+quant.toString(); cell4.innerHTML = exp;
                     cell5.innerHTML = loc;
-                } 
+                } else {
+                    return;
+                }
                 idx ++ // to show number of items expiring if it goes beyond limit
 
                 // console.log(typeof exp)
@@ -169,9 +176,10 @@ export default {
 
 table {
   border-collapse: collapse;
-  width: 80%;
+  width: 95%;
   border: 2px solid #2c3e50; 
-  /* text-align: center */
+  margin: auto;
+  text-align: center
 }
 
 th,td {
@@ -187,8 +195,9 @@ th,td {
 
 
 h2 {
-    padding-top: 140px;
+    padding-top: 20px;
     padding-right: 25px;
+
     font-size: 60px;
     font-weight: 100;
     color: white;

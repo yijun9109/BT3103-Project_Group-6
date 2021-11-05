@@ -44,7 +44,7 @@ export default {
   height: 350px;
   margin-right: auto;
   margin-left: auto;
-  margin-top: 10px;
+  margin-top: 50px;
 }
 #logout {
     padding-top: 50px;
