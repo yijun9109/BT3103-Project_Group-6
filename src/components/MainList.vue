@@ -46,7 +46,7 @@
                         id='dropdown'
                         style='color: #A0AEC0;'
                         @click="dropDown()">
-                        mdi-filter
+                        mdi-menu-down
                     </v-icon>
                      <!-- <button class='sorting' id="dropdown" v-on:click='dropDown()'> V </button> -->
                     <div>
@@ -95,9 +95,6 @@
     <div class="modal-overlay" v-if="showDelete"></div>
 
 
-
-
-
     <!-- <button type='button' class = 'add' v-on:click='addItem()'> + Add Item </button> -->
     <v-icon
         small
@@ -107,7 +104,7 @@
         mdi-calendar
     </v-icon>
 
-    <button type='button' class = 'dlcal' v-on:click ='dlcalendar()'> Link to my calendar </button>
+    <button type='button' class = 'dlcal' v-on:click ='dlcalendar()'> Download Calendar </button>
 
 
     <!--Add Item Vuetify-->
@@ -182,6 +179,7 @@
           </v-card>
         </v-dialog>
     </div> -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
 
 </div>
 </template>
@@ -375,18 +373,16 @@ export default {
                 cell4.innerHTML = data.storage;
                 cell5.innerHTML = data.expiry;
 
-                var editBut = document.createElement('button')
-                editBut.className = 'editbwt'
+                var editBut = document.createElement('i')
+                editBut.className = "mdi mdi-pencil mdi-24px"
                 editBut.id = String(data.item)
-                editBut.innerHTML = 'Edit'
                 editBut.onclick = () => { 
                     this.editItem(editBut.id, data.expiry, data.storage)
                 }
 
-                var deleteBut = document.createElement('button')
-                deleteBut.className = 'deletebwt'
+                var deleteBut = document.createElement('i')
+                deleteBut.className = 'mdi mdi-delete mdi-24px'
                 deleteBut.id = String(data.items)
-                deleteBut.innerHTML = 'Delete'
                 deleteBut.onclick = () => { 
                     this.showDelete = true // added
                     document.getElementById('delete').style.display = 'block'

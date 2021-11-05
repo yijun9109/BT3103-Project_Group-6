@@ -9,7 +9,7 @@
 
             <v-card-text>
                 <v-form class="px-3" ref="form">
-                    <v-text-field label="Name" v-model="name" ></v-text-field>
+                    <v-text-field label="Name" v-model="name" readonly></v-text-field>
                     <v-text-field label="Quantity" v-model="qty" :rules="qtyRules"></v-text-field>
                     <v-select
                         :items="locations"
@@ -53,7 +53,7 @@
 <script>
 import firebaseApp from '@/firebase.js'
 import { getFirestore } from 'firebase/firestore'
-import { doc, setDoc, }  from 'firebase/firestore'
+import { doc, setDoc, deleteDoc }  from 'firebase/firestore'
 import { getAuth} from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
@@ -85,6 +85,10 @@ export default {
             var quantity = parseInt(this.qty)
             var expiry = this.due
             var storage = this.loc
+            
+            var oldI = this.item;
+            var oldE = this.expiry;
+            var oldS = this.storage;
 
             try {
                 const docRef = await setDoc(doc(db, String(this.user), item + ' ' + expiry + ' ' + storage), {
@@ -93,6 +97,7 @@ export default {
                     expiry: expiry, 
                     storage: storage
                 })
+                await deleteDoc(doc(db, String(this.fbuser), oldI + ' ' + oldE + ' ' + oldS))
                 document.getElementById('input').reset();
                 console.log(item + ' is updated')
                 console.log(docRef)
@@ -109,6 +114,8 @@ export default {
     mounted() {
         this.item = this.$route.params.item
         this.name = this.item
+        this.expiry = this.$route.params.expiry
+        this.storage = this.$route.params.storage
     }
 
 }
