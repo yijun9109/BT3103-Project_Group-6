@@ -163,6 +163,7 @@ export default {
     padding: 20px;
     margin-left: -10px;
     margin-right: -40px;
+    /* overflow: hidden; */
 }
 
 /* .container {
@@ -176,8 +177,9 @@ export default {
 
 /* Vuetify */
 
-#vuetify {
+.bg #vuetify {
     margin-top: 0px;
+    height: 20px;
 }
 
 #addbtn {

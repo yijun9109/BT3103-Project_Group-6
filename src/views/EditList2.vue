@@ -1,7 +1,6 @@
 <template>
-<div class="bg">
-
-
+<div id="bg">
+    <v-app>
     <v-card class="card">
             <v-card-title>
                 <h2>Edit Item</h2>
@@ -46,7 +45,8 @@
             </v-btn>
             </v-card-actions>
         </v-card>
-
+    </v-app>
+            
     </div>
 </template>
 
@@ -59,7 +59,7 @@ import { getAuth} from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
-  name: "edit2",
+  name: "Edit",
   data() {
       return {
           item: '',
@@ -68,13 +68,21 @@ export default {
           qty: '',
           due: null,
           loc: '',
-          locations: ['Fridge', 'Freezer', 'Cabinet']
+          locations: ['Fridge', 'Freezer', 'Cabinet'],
+          qtyRules: [
+                v => v.length > 0 || 'This field may not be empty',
+                v => Number.isInteger(Number(v)) || "The value must be an integer number"
+            ],
       }
   },
   
   methods: {
     cancel() {
             this.$router.push({name: 'List'})
+    },
+
+    change() {
+        this.refresh += 1;
     },
 
     async editData() { 
@@ -93,16 +101,20 @@ export default {
                     expiry: expiry, 
                     storage: storage
                 })
-                document.getElementById('input').reset();
+                // document.getElementById('input').reset();
                 console.log(item + ' is updated')
+                console.log(item, quantity, expiry, storage)
                 console.log(docRef)
-                this.$emit("added")
-                this.$router.push({name: 'List'})
+                this.change()
+                // this.$emit("added")
+                // this.$router.push({name: 'List'})
             }
             catch (error) {
                 console.error("Error adding item: " + item)
                 console.log(error)
             }
+            this.$refs.form.reset()
+            this.cancel()
         }
   },
 
@@ -114,15 +126,17 @@ export default {
 }
 </script>
 
-<style>
-.bg {
+<style scoped>
+#bg {
     background-color: #FFF8EF;
-    height: 800px;
+    /* height: 800px; */
+    width: 100%;
+    height: 100vh;
 }
 
 .card {
     width: 40%;
     margin: auto;
-    top: 100px;
+    top: -50px;
 }
 </style>
