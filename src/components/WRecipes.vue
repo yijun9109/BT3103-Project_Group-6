@@ -30,7 +30,7 @@
     <v-row 
         :align="align"
         no-gutters>
-        <v-col>
+        <v-col md="4">
         <router-link to="/RecipeDemo">
             <v-card class="rounded-card" id="one">
                 <center>
@@ -48,25 +48,7 @@
             </v-card>
         </router-link>
         </v-col>
-        <v-col>
-        <router-link to="">
-            <v-card class="rounded-card" id="two">
-                <center>
-                <v-img 
-                    id="image"
-                    contain
-                    src="https://www.simplyrecipes.com/thmb/wc6AR5n8ReYkmjUVVP3UUoCSh40=/1600x1067/filters:fill(auto,1)/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2008__08__shrimp-fried-rice-horiz-a-1600-1d45831476cb4e89a385b58b716bca26.jpg">
-                </v-img>
-                </center>
-                <h2>Fried rice</h2>
-                <br>
-                Serves 3
-                <br>
-                Cooking time 5 mins
-            </v-card>
-        </router-link>
-        </v-col>
-        <v-col>
+        <v-col md="4">
         <router-link to="">
             <v-card class="rounded-card" id="three">
                 <center>
@@ -100,12 +82,12 @@ export default {
         items: [
         {
             text: 'Show All',
-            disabled: true,
+            disabled: false,
             function: '/Recipes',
         },
         {
             text: 'Western',
-            disabled: false,
+            disabled: true,
             function: '/WRecipes',
         },
         {
@@ -142,14 +124,6 @@ h3{
 #one{
     text-align: center;
     background-color: #F5E6F7;
-    height: 450px;
-    color: slategray;
-    margin: 50px;
-    margin-bottom: 0px;
-}
-#two{
-    text-align: center;
-    background-color: #EAEFFB;
     height: 450px;
     color: slategray;
     margin: 50px;

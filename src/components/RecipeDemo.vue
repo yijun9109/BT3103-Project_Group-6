@@ -46,23 +46,13 @@
         </v-row>
     </v-card>
     <br>
-    <v-btn id="back" @click ="goToRecipe()">
+    <v-btn id="back" @click ="$router.go(-1)">
         Back <v-icon>
           mdi-arrow-right
         </v-icon>
     </v-btn>
 </div>
 </template>
-
-<script>
-export default {
-    methods: {
-        goToRecipe() {
-            this.$router.push({name:'Recipes'})
-        }
-    }
-}
-</script>
 
 <style scoped>
 #back{

@@ -13,7 +13,7 @@
                 <v-avatar
                     size="90"
                     id="bulb">
-                    <img src="https://cdn-icons.flaticon.com/png/512/2987/premium/2987996.png?token=exp=1635768194~hmac=dfcd9a07906a80213bb346799c6e3c60" alt="Bulb">
+                    <img src="https://live.staticflickr.com/65535/51654697314_1c14375fa5_o.png" alt="Bulb">
                 </v-avatar>
                 <h2>Storage guide</h2>
                 <br><br>
@@ -27,7 +27,7 @@
                 <v-avatar
                     size="90"
                     id="food">
-                    <img src="https://cdn-icons.flaticon.com/png/512/1065/premium/1065715.png?token=exp=1635771194~hmac=164e533aef649ba497faaa34439d1324">
+                    <img src="https://live.staticflickr.com/65535/51654709049_58e4beae47_o.png" alt="Food">
                 </v-avatar>
                 <h2>Recipes</h2>
                 <br><br>

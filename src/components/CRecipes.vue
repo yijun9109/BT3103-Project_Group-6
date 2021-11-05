@@ -30,25 +30,7 @@
     <v-row 
         :align="align"
         no-gutters>
-        <v-col>
-        <router-link to="/RecipeDemo">
-            <v-card class="rounded-card" id="one">
-                <center>
-                <v-img 
-                    id="image"
-                    contain
-                    src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2004/2/25/0/bw2b07_hambugers1.jpg.rend.hgtvcom.616.462.suffix/1558017418187.jpeg">
-                </v-img>
-                </center>
-                <h2>Hamburger</h2>
-                <br>
-                Serves 4
-                <br>
-                Cooking time 30 mins
-            </v-card>
-        </router-link>
-        </v-col>
-        <v-col>
+        <v-col md="4">
         <router-link to="">
             <v-card class="rounded-card" id="two">
                 <center>
@@ -63,24 +45,6 @@
                 Serves 3
                 <br>
                 Cooking time 5 mins
-            </v-card>
-        </router-link>
-        </v-col>
-        <v-col>
-        <router-link to="">
-            <v-card class="rounded-card" id="three">
-                <center>
-                <v-img 
-                    id="image"
-                    contain
-                    src="https://i2.wp.com/dashofsavory.com/wp-content/uploads/2015/08/IMG_78541.jpg?fit=2000%2C1334&ssl=1">
-                </v-img>
-                </center>
-                <h2>Carbonara</h2>
-                <br>
-                Serves 6
-                <br>
-                Cooking time 30 mins
             </v-card>
         </router-link>
         </v-col>
@@ -100,7 +64,7 @@ export default {
         items: [
         {
             text: 'Show All',
-            disabled: true,
+            disabled: false,
             function: '/Recipes',
         },
         {
@@ -110,7 +74,7 @@ export default {
         },
         {
             text: 'Chinese',
-            disabled: false,
+            disabled: true,
             function: '/CRecipes',
         },
         ],
@@ -139,25 +103,9 @@ h3{
     text-align: left;
     margin-left: 50px;
 }
-#one{
-    text-align: center;
-    background-color: #F5E6F7;
-    height: 450px;
-    color: slategray;
-    margin: 50px;
-    margin-bottom: 0px;
-}
 #two{
     text-align: center;
     background-color: #EAEFFB;
-    height: 450px;
-    color: slategray;
-    margin: 50px;
-    margin-bottom: 0px;
-}
-#three{
-    text-align: center;
-    background-color: #FBEAEA;
     height: 450px;
     color: slategray;
     margin: 50px;
