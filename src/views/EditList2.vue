@@ -1,6 +1,7 @@
 <template>
-<div id="bg">
-    <v-app>
+<div class="bg">
+
+
     <v-card class="card">
             <v-card-title>
                 <h2>Edit Item</h2>
@@ -8,7 +9,7 @@
 
             <v-card-text>
                 <v-form class="px-3" ref="form">
-                    <v-text-field label="Name" v-model="name" ></v-text-field>
+                    <v-text-field label="Name" v-model="name" readonly></v-text-field>
                     <v-text-field label="Quantity" v-model="qty" :rules="qtyRules"></v-text-field>
                     <v-select
                         :items="locations"
@@ -45,21 +46,20 @@
             </v-btn>
             </v-card-actions>
         </v-card>
-    </v-app>
-            
+
     </div>
 </template>
 
 <script>
 import firebaseApp from '@/firebase.js'
 import { getFirestore } from 'firebase/firestore'
-import { doc, setDoc, }  from 'firebase/firestore'
+import { doc, setDoc, deleteDoc }  from 'firebase/firestore'
 import { getAuth} from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
 
 export default {
-  name: "Edit",
+  name: "edit2",
   data() {
       return {
           item: '',
@@ -68,21 +68,13 @@ export default {
           qty: '',
           due: null,
           loc: '',
-          locations: ['Fridge', 'Freezer', 'Cabinet'],
-          qtyRules: [
-                v => v.length > 0 || 'This field may not be empty',
-                v => Number.isInteger(Number(v)) || "The value must be an integer number"
-            ],
+          locations: ['Fridge', 'Freezer', 'Cabinet']
       }
   },
   
   methods: {
     cancel() {
             this.$router.push({name: 'List'})
-    },
-
-    change() {
-        this.refresh += 1;
     },
 
     async editData() { 
@@ -93,6 +85,10 @@ export default {
             var quantity = parseInt(this.qty)
             var expiry = this.due
             var storage = this.loc
+            
+            var oldI = this.item;
+            var oldE = this.expiry;
+            var oldS = this.storage;
 
             try {
                 const docRef = await setDoc(doc(db, String(this.user), item + ' ' + expiry + ' ' + storage), {
@@ -101,42 +97,39 @@ export default {
                     expiry: expiry, 
                     storage: storage
                 })
-                // document.getElementById('input').reset();
+                await deleteDoc(doc(db, String(this.fbuser), oldI + ' ' + oldE + ' ' + oldS))
+                document.getElementById('input').reset();
                 console.log(item + ' is updated')
-                console.log(item, quantity, expiry, storage)
                 console.log(docRef)
-                this.change()
-                // this.$emit("added")
-                // this.$router.push({name: 'List'})
+                this.$emit("added")
+                this.$router.push({name: 'List'})
             }
             catch (error) {
                 console.error("Error adding item: " + item)
                 console.log(error)
             }
-            this.$refs.form.reset()
-            this.cancel()
         }
   },
 
     mounted() {
         this.item = this.$route.params.item
         this.name = this.item
+        this.expiry = this.$route.params.expiry
+        this.storage = this.$route.params.storage
     }
 
 }
 </script>
 
-<style scoped>
-#bg {
+<style>
+.bg {
     background-color: #FFF8EF;
-    /* height: 800px; */
-    width: 100%;
-    height: 100vh;
+    height: 800px;
 }
 
 .card {
     width: 40%;
     margin: auto;
-    top: -50px;
+    top: 100px;
 }
 </style>
