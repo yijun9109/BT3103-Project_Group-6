@@ -411,7 +411,7 @@ export default {
         },
 
         editItem(i, e, s) { 
-            this.$router.push({name: 'edit2', params: {item: i, expiry: e, storage: s}})
+            this.$router.push({name: 'Edit', params: {item: i, expiry: e, storage: s}})
         },
 
         async deleteItem(item, expiry, storage) {

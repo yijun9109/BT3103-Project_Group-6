@@ -10,12 +10,12 @@ import LogOut from "@/views/LogOut.vue";
 // import Registration from '@/views/Registration.vue'
 // import ForgetPassword from '@/views/ForgetPassword.vue'
 // Tips Page
-import Tips from '@/views/Tips.vue'
-import StorageGuide from '@/views/StorageGuide.vue'
-import Recipes from '@/views/Recipes.vue'
-import RecipeDemo from '@/views/RecipeDemo.vue'
-import WesternRecipes from '@/views/WRecipes.vue'
-import ChineseRecipes from '@/views/CRecipes.vue'
+import Tips from "@/views/Tips.vue";
+import StorageGuide from "@/views/StorageGuide.vue";
+import Recipes from "@/views/Recipes.vue";
+import RecipeDemo from "@/views/RecipeDemo.vue";
+import WesternRecipes from "@/views/WRecipes.vue";
+import ChineseRecipes from "@/views/CRecipes.vue";
 // Shopping List Page
 import ShoppingList from "@/views/ShoppingList.vue";
 import Router from "vue-router";
@@ -23,7 +23,7 @@ import Vue from "vue";
 
 // temp
 import temp from "@/views/temp.vue";
-import edit2 from "@/views/EditList2.vue";
+import Edit from "@/views/EditList2.vue";
 
 // catch error
 import NotFound from "@/views/NotFound.vue";
@@ -90,19 +90,19 @@ export default new Router({
       component: RecipeDemo,
     },
     {
-      path: '/WRecipes',
-      name: 'WesternRecipes',
-      component: WesternRecipes
+      path: "/WRecipes",
+      name: "WesternRecipes",
+      component: WesternRecipes,
     },
     {
-      path: '/CRecipes',
-      name: 'ChineseRecipes',
-      component: ChineseRecipes
+      path: "/CRecipes",
+      name: "ChineseRecipes",
+      component: ChineseRecipes,
     },
     {
-        path: '/ShoppingList',
-        name: 'ShoppingList',
-        component: ShoppingList 
+      path: "/ShoppingList",
+      name: "ShoppingList",
+      component: ShoppingList,
     },
 
     {
@@ -112,15 +112,9 @@ export default new Router({
     },
 
     {
-      path: "/edit2",
-      name: "edit2",
-      component: edit2,
-    },
-
-    {
-      path: "/edit2/:item",
-      name: "edit2",
-      component: edit2,
+      path: "/Edit/:item",
+      name: "Edit",
+      component: Edit,
     },
 
     {

@@ -1,8 +1,8 @@
 <template>
 <div class="bg">
 
-
-    <v-card class="card">
+    <v-app>
+        <v-card class="card">
             <v-card-title>
                 <h2>Edit Item</h2>
             </v-card-title>
@@ -46,7 +46,8 @@
             </v-btn>
             </v-card-actions>
         </v-card>
-
+    </v-app>
+    
     </div>
 </template>
 
@@ -59,7 +60,7 @@ import { getAuth} from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
-  name: "edit2",
+  name: "Edit",
   data() {
       return {
           item: '',
@@ -68,7 +69,11 @@ export default {
           qty: '',
           due: null,
           loc: '',
-          locations: ['Fridge', 'Freezer', 'Cabinet']
+          locations: ['Fridge', 'Freezer', 'Cabinet'],
+          qtyRules: [
+            v => v.length > 0 || 'This field may not be empty',
+            v => Number.isInteger(Number(v)) || "The value must be an integer number"
+          ],
       }
   },
   
@@ -98,17 +103,20 @@ export default {
                     storage: storage
                 })
                 await deleteDoc(doc(db, String(this.fbuser), oldI + ' ' + oldE + ' ' + oldS))
-                document.getElementById('input').reset();
+                // document.getElementById('input').reset();
                 console.log(item + ' is updated')
                 console.log(docRef)
                 this.$emit("added")
-                this.$router.push({name: 'List'})
+                
             }
             catch (error) {
                 console.error("Error adding item: " + item)
                 console.log(error)
             }
-        }
+
+            this.$refs.form.reset()
+            this.$router.push({name: 'List'})
+        },
   },
 
     mounted() {
@@ -130,6 +138,6 @@ export default {
 .card {
     width: 40%;
     margin: auto;
-    top: 100px;
+    margin-top: 100px;
 }
 </style>

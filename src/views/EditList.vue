@@ -1,7 +1,7 @@
 <template>
 <div class="bg">
     <h1> Edit </h1>
-    <EditItemList @added="change"/>
+    <EditItemList @added="change" :key="refresh" />
     
     <!-- <MainList :key="refreshComp"/> -->
 
@@ -32,7 +32,8 @@ export default {
     data() {
         return {
             refreshComp: 0,
-            showEdit: true
+            showEdit: true,
+            refresh:0,
         }
     },
 

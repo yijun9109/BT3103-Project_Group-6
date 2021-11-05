@@ -238,7 +238,7 @@ export default {
     background-image: linear-gradient(to right, #db9387, #fbd09e);
     color: white;
     font-size: 18px;
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 
 #allbtn {
