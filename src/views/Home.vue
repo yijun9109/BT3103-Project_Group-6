@@ -22,7 +22,7 @@
         <v-row>
             <v-col cols='6'>
 
-            <v-btn id="allbtn" href="/#/List">All Items</v-btn>
+            <v-btn id="allbtn" href="/List">All Items</v-btn>
             </v-col>
 
             <v-col cols='6'>

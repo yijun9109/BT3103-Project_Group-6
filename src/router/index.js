@@ -22,9 +22,10 @@ import Vue from "vue";
 
 // temp
 import temp from "@/views/temp.vue";
+import edit2 from "@/views/EditList2.vue";
 
 // catch error
-import NotFound from "@/views/NotFound.vue"
+import NotFound from "@/views/NotFound.vue";
 
 Vue.use(Router);
 export default new Router({
@@ -100,7 +101,19 @@ export default new Router({
     },
 
     {
-      path: '/:pathMatch(.*)*',
+      path: "/edit2",
+      name: "edit2",
+      component: edit2,
+    },
+
+    {
+      path: "/edit2/:item",
+      name: "edit2",
+      component: edit2,
+    },
+
+    {
+      path: "/:pathMatch(.*)*",
       name: "NotFound",
       component: NotFound,
     },

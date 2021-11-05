@@ -1,7 +1,10 @@
 <template>
 <div class="bg">
 
-    <a href="/#/Home" class="viewexp">View expiring items</a>
+    
+    <!-- <a href="/Home" class="viewexp">View expiring items</a> -->
+    <button type='button' class = 'viewexp' v-on:click ="goExp()"> View expiring </button>
+
     <div id='list' style='position:absolute;'>
 
         <h1>All Items</h1>
@@ -73,7 +76,6 @@
     </div>
 
     <div id="delete" class="modal">
-
         <div class="actual-modal">
             <!-- <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span> -->
             <form class="modal-content">
@@ -88,10 +90,12 @@
             </div>
         </form>
         </div> 
-
     </div>
 
     <div class="modal-overlay" v-if="showDelete"></div>
+
+
+
 
 
     <!-- <button type='button' class = 'add' v-on:click='addItem()'> + Add Item </button> -->
@@ -99,9 +103,10 @@
         small
         id='cale'
         style='color: #91a3b8;
-        position: relative; right: -32%; top: 44px;'>
+        position: relative; right: -28%; top: -16px;'>
         mdi-calendar
     </v-icon>
+
     <button type='button' class = 'dlcal' v-on:click ='dlcalendar()'> Link to my calendar </button>
 
 
@@ -220,10 +225,15 @@ export default {
             // refresh:0,
 
             showDelete: false,
+            // main: true // only show link to cal when on main list page
 
         }
     },
     methods: { 
+        goExp() {
+            location.href='/Home';
+        },
+
         itemOrder() {
             this.orderByItems += 1;
             if (this.orderByItems % 3 == 1) {
@@ -383,6 +393,7 @@ export default {
                     document.getElementById('confirm').onclick = () => {
                         this.deleteItem(data.item, data.expiry, data.storage)
                         console.log("deleted")
+                        this.showDelete =false // closes delete modal
                         document.getElementById('delete').style.display = 'none'
                     }
                     document.getElementById('cancel').onclick = () => { 
@@ -404,7 +415,8 @@ export default {
         },
 
         editItem(i) { 
-            this.$router.push({name: 'EditList', params: {item: i}})
+            // this.$router.push({name: 'EditList', params: {item: i }})
+            this.$router.push({name: 'edit2', params: {item: i }})
         },
 
         async deleteItem(item, expiry, storage) {
@@ -523,6 +535,7 @@ export default {
 <style scoped>
 
 .bg {
+    height: 85vh;
     overflow: hidden;
 }
 
@@ -553,16 +566,22 @@ export default {
 
 .viewexp {
     text-decoration:none;
-    color: #2c3e50;
+    /* color: #2c3e50; */
     font-size: 15px;
     position: relative;
-    right: -48%;
-    top: -10px;
-    font-weight: bold;
+    right: -44%;
+    top: -15px;
+
+    border: 1px solid #91a3b8;
+    width: 200px;
+    height: 35px;
+    border-radius: 10px;
+    background-color: #91a3b8;
+    color: white
 }
 
 .viewexp:hover {
-    color: rgb(66, 66, 66, 0.6);
+    /* color: rgb(66, 66, 66, 0.6); */
 
 }
 
@@ -588,6 +607,7 @@ h1 {
     box-shadow: 0px 3.5px 5.5px rgba(0, 0.5, 0.5, 0.2);
     border-radius: 15px;
     padding-bottom: 10px;
+    overflow: auto;
 }
 
 #list th {
@@ -643,13 +663,15 @@ hr {
     position: relative;
     border: 1px solid #91a3b8;
     /* border: 1px solid #2c3e50; */
-    width: 280px;
+    width: 200px;
     height: 35px;
     border-radius: 10px;
     color: #91a3b8;
-    right: -28%;
+    right: -15%;
+    text-align: left;
+    padding-left: 20px;
     /* right: -350px; */
-    top: 45px;
+    top: -15px;
 }
 
 .dlcal:hover {
@@ -693,7 +715,7 @@ hr {
     right: 0;
     bottom: 0;
     z-index: 95;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 248, 239, 0.3);
 }
 
 #deleteContent h1{
