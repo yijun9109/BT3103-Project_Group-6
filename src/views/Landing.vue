@@ -109,7 +109,7 @@ p {
 
 .tile {
   color: white;
-  height: 350px;
+  height: 300px;
   width: 20%;
   /* border: 1px solid black; */
   background-color: white;
