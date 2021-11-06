@@ -188,7 +188,11 @@ export default {
             var d = this.loc
             var e = this.unit
 
+
+            if (e == 'NA') {
+
             if (e == 'No unit') {
+
               e = ''
             } else if (e == 'g'&& b >= 1000) {
               b = b/1000
