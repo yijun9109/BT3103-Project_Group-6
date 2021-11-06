@@ -166,6 +166,9 @@ export default {
             var d = this.loc
             var e = this.unit
 
+            console.log(b)
+            console.log(b.length)
+
             if (e == 'NA') {
               e = ''
             } else

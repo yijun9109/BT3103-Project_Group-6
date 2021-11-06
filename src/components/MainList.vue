@@ -716,6 +716,7 @@ hr {
     right: 0;
     bottom: 0;
     z-index: 95;
+    height: 150vh;
     background-color: rgba(255, 248, 239, 0.3);
 }
 
