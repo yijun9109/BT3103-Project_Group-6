@@ -51,21 +51,22 @@ export default {
 
   display: inline-block;
   padding: 15px 25px;
-  background-image: linear-gradient(to right, #db9387, #fbd09e);
+  background-color: #fab05c;
+  /* background-image: linear-gradient(to right, #db9387, #fbd09e); */
   /* background-image: linear-gradient(to right, #CC2E5D, #FF5858); */
-  border-radius: 30px;
+  border-radius: 10px;
 
   color: #fff;
   font-size: 18px;
   font-weight: 700;
-  box-shadow: 3px 3px rgba(0, 0, 0, 0.2);
-  filter: drop-shadow(1px 1px 2px #4a4a4a);
+  /* box-shadow: 3px 3px rgba(0, 0, 0, 0.2); */
+  /* filter: drop-shadow(1px 1px 2px #4a4a4a); */
   transition: 0.4s ease-out;
 
   font-size: 20px;
   font-weight: bold;
   color: white;
-  height: 10px;
+  height: 40px;
   width: 120px;
   line-height: 4px;
   text-align: center;

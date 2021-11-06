@@ -46,7 +46,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #bg {
   background-image: url("../assets/gradient_background.svg");
   position: fixed;
