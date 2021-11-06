@@ -309,7 +309,7 @@ export default {
     width: 140%;
     height: 200px;
     margin-left: -20px;
-    margin-top: -70px;
+    margin-top: -90px;
 }
 
 .modal {
@@ -554,7 +554,7 @@ h2 {
     .bg {
         /* width: auto !important;
         width: 900px; */
-        height: 800px;
+        min-height: 800px !important;
     }
 }
 </style>

@@ -111,4 +111,10 @@ a {
 
   
 }
+
+@media (max-width: 900px)  {
+    #nav {
+        width: 770px;
+    }
+}
 </style>
