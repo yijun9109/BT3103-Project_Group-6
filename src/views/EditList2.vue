@@ -96,7 +96,7 @@ export default {
             var oldS = this.storage;
 
             try {
-                const docRef = await setDoc(doc(db, String(this.user), item + ' ' + expiry + ' ' + storage), {
+                const docRef = await setDoc(doc(db, String(this.fbuser), item + ' ' + expiry + ' ' + storage), {
                     item: item, 
                     quantity: quantity, 
                     expiry: expiry, 
