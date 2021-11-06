@@ -15,6 +15,7 @@
             <th>Index</th>       
             <th>Item</th>
             <th>Quantity</th>
+            <th>Units</th>
             <th>Location</th>
             <th>Expiry Date</th>
             </tr>
@@ -121,6 +122,9 @@ export default {
             if (parseInt(arrTime[1]) < 10) {
                 arrTime[1] = '0' + arrTime[1]
             }
+            if (parseInt(arrTime[0]) < 10) {
+                arrTime[0] = '0' + arrTime[0]
+            }
             var end = arrTime[2] + '-' + arrTime[0] + '-' + arrTime[1]
             console.log(end)
 
@@ -149,6 +153,7 @@ export default {
 
                 var name = (yy.item)
                 var quant = parseInt(yy.quantity)
+                var u = yy.unit
                 var exp = (yy.expiry)
                 var loc = (yy.storage)
 
@@ -156,11 +161,11 @@ export default {
                     var row = table.insertRow(idx)
                     var cell1 = row.insertCell(0); var cell2 = row.insertCell(1);
                     var cell3 = row.insertCell(2); var cell4 = row.insertCell(3);
-                    var cell5 = row.insertCell(4); 
+                    var cell5 = row.insertCell(4); var cell6 = row.insertCell(5)
 
                     cell1.innerHTML = idx; cell2.innerHTML = name; 
-                    cell3.innerHTML = "x"+quant.toString(); cell4.innerHTML = exp;
-                    cell5.innerHTML = loc;
+                    cell3.innerHTML = quant.toString(); cell4.innerHTML = u;
+                    cell5.innerHTML = loc; cell6.innerHTML = exp;
                 } else {
                     return;
                 }

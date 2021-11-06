@@ -12,12 +12,16 @@
                     <v-text-field label="Name" v-model="name" readonly></v-text-field>
                     <v-text-field label="Quantity" v-model="qty" :rules="qtyRules"></v-text-field>
                     <v-select
+                        :items="units"
+                        label="Unit" v-model="unit"
+                        ></v-select>
+                    <v-select
                         :items="locations"
                         label="Storage Location" v-model="loc"
-                        ></v-select>
+                        :rules=[rules.required]></v-select>
                     <v-menu max-width="290" class="mx-100">
                         <template v-slot:activator="{ on }">
-                            <v-text-field :value="due" v-on="on" label="Expiry Date"></v-text-field>
+                            <v-text-field :value="due" v-on="on" label="Expiry Date" :rules=[rules.required]></v-text-field>
                         </template>
                         <v-date-picker v-model="due"></v-date-picker>
                     </v-menu>
@@ -69,7 +73,12 @@ export default {
           qty: '',
           due: null,
           loc: '',
+          unit: '',
           locations: ['Fridge', 'Freezer', 'Cabinet'],
+          units: ['No unit', 'kg', 'g', 'l', 'ml'],
+          rules: {
+            required: value => !!value || 'This field must be filled'
+          },
           qtyRules: [
             v => v.length > 0 || 'This field may not be empty',
             v => Number.isInteger(Number(v)) || "The value must be an integer number"
@@ -88,6 +97,7 @@ export default {
 
             var item = this.name
             var quantity = parseInt(this.qty)
+            var u = this.unit;
             var expiry = this.due
             var storage = this.loc
             
@@ -95,10 +105,21 @@ export default {
             var oldE = this.expiry;
             var oldS = this.storage;
 
+            if (u == 'No unit') {
+              u = ''
+            } else if (u == 'g'&& quantity >= 1000) {
+              quantity = quantity/1000
+              u = 'kg'
+            } else if (u == 'ml' && quantity >= 1000) {
+              quantity = quantity/1000
+              u = 'l'
+            }
+
             try {
                 const docRef = await setDoc(doc(db, String(this.fbuser), item + ' ' + expiry + ' ' + storage), {
                     item: item, 
                     quantity: quantity, 
+                    unit: u,
                     expiry: expiry, 
                     storage: storage
                 })

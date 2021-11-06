@@ -19,15 +19,19 @@
 
             <v-card-text>
                 <v-form class="px-3" ref="form">
-                    <v-text-field label="Name" v-model="name" ></v-text-field>
+                    <v-text-field label="Name" v-model="name" :rules=[rules.required]></v-text-field>
                     <v-text-field label="Quantity" v-model="qty" :rules="qtyRules"></v-text-field>
+                    <v-select
+                        :items="units"
+                        label="Unit" v-model="unit"
+                        ></v-select>
                     <v-select
                         :items="loki"
                         label="Storage Location" v-model="loc"
-                        ></v-select>
+                        :rules=[rules.required]></v-select>
                     <v-menu max-width="290" class="mx-100">
                         <template v-slot:activator="{ on }">
-                            <v-text-field :value="due" v-on="on" label="Expiry Date"></v-text-field>
+                            <v-text-field :value="due" v-on="on" label="Expiry Date" :rules=[rules.required]></v-text-field>
                         </template>
                         <v-date-picker v-model="due"></v-date-picker>
                     </v-menu>
@@ -64,6 +68,25 @@
     </template>
     </v-app>
 
+    <div id="recoedit" class="modal">
+        <div class="actual-modal">
+            <!-- <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span> -->
+            <form class="modal-content">
+            <div class='content' id='recoContent'>
+                <h1>Duplicate Item</h1>
+                <p> Your item has already been stored! </p>
+                <p>If you would like to make changes, please use the edit function instead.</p>
+
+                <div class='confirmation'>
+                    <button type='button' id='ack'> Ok </button>
+                </div>
+            </div>
+        </form>
+        </div> 
+    </div>
+
+    <div class="modal-overlay" v-if="showModal"></div>   
+
   </div>
 </template>
 
@@ -71,7 +94,7 @@
 import MainList from '@/components/MainList.vue'
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";
-import { doc, setDoc }  from 'firebase/firestore'
+import { doc, setDoc, collection, query, where, getDocs }  from 'firebase/firestore'
 import { getAuth } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
@@ -81,12 +104,18 @@ export default {
     data() {
         return {
             // vuetify
+            showModal: false, 
             name: '',
             qty: '',
+            unit: '',
             due: null,
             loc: '',
             dialog: false,
+            units: ['No unit', 'kg', 'g', 'l', 'ml'],
             loki: ['Fridge', 'Freezer', 'Cabinet'],
+            rules: {
+                required: value => !!value || 'This field must be filled'
+            },
             qtyRules: [
                 v => v.length > 0 || 'This field may not be empty',
                 v => Number.isInteger(Number(v)) || "The value must be an integer number"
@@ -106,17 +135,44 @@ export default {
                 const auth = getAuth();
                 this.fbuser = auth.currentUser.email;
 
-                var a = this.name
-                var b = this.qty
-                var c = this.due
-                var d = this.loc
+            var a = this.name
+            var b = this.qty
+            var c = this.due
+            var d = this.loc
+            var e = this.unit
+
+            if (e == 'No unit') {
+              e = ''
+            } else if (e == 'g'&& b >= 1000) {
+              b = b/1000
+              e = 'kg'
+            } else if (e == 'ml' && b >= 1000) {
+              b = b/1000
+              e = 'l'
+            }
+
+            const food = collection(db, String(this.fbuser));
+            const q = query(food, where('item', '==', a), where('expiry', '==', c), where('storage', '==', d))
+            const que = await getDocs(q)
+
+            if (!que.empty) {
+                this.showModal = true;
+                document.getElementById('recoedit').style.display = 'block'
+                this.close()
+                document.getElementById('ack').onclick = () => {
+                    console.log('ok')
+                    this.showModal = false;
+                    document.getElementById('recoedit').style.display = 'none'
+                }
+                return;
+            }
 
                 if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
                     // alert("Saving item: " + b + "x " + a)
                     try {
                         const docRef = await setDoc(doc(db, String(this.fbuser), a + ' ' + c + ' ' + d), {
                         // const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
-                            item: a, quantity: b, expiry: c, storage: d, 
+                            item: a, quantity: b, unit: e, expiry: c, storage: d, 
                         })
                         console.log(docRef)
                         this.change()
@@ -164,6 +220,64 @@ export default {
     margin-left: -10px;
     margin-right: -40px;
     /* overflow: hidden; */
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  /*z-index: 1;*/ /* Sit on top */
+  z-index: 99;
+  /* left: 0;
+  top: 0; */
+  /* width: 100%; /* Full width */
+  /* height: 100%; Full height  */
+  width: 30%;
+  height: 30%;
+
+  overflow: auto; /* Enable scroll if needed */
+  background-color: white;
+  /* background-color: #474e5d; */
+  padding-top: 50px;
+
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 16px;
+  border: 1px solid;
+}
+
+.modal button {
+    margin:20px;
+}
+
+.modal-overlay { /* added */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 95;
+    background-color: rgba(255, 248, 239, 0.3);
+}
+
+#recoContent h1{
+    text-align: center;
+    margin-left: -10px;
+}
+
+
+.confirmation button {
+    color: white;
+    height: 30px;
+    width: 100px;
+    border-radius: 30px;
+    border: 0px;
+    font-weight: bold;
+    background-color: #90B3F5;
+}
+
+#ack:hover {
+    background-color: #5a7dbd;
 }
 
 /* .container {
