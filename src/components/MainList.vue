@@ -603,6 +603,8 @@ h1 {
     border-radius: 15px;
     padding-bottom: 10px;
     overflow: auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #list th {

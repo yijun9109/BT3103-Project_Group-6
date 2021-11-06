@@ -24,6 +24,11 @@ export default {
 </script>
 
 <style scoped>
+
+h1 {
+    margin-top:90px;
+}
+
 #h1 {
     font-family:monospace;
 }
@@ -47,6 +52,7 @@ export default {
   margin-top: 50px;
 }
 #logout {
-    padding-top: 50px;
+    padding-top: 0px;
+    margin-top: -10px;
 }
 </style>
