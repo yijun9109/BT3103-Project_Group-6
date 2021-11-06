@@ -75,10 +75,10 @@
             <div class='content' id='recoContent'>
                 <h1>Duplicate Item</h1>
                 <p> Your item has already been stored! </p>
-                <p>If you would like to make changes, please use the edit function instead.</p>
+                <p>If you would like to make changes, <br> please use the edit function instead.</p>
 
                 <div class='confirmation'>
-                    <button type='button' id='ack'> Ok </button>
+                    <button type='button' id='ack'> OK </button>
                 </div>
             </div>
         </form>
