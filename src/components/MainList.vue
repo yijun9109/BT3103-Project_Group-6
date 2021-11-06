@@ -262,9 +262,9 @@ export default {
         expiryOrder() {
             this.orderByExpiry += 1;
             if (this.orderByExpiry % 3 == 1) {
-                this.orderByList = [4, 'asc']
+                this.orderByList = [5, 'asc']
             } else if (this.orderByExpiry % 3 == 2) {
-                this.orderByList = [4, 'desc']
+                this.orderByList = [5, 'desc']
             } else {
                 this.orderByList = []
                 this.orderByExpiry = 0;
@@ -289,7 +289,7 @@ export default {
             var table = document.getElementById('table')
             for (let i = 1; i < table.rows.length; i++) {
                 let cells = table.rows[i].cells;
-                for (let c = 0; c < 5; c++) {
+                for (let c = 1; c < 6; c++) {
                     calarr.push(cells[c].innerHTML)
                 }
                 let date = String(calarr[4])
@@ -299,7 +299,7 @@ export default {
                 moddate.push(0)
                 moddate.push(0)
                 console.log(moddate)
-                let name = "You have " + calarr[2] + " " + calarr[1] + " expiring today!"
+                let name = "You have " + calarr[1] + calarr[2] + ' ' + calarr[0] + " expiring today!"
                 let entry = {
                     title: name,
                     start: moddate,
@@ -317,7 +317,6 @@ export default {
             });
 
             return val  
-                   
         },
 
         addItem() { 
@@ -428,50 +427,12 @@ export default {
             this.run()
          },
 
-        // submit btn for vuetify - moved to list
-        // async submit() {
-        //     if (this.$refs.form.validate())  {  // performs validation check
-        //         const auth = getAuth();
-        //         this.fbuser = auth.currentUser.email;
-
-        //         var a = this.name
-        //         var b = this.qty
-        //         var c = this.due
-        //         var d = this.loc
-
-        //         if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
-        //             // alert("Saving item: " + b + "x " + a)
-        //             try {
-        //                 const docRef = await setDoc(doc(db, String(this.fbuser), a), {
-        //                 // const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
-        //                     item: a, quantity: b, expiry: c, storage: d, 
-        //                 })
-        //                 console.log(docRef)
-        //                 this.change()
-        //             } catch(error) {
-        //                 console.error("Error adding document: ", error);
-        //             }
-        //         }
-        //         this.close()
-        //     }
-
-        // },
-        // change() {
-        //     this.refresh +=1; 
-        // },
-
-        // // closing add item dialog
-        // close() {
-        // this.dialog = false
-        // },
-
-
          sortTable(index, direction) {
              var table = document.getElementById('table');
              var sw = true;
              while (sw) {
                 sw = false;
-                if (index == 4 || index == 1) {
+                if (index == 5 || index == 1) {
                     for (let i = 1; i < (table.rows.length - 1); i++) {
                         let x = table.rows[i].getElementsByTagName('TD')[index]
                         let y = table.rows[i + 1].getElementsByTagName('TD')[index]
@@ -522,9 +483,9 @@ export default {
         }
       });
     }, watch: {
-                dialog(val) {
-                    val || this.close()
-                }
+        dialog(val) {
+            val || this.close()
+        }
     }
 
 }
