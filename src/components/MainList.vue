@@ -39,6 +39,8 @@
                     </v-icon>
                     <!-- <button id='quantityorder' v-on:click='quantityOrder()'> V </button> -->
                 </th>
+                <th> Units
+                </th>
                 <th>
                     Storage Location
                     <v-icon
@@ -366,12 +368,14 @@ export default {
                 var cell5 = row.insertCell(4);
                 var cell6 = row.insertCell(5);
                 var cell7 = row.insertCell(6);
+                var cell8 = row.insertCell(7);
 
                 cell1.innerHTML = index;
                 cell2.innerHTML = data.item;
                 cell3.innerHTML = parseInt(data.quantity);
-                cell4.innerHTML = data.storage;
-                cell5.innerHTML = data.expiry;
+                cell4.innerHTML = data.unit;
+                cell5.innerHTML = data.storage;
+                cell6.innerHTML = data.expiry;
 
                 var editBut = document.createElement('i')
                 editBut.className = "mdi mdi-pencil mdi-24px"
@@ -399,8 +403,8 @@ export default {
 
                 }
 
-                cell6.appendChild(editBut)
-                cell7.appendChild(deleteBut)
+                cell7.appendChild(editBut)
+                cell8.appendChild(deleteBut)
                 index += 1
             })
 

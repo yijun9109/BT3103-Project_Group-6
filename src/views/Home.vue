@@ -43,6 +43,10 @@
                             <v-text-field label="Name" v-model="name" ></v-text-field>
                             <v-text-field label="Quantity" v-model="qty" :rules="qtyRules"></v-text-field>
                             <v-select
+                                :items="units"
+                                label="Unit" v-model="unit"
+                                ></v-select>
+                            <v-select
                                 :items="locations"
                                 label="Storage Location" v-model="loc"
                                 ></v-select>
@@ -90,7 +94,7 @@
 
     <!-- this is for the buttons-->
     <div class="white"></div> 
-    <!-- vuetify buttons the default background cannot set transparent :( -->
+    <!-- vuetify buttons the default background cannot set transparent :( -->   
 
   </div>
 </template>
@@ -123,6 +127,7 @@ export default {
         qty: '',
         due: null,
         loc: '',
+        unit: '',
         dialog: false,
         fbuser: '',
         run: 0,
@@ -130,6 +135,7 @@ export default {
         refresh: 0,
 
         locations: ['Fridge', 'Freezer', 'Cabinet'],
+        units: ['NA', 'kg', 'g', 'l', 'ml', 'bottle', 'packet', 'bag'],
         qtyRules: [
             v => v.length > 0 || 'This field may not be empty',
             v => Number.isInteger(Number(v)) || "The value must be an integer number"
@@ -158,13 +164,18 @@ export default {
             var b = this.qty
             var c = this.due
             var d = this.loc
+            var e = this.unit
+
+            if (e == 'NA') {
+              e = ''
+            } else
 
             if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
                 // alert("Saving item: " + b + "x " + a)
                 try {
                     const docRef = await setDoc(doc(db, String(this.fbuser), a + ' ' + c + ' ' + d), {
                     // const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
-                        item: a, quantity: b, expiry: c, storage: d, 
+                        item: a, quantity: b, unit: e, expiry: c, storage: d, 
                     })
                     console.log(docRef)
                     // this.$emit("added") - used to be additem component now here
