@@ -306,7 +306,7 @@ export default {
 
 .white {
     background-color: white;
-    width: 100%;
+    width: 140%;
     height: 200px;
     margin-left: -20px;
     margin-top: -70px;
@@ -431,6 +431,9 @@ export default {
   margin-left: -10px;
   margin-right: -40px;
   overflow: hidden; /* prevents scrolling down the abyss of nothginness */
+
+  min-width: 800px;
+  min-height: 770px
 }
 
 .btn {
@@ -544,5 +547,14 @@ h2 {
 
 .table {
     /* padding-left: 30px; */
+}
+
+@media (max-width: 900px)  {
+/* (min-height: 770px) (min-width: 900px) */
+    .bg {
+        /* width: auto !important;
+        width: 900px; */
+        height: 800px;
+    }
 }
 </style>
