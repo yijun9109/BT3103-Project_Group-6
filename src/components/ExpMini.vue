@@ -117,7 +117,7 @@ export default {
             let idx = 1
             var lim = 8
 
-            var time = new Date(new Date().getTime() + 3*24*60*60*1000).toLocaleDateString("en", );
+            var time = new Date(new Date().getTime() + 3*24*60*60*1000).toLocaleDateString("en-GB");
             var arrTime = time.split('/')
             if (parseInt(arrTime[1]) < 10) {
                 arrTime[1] = '0' + arrTime[1]
@@ -127,7 +127,7 @@ export default {
             }
             var end = arrTime[2] + '-' + arrTime[1] + '-' + arrTime[0]
             console.log(end)
-            console.log(new Date().toLocaleDateString())
+            console.log(new Date().toLocaleDateString("en-GB"))
 
 
             // const q = query(collection(db, String(this.fbuser)+" Food"));
