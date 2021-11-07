@@ -125,7 +125,9 @@ export default {
             if (parseInt(arrTime[0]) < 10) {
                 arrTime[0] = '0' + arrTime[0]
             }
-            var end = arrTime[2] + '-' + arrTime[0] + '-' + arrTime[1]
+
+            var end = arrTime[2] + '-' + arrTime[1] + '-' + arrTime[0] // my com weird
+            // var end = arrTime[2] + '-' + arrTime[0] + '-' + arrTime[1] - your com
             console.log(end)
 
 

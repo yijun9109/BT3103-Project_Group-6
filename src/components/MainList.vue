@@ -5,6 +5,40 @@
     <!-- <a href="/Home" class="viewexp">View expiring items</a> -->
     <button type='button' class = 'viewexp' v-on:click ="goExp()"> View expiring </button>
 
+
+
+    <div id="delete" class="modal">
+        <div class="actual-modal">
+            <!-- <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span> -->
+            <form class="modal-content">
+            <div class='content' id='deleteContent'>
+                <h1>Confirm Delete</h1>
+                <p> Do you want to delete this item? </p>
+
+                <div class='confirmation'>
+                    <button type="button" id="cancel"> Cancel </button>
+                    <button type='button' id='confirm'> Delete </button>
+                </div>
+            </div>
+        </form>
+        </div> 
+    </div>
+
+    <div class="modal-overlay" v-if="showDelete"></div>
+
+
+    <!-- <button type='button' class = 'add' v-on:click='addItem()'> + Add Item </button> -->
+    <v-icon
+        small
+        id='cale'
+        style='color: #91a3b8;
+        position: relative; right: -28%; top: -16px;'>
+        mdi-calendar
+    </v-icon>
+
+    <button type='button' class = 'dlcal' v-on:click ='dlcalendar()'> Download Calendar </button>
+
+
     <div id='list' style='position:absolute;'>
 
         <h1>All Items</h1>
@@ -77,36 +111,7 @@
         <br>
     </div>
 
-    <div id="delete" class="modal">
-        <div class="actual-modal">
-            <!-- <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span> -->
-            <form class="modal-content">
-            <div class='content' id='deleteContent'>
-                <h1>Confirm Delete</h1>
-                <p> Do you want to delete this item? </p>
 
-                <div class='confirmation'>
-                    <button type="button" id="cancel"> Cancel </button>
-                    <button type='button' id='confirm'> Delete </button>
-                </div>
-            </div>
-        </form>
-        </div> 
-    </div>
-
-    <div class="modal-overlay" v-if="showDelete"></div>
-
-
-    <!-- <button type='button' class = 'add' v-on:click='addItem()'> + Add Item </button> -->
-    <v-icon
-        small
-        id='cale'
-        style='color: #91a3b8;
-        position: relative; right: -28%; top: -16px;'>
-        mdi-calendar
-    </v-icon>
-
-    <button type='button' class = 'dlcal' v-on:click ='dlcalendar()'> Download Calendar </button>
 
 
     <!--Add Item Vuetify-->
