@@ -301,8 +301,10 @@ export default {
     background-image: linear-gradient(to right, #db9387, #fbd09e);
     color: white;
     font-size: 18px;
+    margin-left: -30px;
     /* font-weight: 700; */
 }
+
 
 .white {
     background-color: white;
@@ -555,6 +557,11 @@ h2 {
         /* width: auto !important;
         width: 900px; */
         min-height: 800px !important;
+    }
+
+    .white {
+        margin-top: 60px;
+        margin-left: 40px;
     }
 }
 </style>

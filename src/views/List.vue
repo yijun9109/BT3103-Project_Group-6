@@ -3,7 +3,27 @@
 
     <MainList :key="refresh"/>
 
-     <!--Add Item Vuetify-->
+
+    <div id="delete" class="modal">
+        <div class="actual-modal">
+            <!-- <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span> -->
+            <form class="modal-content">
+            <div class='content' id='deleteContent'>
+                <h1>Confirm Delete</h1>
+                <p> Do you want to delete this item? </p>
+
+                <div class='confirmation'>
+                    <button type="button" id="cancel"> Cancel </button>
+                    <button type='button' id='confirm'> Delete </button>
+                </div>
+            </div>
+        </form>
+        </div> 
+    </div>
+
+    <div class="modal-overlay" v-if="showDelete"></div>
+
+       <!--Add Item Vuetify-->
     <v-app id="vuetify">
         <template>
         <v-dialog v-model="dialog" max-width = "600px">
