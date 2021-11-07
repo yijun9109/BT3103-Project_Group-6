@@ -127,8 +127,6 @@ export default {
             }
             var end = arrTime[2] + '-' + arrTime[1] + '-' + arrTime[0]
             console.log(end)
-            console.log(new Date().toLocaleDateString("en-GB"))
-
 
             // const q = query(collection(db, String(this.fbuser)+" Food"));
             // const q = query(collection(db, "Food"), orderBy('expiry'));
@@ -167,8 +165,6 @@ export default {
                     cell1.innerHTML = idx; cell2.innerHTML = name; 
                     cell3.innerHTML = quant.toString(); cell4.innerHTML = u;
                     cell5.innerHTML = loc; cell6.innerHTML = exp;
-                } else {
-                    return;
                 }
                 idx ++ // to show number of items expiring if it goes beyond limit
 
