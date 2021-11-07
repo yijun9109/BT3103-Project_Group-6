@@ -380,7 +380,7 @@ export default {
                 editBut.className = "mdi mdi-pencil mdi-24px"
                 editBut.id = String(data.item)
                 editBut.onclick = () => { 
-                    this.editItem(editBut.id, data.expiry, data.storage)
+                    this.editItem(editBut.id, data.expiry, data.storage, data.quantity, data.unit)
                 }
 
                 var deleteBut = document.createElement('i')
@@ -413,8 +413,8 @@ export default {
 
         },
 
-        editItem(i, e, s) { 
-            this.$router.push({name: 'Edit', params: {item: i, expiry: e, storage: s}})
+        editItem(i, e, s, q, u) { 
+            this.$router.push({name: 'Edit', params: {item: i, expiry: e, storage: s, quantity: q, unit: u}})
         },
 
         async deleteItem(item, expiry, storage) {
