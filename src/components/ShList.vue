@@ -299,7 +299,7 @@ const db = getFirestore(firebaseApp)
           var iquant1 = document.getElementById("IQuant1").value
           var cquant1 = document.getElementById("CQuant1").value
           var i = this.editedItem.name
-          const docRef = doc(db, String(this.fbuser) + " Shopping", i);
+          const docRef = doc(db, String(this.fbuser), i);
           if (i == name1) {
             await updateDoc(docRef, {
               iquant: iquant1,
