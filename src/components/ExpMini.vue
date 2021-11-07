@@ -125,7 +125,9 @@ export default {
             if (parseInt(arrTime[0]) < 10) {
                 arrTime[0] = '0' + arrTime[0]
             }
+
             var end = arrTime[2] + '-' + arrTime[1] + '-' + arrTime[0]
+
             console.log(end)
 
             // const q = query(collection(db, String(this.fbuser)+" Food"));
