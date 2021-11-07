@@ -24,7 +24,7 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.name" label="ITEM NAME" id="name">
+                    <v-text-field v-model="editedItem.name" label="Item Name" id="name">
                     </v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
@@ -33,7 +33,6 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field v-model="editedItem.current" label="Current Quantity" id="CQuant">
-
                     </v-text-field>
                   </v-col>
                 </v-row>
@@ -142,7 +141,7 @@
 </template>
 
 <script>
-import {  deleteDoc, getDocs, collection, setDoc, doc, getFirestore, updateDoc, getDoc } from 'firebase/firestore'
+import {  deleteDoc, getDocs, collection, setDoc, doc, getFirestore, updateDoc, query, where } from 'firebase/firestore'
 import firebaseApp from '../firebase'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -299,7 +298,7 @@ const db = getFirestore(firebaseApp)
           var iquant1 = document.getElementById("IQuant1").value
           var cquant1 = document.getElementById("CQuant1").value
           var i = this.editedItem.name
-          const docRef = doc(db, String(this.fbuser), i);
+          const docRef = doc(db, String(this.fbuser)+ " Shopping", i);
           if (i == name1) {
             await updateDoc(docRef, {
               iquant: iquant1,
@@ -312,16 +311,27 @@ const db = getFirestore(firebaseApp)
           var name = document.getElementById("name").value
           var iquant = document.getElementById("IQuant").value
           var cquant = document.getElementById("CQuant").value
-          const nRef = doc(db, String(this.fbuser) + " Shopping", name)
-          const next = await getDoc(nRef)
+    
+
+          const ndoc = collection(db, String(this.fbuser))
+          const nRef = query(ndoc, where('item', '==', name))
+          const next = await getDocs(nRef)
+          console.log(next)
       
-          if (next.exists()) {
-            let data = next.data()
-            const docRef = await setDoc(doc(db, String(this.fbuser) + " Shopping", name), {
-            name: name, iquant: iquant, cquant: data.quantity
+          if (!next.empty) {
+            var totquant = ""
+            next.forEach((docs) => {
+              let data = docs.data()
+              totquant += parseInt(data.quantity)
+              totquant += data.unit
+              console.log(totquant)
             })
+            console.log(totquant)
+            const docRef = await setDoc(doc(db, String(this.fbuser) + " Shopping", name), {
+            name: name, iquant: iquant, cquant: totquant
+            })
+            window.location.reload()
             console.log(docRef)
-            window.location.reload();
           } else {
             const docRef = await setDoc(doc(db, String(this.fbuser) + " Shopping", name), {
             name: name, iquant: iquant, cquant: cquant
