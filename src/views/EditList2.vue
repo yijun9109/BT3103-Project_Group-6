@@ -142,9 +142,15 @@ export default {
 
     mounted() {
         this.item = this.$route.params.item
-        this.name = this.item
         this.expiry = this.$route.params.expiry
         this.storage = this.$route.params.storage
+        this.quant = this.$route.params.quantity
+        this.u = this.$route.params.unit
+        this.name = this.item
+        this.due = this.expiry
+        this.loc = this.storage
+        this.qty = this.quant
+        this.unit = this.u
     }
 
 }
