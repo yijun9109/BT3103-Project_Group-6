@@ -37,6 +37,7 @@
         </div>
 
         <div class= "login">
+            <br><br><br>
             <p class= "title">Welcome Back</p>
             <!-- <p><span style="background-color: rgba(255, 255, 255, 0.3);">Login to continue.</span></p> -->
             <p><i>Login to continue.</i></p>
@@ -151,7 +152,7 @@ p {
 
 .message {
     /* background-color: white; */
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 1);
     height: 60%;
     width: 30%;
     padding: 30px;
@@ -161,21 +162,23 @@ p {
 }
 
 .login {
-    width: 30%;
-    height: 300px;
+    width: 40%;
+    height: 1300px;
     margin-left: 60%;
-    margin-top: -20%;
+    margin-top: -57%;
+    background-color: rgba(255, 255, 255, 0.6);
     
 }
 
 .title {
     font-weight: bold;
     font-size: 50px;
+    margin-top: 85%;  
     color: black;
 }
 
 .msg {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 </style>
