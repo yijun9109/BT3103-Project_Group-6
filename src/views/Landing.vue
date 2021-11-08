@@ -132,7 +132,7 @@ img {
 
 p {
   font-size: 20px;
-  color: black;
+  color: black
 }
 
 .tile {
