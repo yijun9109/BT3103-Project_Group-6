@@ -28,10 +28,17 @@
 
     <div class="loggedout" v-else>
         <div class="message">
-            <p>Here at myfridge, you get to list inventory items and track the expiry dates all in one place !
-                Browse through our recipes to cook your leftover ingredients with. Or even look up our tips for storing
-                the different food categories. Track and check off your very own shopping list when you go grocery 
-                shopping with myfridge today. Love, your personal inventory tracker.
+          <meta charset = 'UTF-8'>
+          <p class='title'>
+            Track all your items in one place!
+          </p> <br>
+            <p>Here at myfridge, just store your items and I will help you keep track of them in one place!
+              Browse through my recpies to whip up delicious meals with leftover ingredients, or just look through the 
+              tips that I provide to store different types of food! You can also use me as a shopping list, so let's go 
+              shopping today!
+              </p> <br>
+              <p>
+                Myfridge, your personal inventory tracker &#10084;
             </p>
         </div>
 
@@ -130,7 +137,7 @@ img {
 
 p {
   font-size: 20px;
-  color: black;
+  color: black
 }
 
 .tile {
@@ -148,6 +155,8 @@ p {
 }
 
 .message {
+    font-family: Helvetica;
+    font-size: 15px;
     background-color: white;
     height: 60%;
     width: 30%;
@@ -160,7 +169,8 @@ p {
     width: 20%;
     height: 800px;
     margin-left: 60%;
-    margin-top: -18%;
+    margin-top: -16%;
+    background-color: transparent
 }
 
 .title {
