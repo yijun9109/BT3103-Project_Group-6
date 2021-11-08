@@ -564,7 +564,8 @@ h1 {
     position: absolute;
     width: 90%;
     /* /* width: 1706px; */
-    height: 586px; 
+    /* height: 586px;  */
+    height: 550px;
     left: 96px;
     top: 145px;
 
