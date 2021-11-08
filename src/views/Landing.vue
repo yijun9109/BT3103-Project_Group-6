@@ -1,33 +1,55 @@
 <template>
   <div class="bg">
-    <div class="box">
-      <a href="/Home" v-if="this.loggedIn">keep track of your food items</a>
-      <a href="/LogIn" v-else>keep track of your food items</a>
+      <div class="loggedin" v-if="this.loggedIn">
+        <div class="box">
+            <a href="/Home">keep track of your food items</a>
+            <!-- <a href="/LogIn">keep track of your food items</a> -->
+        </div>
+
+        <div class="row">
+            <div class="tile milk">
+                <img src="../assets/milk.jpg" />
+                <p>2-3 days after opening</p>
+            </div>
+            <div class="tile beef">
+                <img src="../assets/beef.png" />
+                <p>1-2 months in the fridge</p>
+            </div>
+            <div class="tile broccoli">
+                <img src="../assets/broccoli.jpeg" />
+                <p>3 days in the fridge</p>
+            </div>
+            <div class="tile apple">
+                <img src="../assets/apple.jpeg" />
+                <p>1-2 weeks in the fridge</p>
+            </div>
+        </div>
+      </div>
+
+    <div class="loggedout" v-else>
+        <div class="message">
+            <p>Here at myfridge, you get to list inventory items and track the expiry dates all in one place !
+                Browse through our recipes to cook your leftover ingredients with. Or even look up our tips for storing
+                the different food categories. Track and check off your very own shopping list when you go grocery 
+                shopping with myfridge today. Love, your personal inventory tracker.
+            </p>
+        </div>
+
+        <div class= "login">
+            <p class= "title">Welcome Back</p>
+            <p>Login to continue.</p>
+            <LogInComponent />
+        </div>
     </div>
 
-    <div class="row">
-      <div class="tile milk">
-        <img src="../assets/milk.jpg" />
-        <p>2-3 days after opening</p>
-      </div>
-      <div class="tile beef">
-        <img src="../assets/beef.png" />
-        <p>1-2 months in the fridge</p>
-      </div>
-      <div class="tile broccoli">
-        <img src="../assets/broccoli.jpeg" />
-        <p>3 days in the fridge</p>
-      </div>
-      <div class="tile apple">
-        <img src="../assets/apple.jpeg" />
-        <p>1-2 weeks in the fridge</p>
-      </div>
-    </div>
+
+
   </div>
 </template>
 
 <script>
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import LogInComponent from "@/components/LogIn.vue";
 
 export default {
   name: "Landing",
@@ -37,6 +59,9 @@ export default {
       user: false,
       loggedIn: false,
     };
+  },
+    components: {
+    LogInComponent,
   },
 
   mounted() {
@@ -63,6 +88,7 @@ export default {
   padding: 20px;
   margin-left: -10px;
   margin-right: -40px;
+  overflow: hidden;
 }
 
 .box {
@@ -120,4 +146,27 @@ p {
   overflow: hidden;
   float: left;
 }
+
+.message {
+    background-color: white;
+    height: 60%;
+    width: 30%;
+    padding: 30px;
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+.login {
+    width: 20%;
+    height: 800px;
+    margin-left: 60%;
+    margin-top: -18%;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 40px;
+    color: black;
+}
+
 </style>
