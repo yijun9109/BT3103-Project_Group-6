@@ -28,16 +28,18 @@
 
     <div class="loggedout" v-else>
         <div class="message">
-            <p>Here at myfridge, you get to list inventory items and track the expiry dates all in one place !
-                Browse through our recipes to cook your leftover ingredients with. Or even look up our tips for storing
-                the different food categories. Track and check off your very own shopping list when you go grocery 
-                shopping with myfridge today. Love, your personal inventory tracker.
+            <p class = "msg">Here at <span style="color:#FFA235"><b>myfridge</b></span>, you get to list inventory items and track the expiry dates all in one place!
+                Browse through our recipes to cook your leftover ingredients with or even look up tips we have for storing
+                the food. Track and check off your very own shopping list when you go grocery 
+                shopping with myfridge today. <br><br>
+                <b>Love,</b> your personal inventory tracker.
             </p>
         </div>
 
         <div class= "login">
             <p class= "title">Welcome Back</p>
-            <p>Login to continue.</p>
+            <!-- <p><span style="background-color: rgba(255, 255, 255, 0.3);">Login to continue.</span></p> -->
+            <p><i>Login to continue.</i></p>
             <LogInComponent />
         </div>
     </div>
@@ -148,25 +150,32 @@ p {
 }
 
 .message {
-    background-color: white;
+    /* background-color: white; */
+    background-color: rgba(255, 255, 255, 0.4);
     height: 60%;
     width: 30%;
     padding: 30px;
     margin-top: 10%;
     margin-left: 10%;
+    text-align: left;
 }
 
 .login {
-    width: 20%;
-    height: 800px;
+    width: 30%;
+    height: 300px;
     margin-left: 60%;
-    margin-top: -18%;
+    margin-top: -20%;
+    
 }
 
 .title {
     font-weight: bold;
-    font-size: 40px;
+    font-size: 50px;
     color: black;
+}
+
+.msg {
+    font-size: 20px;
 }
 
 </style>
