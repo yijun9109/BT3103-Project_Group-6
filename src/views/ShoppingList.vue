@@ -34,7 +34,8 @@ export default {
 
 <style scoped>
 #test {
-    background-color: antiquewhite;
-    height: 100%
+    background-color: #FFF8EF;
+    width: 100%;
+    height: 100vh;
 }
 </style>

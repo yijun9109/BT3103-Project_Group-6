@@ -28,12 +28,9 @@ export default {
             const auth = getAuth();
             const user = auth.currentUser;
             signOut(auth, user)
-            //this.$router.push({name:'Landing'})
+            this.$router.push({name:'Landing'})
+            window.location.reload()
             
-            //this.$router.go()
-           
-            this.$router.go('/')
-            //this.$router.go('http://localhost:8080/')
         }
         
     }
