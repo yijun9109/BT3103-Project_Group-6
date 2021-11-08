@@ -39,6 +39,6 @@ export default {
 #firebaseui-auth-container {
   margin-top: 50px;
   margin-bottom: 50px;
-  background-color: white;
+  /* background-color: white; */
 }
 </style>
