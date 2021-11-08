@@ -10,10 +10,10 @@
     <div id="delete" class="modal">
         <div class="actual-modal">
             <!-- <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span> -->
-            <form class="modal-content">
+            <form class="modal-content" >
             <div class='content' id='deleteContent'>
                 <h1>Confirm Delete</h1>
-                <p> Do you want to delete this item? </p>
+                <p> Do you want to delete {{del}} from myfridge? </p>
 
                 <div class='confirmation'>
                     <button type="button" id="cancel"> Cancel </button>
@@ -215,6 +215,7 @@ export default {
             url: '#',
             filename: '',
             item: "",
+            del: "",
 
             // vuetify moved to list for better reactivity to refresh
             // name: '',
@@ -390,9 +391,10 @@ export default {
 
                 var deleteBut = document.createElement('i')
                 deleteBut.className = 'mdi mdi-delete mdi-24px'
-                deleteBut.id = String(data.items)
+                deleteBut.id = String(data.item)
                 deleteBut.onclick = () => { 
                     this.showDelete = true // added
+                    this.del = data.item
                     document.getElementById('delete').style.display = 'block'
                     document.getElementById('confirm').onclick = () => {
                         this.deleteItem(data.item, data.expiry, data.storage)

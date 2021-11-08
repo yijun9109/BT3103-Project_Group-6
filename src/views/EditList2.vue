@@ -107,7 +107,7 @@ export default {
 
             if (u == 'No unit') {
               u = ''
-            } else if (u == 'g'&& quantity >= 1000) {
+            } else if (u == 'g' && quantity >= 1000) {
               quantity = quantity/1000
               u = 'kg'
             } else if (u == 'ml' && quantity >= 1000) {
