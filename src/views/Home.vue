@@ -309,8 +309,8 @@ export default {
 .white {
     background-color: white;
     width: 140%;
-    height: 200px;
-    margin-left: -20px;
+    height: 300px;
+    margin-left: -40px;
     margin-top: -90px;
 }
 
