@@ -6,30 +6,31 @@
                 <p class="wlc">Welcome <strong>{{user.displayName}}</strong><br/></p>
                 <p class="wwyltd"> What would you like to do today?</p>
 
+
                 <div class="row">
                     <div class="tile">
                         <a href="/Home">
                         <img src="https://www.svgrepo.com/show/36123/warning.svg">
                         </a>
-                        <!-- <p class="label">Home</p> -->
+                        <p class="label">Home</p>
                     </div>
                     <div class="tile">
                         <a href="/List">
                         <img src="https://www.svgrepo.com/show/57953/refrigerator.svg">
                         </a>
-                        <!-- <p class="label">Inventory</p> -->
+                        <p class="label">Inventory</p>
                     </div>
                     <div class="tile">
                         <a href="/ShoppingList">
                         <img src="https://www.svgrepo.com/show/38114/shopping-bag.svg">
                         </a>
-                        <!-- <p class="label">Shopping List</p> -->
+                        <p class="label">Shopping List</p>
                     </div>
                     <div class="tile">
                         <a href="/Tips">
                         <img src="https://www.svgrepo.com/show/282350/file-storage.svg">
                         </a>
-                        <!-- <p class="label">Tips</p> -->
+                        <p class="label">Tips</p>
                     </div>
                 </div>
                 <!-- <img src="data:," id="imgId" style="height:20px;"> --- CANT GET USER PFP TO DISPLAY-->
@@ -192,6 +193,16 @@ p {
   color: black;
 }
 
+.labels {
+    color: black;
+    font-weight: bold;
+}
+
+#home {
+    margin-left: 120px;
+        z-index:99;
+}
+
 .tile {
   color: black; /* added */
   height: 300px;
@@ -205,6 +216,7 @@ p {
   overflow: hidden;
   float: left;
   border-radius: 30px; /* added */
+  z-index:94;
 }
 
 .tile p {
@@ -221,6 +233,7 @@ p {
     margin-left: 40px;
     margin-top: 50px;
     height: 200px;
+    z-index:94;
 }
 
 .message {
