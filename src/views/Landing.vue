@@ -1,9 +1,47 @@
 <template>
   <div class="bg">
       <div class="loggedin" v-if="this.loggedIn">
-        <div class="box">
+          <div class = "profile">
+                <br><br><br><br>
+                <p class="wlc">Welcome <strong>{{user.displayName}}</strong><br/></p>
+                <p class="wwyltd"> What would you like to do today?</p>
+
+
+                <div class="row">
+                    <div class="tile">
+                        <a href="/Home">
+                        <img src="https://www.svgrepo.com/show/36123/warning.svg">
+                        </a>
+                        <p class="label">Home</p>
+                    </div>
+                    <div class="tile">
+                        <a href="/List">
+                        <img src="https://www.svgrepo.com/show/57953/refrigerator.svg">
+                        </a>
+                        <p class="label">Inventory</p>
+                    </div>
+                    <div class="tile">
+                        <a href="/ShoppingList">
+                        <img src="https://www.svgrepo.com/show/38114/shopping-bag.svg">
+                        </a>
+                        <p class="label">Shopping List</p>
+                    </div>
+                    <div class="tile">
+                        <a href="/Tips">
+                        <img src="https://www.svgrepo.com/show/282350/file-storage.svg">
+                        </a>
+                        <p class="label">Tips</p>
+                    </div>
+                </div>
+                <!-- <img src="data:," id="imgId" style="height:20px;"> --- CANT GET USER PFP TO DISPLAY-->
+
+                <!-- <pre id="account-details"></pre> -->
+                <!-- <p>Image: {{profile.photoUrl}}</p> -->
+                <!-- <p>Email: <strong>{{user.email}}</strong><br></p> -->
+                
+          </div>
+        <!-- <div class="box">
             <a href="/Home">keep track of your food items</a>
-            <!-- <a href="/LogIn">keep track of your food items</a> -->
         </div>
 
         <div class="row">
@@ -23,7 +61,7 @@
                 <img src="../assets/apple.jpeg" />
                 <p>1-2 weeks in the fridge</p>
             </div>
-        </div>
+        </div> -->
       </div>
 
     <div class="loggedout" v-else>
@@ -37,6 +75,7 @@
         </div>
 
         <div class= "login">
+            <br><br><br>
             <p class= "title">Welcome Back</p>
             <!-- <p><span style="background-color: rgba(255, 255, 255, 0.3);">Login to continue.</span></p> -->
             <p><i>Login to continue.</i></p>
@@ -69,10 +108,28 @@ export default {
   mounted() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+    if (user) {
         this.user = user;
         this.loggedIn = user;
-      }
+        
+
+        // var displayName = user.displayName;
+        // var email = user.email;
+        var photoURL = user.photoURL;
+
+        console.log(photoURL)
+
+        if (document.getElementById('imgId') != null) {
+            document.getElementById('imgId').src = user.photoURL;
+        }
+
+        
+        // document.getElementById('account-details').textContent = JSON.stringify({
+        //         displayName: displayName,
+        //         email: email,
+        //         photoURL: photoURL,
+        //       }, null, '  ');
+    }
     });
   },
 };
@@ -128,6 +185,7 @@ img {
 
 .row {
   width: 100%;
+  margin-top: -70px;
 }
 
 p {
@@ -135,23 +193,52 @@ p {
   color: black
 }
 
+.labels {
+    color: black;
+    font-weight: bold;
+}
+
+#home {
+    margin-left: 120px;
+        z-index:99;
+}
+
 .tile {
-  color: white;
+  color: black; /* added */
   height: 300px;
   width: 20%;
   /* border: 1px solid black; */
-  background-color: white;
+  background-color: #f8f4ef;
   position: relative;
   margin: 20px;
   left: 80px;
   top: 150px;
   overflow: hidden;
   float: left;
+  border-radius: 30px; /* added */
+  z-index:94;
+}
+
+.tile p {
+    font-weight: bold;
+    margin-top: 200px;
+    margin-left: 160px;
+} 
+
+.tile:hover { 
+    background-color: rgba(0,0,0,0.1);
+}
+
+.tile img {
+    margin-left: 40px;
+    margin-top: 50px;
+    height: 200px;
+    z-index:94;
 }
 
 .message {
     /* background-color: white; */
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 1);
     height: 60%;
     width: 30%;
     padding: 30px;
@@ -161,21 +248,40 @@ p {
 }
 
 .login {
-    width: 30%;
-    height: 300px;
+    width: 40%;
+    height: 1300px;
     margin-left: 60%;
-    margin-top: -20%;
+    margin-top: -57%;
+    background-color: rgba(255, 255, 255, 0.6);
     
 }
 
 .title {
     font-weight: bold;
     font-size: 50px;
+    margin-top: 85%;  
     color: black;
 }
 
 .msg {
-    font-size: 20px;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.wlc {
+    font-size: 40px;
+    margin-left: 80px;
+}
+
+.wwyltd {
+    margin-left: 80px;
+    font-size: 25px;
+}
+
+.profile {
+    margin-top: 40px;
+    text-align: left;
+    margin-left: 0px;
 }
 
 </style>
