@@ -47,7 +47,4 @@ export default {
   margin-left: auto;
   margin-top: 10px;
 }
-/* #login {
-    padding-top: 10px;
-} */
 </style>

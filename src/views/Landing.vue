@@ -32,36 +32,8 @@
                         </a>
                         <p class="label">Tips</p>
                     </div>
-                </div>
-                <!-- <img src="data:," id="imgId" style="height:20px;"> --- CANT GET USER PFP TO DISPLAY-->
-
-                <!-- <pre id="account-details"></pre> -->
-                <!-- <p>Image: {{profile.photoUrl}}</p> -->
-                <!-- <p>Email: <strong>{{user.email}}</strong><br></p> -->
-                
+                </div>   
           </div>
-        <!-- <div class="box">
-            <a href="/Home">keep track of your food items</a>
-        </div>
-
-        <div class="row">
-            <div class="tile milk">
-                <img src="../assets/milk.jpg" />
-                <p>2-3 days after opening</p>
-            </div>
-            <div class="tile beef">
-                <img src="../assets/beef.png" />
-                <p>1-2 months in the fridge</p>
-            </div>
-            <div class="tile broccoli">
-                <img src="../assets/broccoli.jpeg" />
-                <p>3 days in the fridge</p>
-            </div>
-            <div class="tile apple">
-                <img src="../assets/apple.jpeg" />
-                <p>1-2 weeks in the fridge</p>
-            </div>
-        </div> -->
       </div>
 
     <div class="loggedout" v-else>
@@ -77,7 +49,6 @@
         <div class= "login">
             <br><br><br>
             <p class= "title">Welcome Back</p>
-            <!-- <p><span style="background-color: rgba(255, 255, 255, 0.3);">Login to continue.</span></p> -->
             <p><i>Login to continue.</i></p>
             <LogInComponent />
         </div>
@@ -112,9 +83,6 @@ export default {
         this.user = user;
         this.loggedIn = user;
         
-
-        // var displayName = user.displayName;
-        // var email = user.email;
         var photoURL = user.photoURL;
 
         console.log(photoURL)
@@ -122,13 +90,6 @@ export default {
         if (document.getElementById('imgId') != null) {
             document.getElementById('imgId').src = user.photoURL;
         }
-
-        
-        // document.getElementById('account-details').textContent = JSON.stringify({
-        //         displayName: displayName,
-        //         email: email,
-        //         photoURL: photoURL,
-        //       }, null, '  ');
     }
     });
   },

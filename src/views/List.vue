@@ -6,7 +6,6 @@
 
     <div id="delete" class="modal">
         <div class="actual-modal">
-            <!-- <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span> -->
             <form class="modal-content">
             <div class='content' id='deleteContent'>
                 <h1>Confirm Delete</h1>
@@ -23,7 +22,6 @@
 
     <div class="modal-overlay" v-if="showDelete"></div>
 
-       <!--Add Item Vuetify-->
     <v-app id="vuetify">
         <template>
         <v-dialog v-model="dialog" max-width = "600px">
@@ -90,7 +88,6 @@
 
     <div id="recoedit" class="modal">
         <div class="actual-modal">
-            <!-- <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span> -->
             <form class="modal-content">
             <div class='content' id='recoContent'>
                 <h1>Duplicate Item</h1>
@@ -163,10 +160,10 @@ export default {
             if (e == 'No unit') {
               e = ''
             } else if (e == 'g'&& b >= 1000) {
-              b = parseInt(b)/1000
+              b = parseFloat(b)/1000
               e = 'kg'
             } else if (e == 'ml' && b >= 1000) {
-              b = parseInt(b)/1000
+              b = parseFloat(b)/1000
               e = 'l'
             }
 
@@ -187,10 +184,8 @@ export default {
             }
 
                 if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
-                    // alert("Saving item: " + b + "x " + a)
                     try {
                         const docRef = await setDoc(doc(db, String(this.fbuser), a + ' ' + c + ' ' + d), {
-                        // const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
                             item: a, quantity: b, unit: e, expiry: c, storage: d, 
                         })
                         console.log(docRef)
@@ -232,24 +227,17 @@ export default {
 
 <style scoped>
 .bg {
-    /* background-color: #fbd09e; */
     background-color: #FFF8EF;
     height: 80vh;
     padding: 20px;
     margin-left: -10px;
     margin-right: -40px;
-    /* overflow: hidden; */
 }
 
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  /*z-index: 1;*/ /* Sit on top */
   z-index: 99;
-  /* left: 0;
-  top: 0; */
-  /* width: 100%; /* Full width */
-  /* height: 100%; Full height  */
   width: 30%;
   height: 30%;
 
@@ -299,15 +287,6 @@ export default {
     background-color: #5a7dbd;
 }
 
-/* .container {
-    background-color: white;
-    border-radius: 30px;
-    margin: auto;
-    width: 40%;
-
-} */
-
-
 /* Vuetify */
 
 .bg #vuetify {
@@ -321,7 +300,6 @@ export default {
     width: 130px;
     left: 85%;
     font-size: 15px;
-    /* font-weight: bold; */
     background-color: #90B3F5;
     border-radius: 30px;
     text-transform: uppercase;
