@@ -1,12 +1,12 @@
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD2ymbSpGQIt0FjCivCFvRRH2lg1wumLMc",
-  authDomain: "democcp-9ac90.firebaseapp.com",
-  projectId: "democcp-9ac90",
-  storageBucket: "democcp-9ac90.appspot.com",
-  messagingSenderId: "198044543758",
-  appId: "1:198044543758:web:c43a572b1d003ad21f455f"
+  apiKey: "AIzaSyAghnu6L8kxbwjz01JJfVXaaoJv_0BEDRk",
+  authDomain: "myfridge-bt3103.firebaseapp.com",
+  projectId: "myfridge-bt3103",
+  storageBucket: "myfridge-bt3103.appspot.com",
+  messagingSenderId: "671238774646",
+  appId: "1:671238774646:web:5eb9d4cc766cc99aeee457"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);

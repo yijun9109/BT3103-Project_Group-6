@@ -322,7 +322,7 @@ const db = getFirestore(firebaseApp)
             var totquant = ""
             next.forEach((docs) => {
               let data = docs.data()
-              totquant += parseInt(data.quantity)
+              totquant += parseFloat(data.quantity)
               totquant += data.unit
               console.log(totquant)
             })
