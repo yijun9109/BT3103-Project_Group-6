@@ -12,9 +12,6 @@
     </div>
 
     <section class="drawers">
-      <!-- <div class="btn">-->
-        <!-- <a href="/#/List">ALL ITEMS</a> -->
-      <!-- </div> --> 
 
         <v-app>
         <template>
@@ -98,7 +95,6 @@
 
     <div id="recoedit" class="modal">
         <div class="actual-modal">
-            <!-- <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span> -->
             <form class="modal-content">
             <div class='content' id='recoContent'>
                 <h1>Duplicate Item</h1>
@@ -119,29 +115,22 @@
 </template>
 
 <script>
-// import AddItem from "../components/AddItem.vue";
-// import MainList from "../components/MainList.vue"
 import ExpMini from "@/components/ExpMini.vue"
 import firebaseApp from '../firebase.js';
 import { getFirestore } from "firebase/firestore";
 import { doc, setDoc, collection, query, where, getDocs}  from 'firebase/firestore'
 import { getAuth } from "firebase/auth";
-// import Popup from "@/components/Popup.vue"
 
 const db = getFirestore(firebaseApp);
 
 export default {
   name: "Home",
   components: {
-    // AddItem, 
-    // Popup,
     ExpMini,
-    // MainList
   },
   data() {
     return {
        showModal: false,
-    //     showModal: true,
         name: '',
         qty: '',
         due: null,
@@ -165,19 +154,12 @@ export default {
   },
 
   methods: {
-    // goToListView() {
-    //   this.$router.push({ name: "List" });
-    // },
-    // toggle() {
-    //   this.showModal = false;
-    // },
     change() {
       this.refresh += 1;  
     },
 
     async submit() {
         if (this.$refs.form.validate())  {  // performs validation check
-            // console.log(this.name, this.qty); // replace with what u need to do
             const auth = getAuth();
             this.fbuser = auth.currentUser.email;
 
@@ -216,12 +198,10 @@ export default {
             if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
                 // alert("Saving item: " + b + "x " + a)
                 try {
-                    const docRef = await setDoc(doc(db, String(this.fbuser), a + ' ' + c + ' ' + d), {
-                    // const docRef = await setDoc(doc(db, String(this.fbuser), "Food"), {
+                    const docRef = await setDoc(doc(db, String(this.fbuser), a + ' ' + b + e + ' ' + c + ' ' + d), {
                         item: a, quantity: b, unit: e, expiry: c, storage: d, 
                     })
                     console.log(docRef)
-                    // this.$emit("added") - used to be additem component now here
                     this.change() 
                 } catch(error) {
                     console.error("Error adding document: ", error);
@@ -318,16 +298,11 @@ export default {
   position: fixed; /* Stay in place */
   /*z-index: 1;*/ /* Sit on top */
   z-index: 99;
-  /* left: 0;
-  top: 0; */
-  /* width: 100%; /* Full width */
-  /* height: 100%; Full height  */
   width: 30%;
   height: 30%;
 
   overflow: auto; /* Enable scroll if needed */
   background-color: white;
-  /* background-color: #474e5d; */
   padding-top: 50px;
 
   transform: translate(-50%, -50%);
@@ -371,55 +346,6 @@ export default {
     background-color: #5a7dbd;
 }
 
-/* .modal-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 98;
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 99;
-  width: 100%;
-  max-width: 400px;
-  background-color: #fff;
-  border-radius: 16px;
-  padding: 25px;
-}
-
-.modal .button {
-  width: 60px;
-} 
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: transform 0.5s opacity 1s;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(50%) translateX(50vw);
-}
-
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.5s;
-}
-
-.slide-enter,
-.slide-leave-to {
-  transform: translateY(-50%) translateX(100vw);
-}
-*/
-
 .bg {
   background-image: url("../assets/fridge.png");
   background-position: center;
@@ -462,12 +388,6 @@ export default {
   line-height: 50px;
 }
 
-/* .listview {
-  float: right;
-  margin-top: -40px;
-  margin-right: 40px;
-} */
-
 .drawers {
   box-sizing: border-box;
   width: 100%;
@@ -490,51 +410,6 @@ h2 {
   margin: auto;
   text-align: left;
   padding-left: ;
-}
-
-/* TILES */
-/* .tile {
-  height: 250px;
-  width: 250px;
-  background-color: white;
-  margin: 50px;
-  margin-top: 30px;
-  overflow: hidden;
-  float: left;
-}
-
-.tile:nth-child(1) {
-  margin-left: 100px;
-}
-
-.tile p {
-  color: black;
-  font-size: 30px;
-  margin-top: 180px;
-  text-align: center;
-} */
-
-/* HOVER DIM */
-.tile:after {
-  /*add button for edit and delete */
-  /* content: "Expiring on 15/10/21 \a Storage Location: Fridge";
-  white-space: pre;
-  color: #fff;
-  position: absolute;
-  width: 100%;
-  height: 100%; /* why does it not take the whole width of tile but almost the whole screen */
-  /* top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.6);
-  opacity: 0;
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  height: 250px;
-  width: 250px; */ 
-}
-
-.tile:hover:after {
-  /* opacity: 1; */
 }
 
 .container {

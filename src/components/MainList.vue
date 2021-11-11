@@ -21,8 +21,6 @@
 
     <div class="modal-overlay" v-if="showDelete"></div>
 
-
-    <!-- <button type='button' class = 'add' v-on:click='addItem()'> + Add Item </button> -->
     <v-icon
         small
         id='cale'
@@ -48,7 +46,6 @@
             <tr>
                 <th >Index</th>
                 <th>Items
-                    <!-- <img src ="../assets/filter.png"> -->
                     <v-icon
                         small
                         id='itemorder'
@@ -56,7 +53,6 @@
                         @click="itemOrder()">
                         mdi-filter
                     </v-icon>
-                    <!-- <button class='sorting' id='itemorder' v-on:click='itemOrder()'> V </button> -->
                 </th>
                 <th>Quantity
                     <v-icon
@@ -66,7 +62,6 @@
                         @click="quantityOrder()">
                         mdi-filter
                     </v-icon>
-                    <!-- <button id='quantityorder' v-on:click='quantityOrder()'> V </button> -->
                 </th>
                 <th> Units
                 </th>
@@ -79,7 +74,6 @@
                         @click="dropDown()">
                         mdi-menu-down
                     </v-icon>
-                     <!-- <button class='sorting' id="dropdown" v-on:click='dropDown()'> V </button> -->
                     <div>
                         <div id="dropmenu" v-if="dropdown">
                             <input type="checkbox" id="cabinet" class="select" value="Cabinet" v-on:click='run()'> 
@@ -99,7 +93,6 @@
                         @click="expiryOrder()">
                         mdi-filter
                     </v-icon>
-                    <!-- <button class='sorting' id='expiryorder' v-on:click='expiryOrder()'> V </button> -->
                 </th>
             </tr>
         </table>
@@ -110,81 +103,6 @@
         <p><i>*Note: For Quantity Sorting, 1kg and 1l are treated as 1 unit</i></p>
     </div>
 
-
-
-
-    <!--Add Item Vuetify-->
-    <!-- <v-app :color="transparent" id="vuetify">
-        <template>
-        <v-dialog v-model="dialog" max-width = "600px">
-
-            <template v-slot:activator="{ on }">
-            <v-btn  v-on="on" id="addbtn">Add Item</v-btn> 
-            </template>
-
-        <v-card>
-            <v-card-title>
-                <h2>Add a new item</h2>
-            </v-card-title>
-
-            <v-card-text>
-                <v-form class="px-3" ref="form">
-                    <v-text-field label="Name" v-model="name" ></v-text-field>
-                    <v-text-field label="Quantity" v-model="qty" :rules="qtyRules"></v-text-field>
-                    <v-select
-                        :items="locations"
-                        label="Storage Location" v-model="loc"
-                        ></v-select>
-                    <v-menu max-width="290" class="mx-100">
-                        <template v-slot:activator="{ on }">
-                            <v-text-field :value="due" v-on="on" label="Expiry Date"></v-text-field>
-                        </template>
-                        <v-date-picker v-model="due"></v-date-picker>
-                    </v-menu>
-
-                </v-form>
-            </v-card-text>
-
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="submit"
-                id="cfmbtn"
-              >
-                Save
-              </v-btn>
-
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="close"
-              >
-                Cancel
-              </v-btn>
-            </v-card-actions>
-        </v-card>
-
-        </v-dialog>
-    </template>
-    </v-app> -->
-
-    <!-- Delete dialog modal cannot get it to display-->
-    <!-- <div id="delete" class="modal">
-        <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text id='cancel' @click="closeDelete">No, cancel</v-btn>
-              <v-btn color="blue darken-1" text id= 'confirm' @click="deleteItemConfirm">Yes, confirm</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-    </div> -->
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
 
 </div>
@@ -216,7 +134,6 @@ export default {
             item: "",
             del: "",
             showDelete: false,
-            // main: true // only show link to cal when on main list page
 
         }
     },
@@ -382,7 +299,7 @@ export default {
                     this.del = data.item
                     document.getElementById('delete').style.display = 'block'
                     document.getElementById('confirm').onclick = () => {
-                        this.deleteItem(data.item, data.expiry, data.storage)
+                        this.deleteItem(data.item, data.quantity, data.unit, data.expiry, data.storage)
                         console.log("deleted")
                         this.showDelete =false // closes delete modal
                         document.getElementById('delete').style.display = 'none'
@@ -409,9 +326,9 @@ export default {
             this.$router.push({name: 'Edit', params: {item: i, expiry: e, storage: s, quantity: q, unit: u}})
         },
 
-        async deleteItem(item, expiry, storage) {
+        async deleteItem(item, quantity, unit, expiry, storage) {
             var i = item 
-            await deleteDoc(doc(db, String(this.fbuser), i + ' ' + expiry + ' ' + storage))
+            await deleteDoc(doc(db, String(this.fbuser), i + ' ' + quantity + unit + ' ' + expiry + ' ' + storage))
             let tb = document.getElementById("table")
             while (tb.rows.length > 1) {
                 tb.deleteRow(1)
@@ -557,8 +474,6 @@ h1 {
 #list {
     position: absolute;
     width: 90%;
-    /* /* width: 1706px; */
-    /* height: 586px;  */
     height: 550px;
     left: 96px;
     top: 145px;
@@ -595,20 +510,6 @@ h1 {
     width: 100%;
 }
 
-
-/* OLD FILTER BUTTON STYLES 
-#itemorder, #quantityorder, #dropdown, #expiryorder {
-    width: 30px;
-    background-color: #90B3F5;
-    color: white;
-    height: 30px;
-    width: 30px;
-    border-radius: 30px;
-    border: 0px;
-    font-weight: bold;
-    text-transform: uppercase;
-}*/
-
 hr {
     position: relative;
     top: 33px;
@@ -617,21 +518,7 @@ hr {
     opacity: 0.4;
 }
 
-/* old add button -non-vuetify 
-.add {
-    position: relative;
-    bottom: -660px;
-    right: -550px;
-    height: 40px;
-    width: 130px;
-    font-size: 15px;
-    font-weight: bold;
-    background-color: #90B3F5;
-    border-radius: 30px;
-    text-transform: uppercase;
-    color: white;
-}
-*/
+
 
 .dlcal {
     position: relative;
@@ -657,12 +544,7 @@ hr {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  /*z-index: 1;*/ /* Sit on top */
   z-index: 99;
-  /* left: 0;
-  top: 0; */
-  /* width: 100%; /* Full width */
-  /* height: 100%; Full height  */
   width: 30%;
   height: 30%;
 

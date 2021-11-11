@@ -1,12 +1,4 @@
 <template>
-    <!-- <v-data-table
-        :headers="headers"
-        :items="items"
-        sort-by="quant"
-        class="elevation-1"
-    >
-
-    </v-data-table> -->
     <div>
         
         <br>
@@ -28,7 +20,6 @@
 
 <script>
 import {  deleteDoc, doc, getFirestore, getDocs, collection,  orderBy, query, where } from 'firebase/firestore';
-// import { getDocs, collection, Timestamp, query, where } from 'firebase/firestore';
 import firebaseApp from '@/firebase.js';
 import { getAuth, onAuthStateChanged } from  'firebase/auth';
 
@@ -42,9 +33,6 @@ export default {
         }
     },
     mounted() {
-        // const auth = getAuth();
-        // this.fbuser = auth.currentUser.email;
-        // this.display(this.fbuser);
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -77,42 +65,6 @@ export default {
 
         async display() {
             this.clearEntry()
-            // const auth = getAuth();
-            // this.fbuser = auth.currentUser.email;
-            // console.log(String(this.fbuser));
-
-        // async display(user) {
-            // let z = await getDocs(collection(db, "Food"))
-            // let z = await getDocs(collection(db, String(user)))
-            //  let data = await getDocs(collection(z, "Food"))
-
-            // let data = await db
-            //             .collection(String(user))
-            //             .doc('Food')
-            //             .get()
-
-            // let data = await getDocs(doc(db, String(user), "Food"))
-
-            // let data = await getDocs(collectionGroup(db,"Food").where("id", "==", String(user))) 
-            
-            // let data = await getDocs(collectionGroup(db,String(user))) 
-
-            // let data = await db.collection(String(user)).doc("Food")
-
-            // let ref = db.collection(String(this.fbuser)).doc("Food")
-            // let data = await ref.listCollections()
-
-            // const docRef = doc(db, String(this.fbuser), "Food");     
-            // const docSnap = await getDocs(docRef);
-
-            // let z = await getDocs(collection(db, String(this.fbuser)+"/Food"))
-
-            // const now = new Date();
-            // function in3days() {
-            //     const aft = now.setHours(72, 0, 0, 0) // +5 hours for Eastern Time
-            //     const timestamp = Timestamp.fromDate(aft)
-            //     return timestamp // ex. 1631246400
-            // }
 
             let idx = 1
             var lim = 8
@@ -130,16 +82,6 @@ export default {
 
             console.log(end)
 
-            // const q = query(collection(db, String(this.fbuser)+" Food"));
-            // const q = query(collection(db, "Food"), orderBy('expiry'));
-            // query all the docs, but lim in table so that still can display
-            // actual number of food expiring "4 Items" text
-            // removed limit(lim) since im technically doing it within the table 
-            // limit(3) works
-            // endBefore, endAt() 0 items
-            // where query 0 items
-
-            // const z = await getDocs(q);
             const z = await getDocs(query(collection(db, String(this.fbuser)), orderBy("expiry"), where('expiry', '<=', end)))
 
             z.forEach((docs) => {
@@ -150,7 +92,6 @@ export default {
                 // need to filter query : expiry date within 3 days
 
                 var table = document.getElementById("table")
-                // var row = table.insertRow(idx)
 
                 var name = (yy.item)
                 var quant = parseFloat(yy.quantity)
@@ -169,9 +110,6 @@ export default {
                     cell5.innerHTML = loc; cell6.innerHTML = exp;
                 }
                 idx ++ // to show number of items expiring if it goes beyond limit
-
-                // console.log(typeof exp)
-                // console.log(name)
             })
 
             document.getElementById("count").innerHTML = (idx-1 + " ITEMS")
@@ -213,7 +151,6 @@ th,td {
 }
 
 /* Q. how to adjust styles under insertrow */
-
 
 h2 {
     padding-top: 20px;

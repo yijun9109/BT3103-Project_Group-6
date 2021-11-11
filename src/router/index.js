@@ -2,8 +2,7 @@
 import Landing from "@/views/Landing.vue";
 import Home from "@/views/Home.vue";
 import List from "@/views/List.vue";
-import AddList from "@/views/AddList.vue";
-import EditList from "@/views/EditList.vue";
+import Edit from "@/views/EditList.vue";
 //Account matters
 import LogIn from "@/views/LogIn.vue";
 import LogOut from "@/views/LogOut.vue";
@@ -23,7 +22,7 @@ import Vue from "vue";
 
 // temp
 import temp from "@/views/temp.vue";
-import Edit from "@/views/EditList2.vue";
+
 
 // catch error
 import NotFound from "@/views/NotFound.vue";
@@ -47,16 +46,6 @@ export default new Router({
       path: "/List",
       name: "List",
       component: List,
-    },
-    {
-      path: "/AddList",
-      name: "AddList",
-      component: AddList,
-    },
-    {
-      path: "/EditList/:item",
-      name: "EditList",
-      component: EditList,
     },
 
     {
