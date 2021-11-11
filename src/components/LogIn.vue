@@ -20,7 +20,7 @@ export default {
     }
 
     var uiConfig = {
-      signInSuccessUrl: "/Home",
+      signInSuccessUrl: "/",
       // signInSuccessUrl: this.$router.replace("/profile"),
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,

@@ -191,10 +191,10 @@ export default {
             if (e == 'No unit') {
               e = ''
             } else if (e == 'g'&& b >= 1000) {
-              b = b/1000
+              b = parseFloat(b)/1000
               e = 'kg'
             } else if (e == 'ml' && b >= 1000) {
-              b = b/1000
+              b = parseFloat(b)/1000
               e = 'l'
             }
 
