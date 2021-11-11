@@ -153,7 +153,7 @@ export default {
                 // var row = table.insertRow(idx)
 
                 var name = (yy.item)
-                var quant = parseInt(yy.quantity)
+                var quant = parseFloat(yy.quantity)
                 var u = yy.unit
                 var exp = (yy.expiry)
                 var loc = (yy.storage)

@@ -1,15 +1,10 @@
 <template>
 <div class="bg">
 
-    
-    <!-- <a href="/Home" class="viewexp">View expiring items</a> -->
     <button type='button' class = 'viewexp' v-on:click ="goExp()"> View expiring </button>
-
-
 
     <div id="delete" class="modal">
         <div class="actual-modal">
-            <!-- <span onclick="document.getElementById('delete').style.display = none" class="close" title="Close Modal">&times;</span> -->
             <form class="modal-content" >
             <div class='content' id='deleteContent'>
                 <h1>Confirm Delete</h1>
@@ -109,6 +104,10 @@
             </tr>
         </table>
         <br>
+    </div>
+
+    <div id = 'disclaimer'>
+        <p><i>*Note: For Quantity Sorting, 1kg and 1l are treated as 1 unit</i></p>
     </div>
 
 
@@ -216,20 +215,6 @@ export default {
             filename: '',
             item: "",
             del: "",
-
-            // vuetify moved to list for better reactivity to refresh
-            // name: '',
-            // qty: '',
-            // due: null,
-            // loc: '',
-            // dialog: false,
-            // locations: ['Fridge', 'Freezer', 'Cabinet'],
-            // qtyRules: [
-            //     v => v.length > 0 || 'This field may not be empty',
-            //     v => Number.isInteger(Number(v)) || "The value must be an integer number"
-            // ],
-            // refresh:0,
-
             showDelete: false,
             // main: true // only show link to cal when on main list page
 
@@ -377,7 +362,7 @@ export default {
 
                 cell1.innerHTML = index;
                 cell2.innerHTML = data.item;
-                cell3.innerHTML = parseInt(data.quantity);
+                cell3.innerHTML = parseFloat(data.quantity);
                 cell4.innerHTML = data.unit;
                 cell5.innerHTML = data.storage;
                 cell6.innerHTML = data.expiry;
@@ -459,15 +444,24 @@ export default {
                     for (let i = 1; i < (table.rows.length - 1); i++) {
                         let x = table.rows[i].getElementsByTagName('TD')[index]
                         let y = table.rows[i + 1].getElementsByTagName('TD')[index]
-                        let xinner = parseInt(x.innerHTML)
-                        let yinner = parseInt(y.innerHTML)
+                        let xu = table.rows[i].getElementsByTagName('TD')[3].innerHTML
+                        let yu = table.rows[i + 1].getElementsByTagName('TD')[3].innerHTML
+                        let xinner = parseFloat(x.innerHTML)
+                        if (xu == 'g' || xu == 'ml') {
+                            xinner = xinner/1000
+                        }
+                        let yinner = parseFloat(y.innerHTML)
+                        if (yu == 'g' || yu == 'ml') {
+                            yinner = yinner/1000
+                        }
+                        console.log(xinner)
                         if (direction == 'asc') {
-                            if (parseInt(xinner) > parseInt(yinner)) {
+                            if (xinner > yinner) {
                                 table.rows[i].parentNode.insertBefore(table.rows[i + 1], table.rows[i])
                                 sw = true;
                             }
                         } else {
-                            if (parseInt(xinner) < parseInt(yinner)) {
+                            if (xinner < yinner) {
                                 table.rows[i].parentNode.insertBefore(table.rows[i + 1], table.rows[i])
                                 sw = true;
                             }
@@ -578,6 +572,16 @@ h1 {
     overflow: auto;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+
+#disclaimer {
+    position: absolute;
+    width: 90%;
+    left: 110px;
+    top: 700px;
+    text-align: left;
+    font-size: 12px;
 }
 
 #list th {
