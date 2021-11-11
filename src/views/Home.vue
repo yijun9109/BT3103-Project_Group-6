@@ -198,7 +198,7 @@ export default {
             if (!((a ==""  || b == "")  || (c == "" || d == ""))) {
                 // alert("Saving item: " + b + "x " + a)
                 try {
-                    const docRef = await setDoc(doc(db, String(this.fbuser), a + ' ' + c + ' ' + d), {
+                    const docRef = await setDoc(doc(db, String(this.fbuser), a + ' ' + b + e + ' ' + c + ' ' + d), {
                         item: a, quantity: b, unit: e, expiry: c, storage: d, 
                     })
                     console.log(docRef)

@@ -102,6 +102,8 @@ export default {
             
             var oldI = this.item;
             var oldE = this.expiry;
+            var oldU = this.un;
+            var oldQ = this.quant;
             var oldS = this.storage;
 
             if (u == 'No unit') {
@@ -115,18 +117,17 @@ export default {
             }
 
             try {
-                const docRef = await setDoc(doc(db, String(this.fbuser), item + ' ' + expiry + ' ' + storage), {
+                const docRef = await setDoc(doc(db, String(this.fbuser), item + ' ' + quantity + u + ' ' + expiry + ' ' + storage), {
                     item: item, 
                     quantity: quantity, 
                     unit: u,
                     expiry: expiry, 
                     storage: storage
                 })
-                await deleteDoc(doc(db, String(this.fbuser), oldI + ' ' + oldE + ' ' + oldS))
+                await deleteDoc(doc(db, String(this.fbuser), oldI + ' ' + oldQ + oldU + ' ' + oldE + ' ' + oldS))
                 console.log(item + ' is updated')
                 console.log(docRef)
-                this.$emit("added")
-                
+                this.$emit("added")  
             }
             catch (error) {
                 console.error("Error adding item: " + item)
@@ -143,12 +144,12 @@ export default {
         this.expiry = this.$route.params.expiry
         this.storage = this.$route.params.storage
         this.quant = this.$route.params.quantity
-        this.u = this.$route.params.unit
+        this.un = this.$route.params.unit
         this.name = this.item
         this.due = this.expiry
         this.loc = this.storage
         this.qty = this.quant
-        this.unit = this.u
+        this.unit = this.un
     }
 
 }

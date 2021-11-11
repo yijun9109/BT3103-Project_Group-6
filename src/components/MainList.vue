@@ -299,7 +299,7 @@ export default {
                     this.del = data.item
                     document.getElementById('delete').style.display = 'block'
                     document.getElementById('confirm').onclick = () => {
-                        this.deleteItem(data.item, data.expiry, data.storage)
+                        this.deleteItem(data.item, data.quantity, data.unit, data.expiry, data.storage)
                         console.log("deleted")
                         this.showDelete =false // closes delete modal
                         document.getElementById('delete').style.display = 'none'
@@ -326,9 +326,9 @@ export default {
             this.$router.push({name: 'Edit', params: {item: i, expiry: e, storage: s, quantity: q, unit: u}})
         },
 
-        async deleteItem(item, expiry, storage) {
+        async deleteItem(item, quantity, unit, expiry, storage) {
             var i = item 
-            await deleteDoc(doc(db, String(this.fbuser), i + ' ' + expiry + ' ' + storage))
+            await deleteDoc(doc(db, String(this.fbuser), i + ' ' + quantity + unit + ' ' + expiry + ' ' + storage))
             let tb = document.getElementById("table")
             while (tb.rows.length > 1) {
                 tb.deleteRow(1)
