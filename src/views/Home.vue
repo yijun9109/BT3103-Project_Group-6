@@ -160,7 +160,6 @@ export default {
         },
         qtyRules: [
             v => v.length > 0 || 'This field may not be empty',
-            v => Number.isInteger(Number(v)) || "The value must be an integer number"
         ],
     };
   },
