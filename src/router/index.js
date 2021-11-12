@@ -20,10 +20,6 @@ import ShoppingList from "@/views/ShoppingList.vue";
 import Router from "vue-router";
 import Vue from "vue";
 
-// temp
-import temp from "@/views/temp.vue";
-
-
 // catch error
 import NotFound from "@/views/NotFound.vue";
 
@@ -92,12 +88,6 @@ export default new Router({
       path: "/ShoppingList",
       name: "ShoppingList",
       component: ShoppingList,
-    },
-
-    {
-      path: "/temp",
-      name: "temp",
-      component: temp,
     },
 
     {
