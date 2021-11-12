@@ -31,7 +31,7 @@
         :align="align"
         no-gutters>
         <v-col md="4">
-        <router-link to="/RecipeDemo">
+        <router-link to="/Food1">
             <v-card class="rounded-card" id="one">
                 <center>
                 <v-img 
@@ -49,7 +49,7 @@
         </router-link>
         </v-col>
         <v-col md="4">
-        <router-link to="">
+        <router-link to="/Food3">
             <v-card class="rounded-card" id="three">
                 <center>
                 <v-img 

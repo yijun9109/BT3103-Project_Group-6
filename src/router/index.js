@@ -12,7 +12,9 @@ import LogOut from "@/views/LogOut.vue";
 import Tips from "@/views/Tips.vue";
 import StorageGuide from "@/views/StorageGuide.vue";
 import Recipes from "@/views/Recipes.vue";
-import RecipeDemo from "@/views/RecipeDemo.vue";
+import Food1 from "@/views/Food1.vue";
+import Food2 from "@/views/Food2.vue";
+import Food3 from "@/views/Food3.vue";
 import WesternRecipes from "@/views/WRecipes.vue";
 import ChineseRecipes from "@/views/CRecipes.vue";
 // Shopping List Page
@@ -70,9 +72,19 @@ export default new Router({
       component: Recipes,
     },
     {
-      path: "/RecipeDemo",
-      name: "RecipeDemo",
-      component: RecipeDemo,
+      path: "/Food1",
+      name: "Food1",
+      component: Food1,
+    },
+    {
+      path: "/Food2",
+      name: "Food2",
+      component: Food2,
+    },
+    {
+      path: "/Food3",
+      name: "Food3",
+      component: Food3,
     },
     {
       path: "/WRecipes",

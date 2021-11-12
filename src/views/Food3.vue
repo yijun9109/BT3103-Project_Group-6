@@ -2,17 +2,17 @@
 <div id = "bg">
     <br>
     <div data-app>
-        <RDemo/>
+        <Carb/>
     </div>
 </div>
 </template>
 
 <script>
-import RDemo from "@/components/RecipeDemo.vue"
+import Carb from "@/components/Food3.vue"
 export default {
-    name : "RecipeDemo",
+    name : "Food3",
     components: {
-        RDemo
+        Carb
     }
 }
 </script>
