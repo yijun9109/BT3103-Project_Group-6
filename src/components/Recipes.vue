@@ -31,8 +31,7 @@
         :align="align"
         no-gutters>
         <v-col>
-        <router-link to="/RecipeDemo">
-            <v-card class="rounded-card" id="one">
+            <v-card class="rounded-card" id="one" @click.native="goToFood1()">
                 <center>
                 <v-img 
                     id="image"
@@ -46,11 +45,9 @@
                 <br>
                 Cooking time 30 mins
             </v-card>
-        </router-link>
         </v-col>
         <v-col>
-        <router-link to="">
-            <v-card class="rounded-card" id="two">
+            <v-card class="rounded-card" id="two" @click.native="goToFood2()">
                 <center>
                 <v-img 
                     id="image"
@@ -64,11 +61,9 @@
                 <br>
                 Cooking time 5 mins
             </v-card>
-        </router-link>
         </v-col>
         <v-col>
-        <router-link to="">
-            <v-card class="rounded-card" id="three">
+            <v-card class="rounded-card" id="three" @click.native="goToFood3()">
                 <center>
                 <v-img 
                     id="image"
@@ -82,7 +77,6 @@
                 <br>
                 Cooking time 30 mins
             </v-card>
-        </router-link>
         </v-col>
     </v-row>
     <br>
@@ -118,6 +112,15 @@ export default {
     methods: {
         goToTips() {
             this.$router.push({name:'Tips'})
+        },
+        goToFood1() {
+            this.$router.push({name:'Food1'})
+        },
+        goToFood2() {
+            this.$router.push({name:'Food2'})
+        },
+        goToFood3() {
+            this.$router.push({name:'Food3'})
         }
     }
 }
