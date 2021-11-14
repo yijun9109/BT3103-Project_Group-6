@@ -5,25 +5,9 @@
       <div id="main">
           <br><br><br><br><br>
         <h1>404</h1>
-        <!-- <img src="@/assets/emoticon.png" alt="emoticon" width="250px" /> -->
         <h2>We can't seem to find the page you are looking for.</h2>
-
-        <!-- <br /><br /> -->
-        <!-- <h2>Please click on the options above to continue.</h2> -->
       </div>
     </div>
-    <!-- <div id="credits">
-      <h6>
-        Icons made by
-        <a href="https://www.flaticon.com/authors/senapedia" title="Senapedia"
-          >Senapedia</a
-        >
-        from
-        <a href="https://www.flaticon.com/" title="Flaticon"
-          >www.flaticon.com</a
-        >
-      </h6>
-    </div> -->
   </div>
 </template>
 
