@@ -152,6 +152,8 @@ export default {
                 this.orderByList = [];
                 this.orderByItems = 0;
             }
+            this.orderByQuantity = 0;
+            this.orderByExpiry = 0;
             this.run()
         },
         quantityOrder() {
@@ -164,6 +166,8 @@ export default {
                 this.orderByList = [];
                 this.orderByQuantity = 0;
             }
+            this.orderByItems = 0;
+            this.orderByExpiry = 0;
             this.run()
         },
 
@@ -177,6 +181,8 @@ export default {
                 this.orderByList = []
                 this.orderByExpiry = 0;
             }
+            this.orderByItems = 0;
+            this.orderByQuantity = 0;
             this.run()
         },
 
